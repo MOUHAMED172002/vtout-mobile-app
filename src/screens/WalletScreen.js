@@ -51,7 +51,7 @@ export default function WalletScreen() {
     setSubmitting(true);
     try {
       const token = await getToken();
-      await requestPayout({ amount: value, payout_info: payoutInfo }, token);
+      await requestPayout({ amount: value, payment_method: 'Mobile Money', payment_details: payoutInfo }, token);
       Alert.alert('Demande envoyée', 'Votre demande de retrait a été transmise.');
       setAmount('');
       setShowPayoutForm(false);

@@ -106,6 +106,8 @@ export default function AdminDashboardScreen({ navigation }) {
             <QuickAction label="Validations vendeurs & produits" icon="checkmark-done-outline" onPress={() => navigation.navigate('AdminApprovals')} />
             <QuickAction label="Utilisateurs" icon="people-outline" onPress={() => navigation.navigate('AdminUsers')} />
             <QuickAction label="Litiges" icon="alert-circle-outline" onPress={() => navigation.navigate('AdminDisputes')} />
+            <QuickAction label="Support client" icon="chatbox-ellipses-outline" onPress={() => navigation.navigate('AdminSupport')} />
+            <QuickAction label="Retraits partenaires" icon="cash-outline" onPress={() => navigation.navigate('AdminPayouts')} />
           </View>
         </View>
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
@@ -11,8 +12,12 @@ import AdminOrdersScreen from '../screens/admin/AdminOrdersScreen';
 import AdminSupplierApprovalScreen from '../screens/admin/AdminSupplierApprovalScreen';
 import AdminUsersScreen from '../screens/admin/AdminUsersScreen';
 import AdminDisputesScreen from '../screens/admin/AdminDisputesScreen';
+import AdminSupportScreen from '../screens/admin/AdminSupportScreen';
+import AdminSupportChatScreen from '../screens/admin/AdminSupportChatScreen';
+import AdminPayoutsScreen from '../screens/admin/AdminPayoutsScreen';
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 const ICONS = {
   AdminDashboard: 'grid',
@@ -22,7 +27,7 @@ const ICONS = {
   AdminDisputes: 'alert-circle',
 };
 
-export default function AdminNavigator() {
+function AdminTabs() {
   const { colors } = useTheme();
   return (
     <Tab.Navigator
@@ -53,5 +58,24 @@ export default function AdminNavigator() {
       <Tab.Screen name="AdminUsers" component={AdminUsersScreen} options={{ title: 'Utilisateurs' }} />
       <Tab.Screen name="AdminDisputes" component={AdminDisputesScreen} options={{ title: 'Litiges' }} />
     </Tab.Navigator>
+  );
+}
+
+export default function AdminNavigator() {
+  const { colors } = useTheme();
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTintColor: colors.text,
+        headerTitleStyle: { fontWeight: '800', fontSize: 16 },
+        headerShadowVisible: false,
+        headerStyle: { backgroundColor: colors.surface },
+      }}
+    >
+      <Stack.Screen name="AdminTabs" component={AdminTabs} options={{ headerShown: false }} />
+      <Stack.Screen name="AdminSupport" component={AdminSupportScreen} options={{ title: 'Support client' }} />
+      <Stack.Screen name="AdminSupportChat" component={AdminSupportChatScreen} options={{ title: 'Conversation' }} />
+      <Stack.Screen name="AdminPayouts" component={AdminPayoutsScreen} options={{ title: 'Retraits partenaires' }} />
+    </Stack.Navigator>
   );
 }

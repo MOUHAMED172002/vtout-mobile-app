@@ -12,7 +12,7 @@ import {
 const NotificationContext = createContext(null);
 
 export function NotificationProvider({ children }) {
-  const { isSignedIn, user, getToken } = useAuth();
+  const { isSignedIn, user, getToken, isAdmin } = useAuth();
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -34,6 +34,7 @@ export function NotificationProvider({ children }) {
     if (isSignedIn && user?.id) {
       load();
       socketService.connect(user.id);
+      if (isAdmin) socketService.emit('join', 'admins');
 
       const handleLive = () => load();
       const unsubOrder = socketService.subscribe('order_status_updated', handleLive);
@@ -48,7 +49,7 @@ export function NotificationProvider({ children }) {
       };
     }
     setNotifications([]);
-  }, [isSignedIn, user?.id, load]);
+  }, [isSignedIn, user?.id, isAdmin, load]);
 
   // Enregistre le jeton de push Expo de cet appareil à la connexion. Le
   // retrait à la déconnexion est géré par AuthContext.signOut() (qui a
