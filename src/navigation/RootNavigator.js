@@ -25,6 +25,7 @@ import NotificationsScreen from '../screens/NotificationsScreen';
 import ProductReviewsScreen from '../screens/ProductReviewsScreen';
 import WriteReviewScreen from '../screens/WriteReviewScreen';
 import MyReviewsScreen from '../screens/MyReviewsScreen';
+import BoutiqueStoreScreen from '../screens/BoutiqueStoreScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -68,6 +69,7 @@ export default function RootNavigator() {
       <Stack.Screen name="ProductReviews" component={ProductReviewsScreen} options={{ title: 'Avis clients' }} />
       <Stack.Screen name="WriteReview" component={WriteReviewScreen} options={{ title: 'Laisser un avis' }} />
       <Stack.Screen name="MyReviews" component={MyReviewsScreen} options={{ title: 'Mes avis' }} />
+      <Stack.Screen name="BoutiqueStore" component={BoutiqueStoreScreen} options={{ title: 'Boutique' }} />
     </Stack.Navigator>
   );
 }

@@ -226,6 +226,23 @@ export default function ProductDetailScreen({ route, navigation }) {
             </View>
           )}
 
+          {product.supplier_id && (
+            <Pressable
+              style={styles.boutiqueRow}
+              onPress={() => navigation.navigate('BoutiqueStore', { supplierId: product.supplier_id, name: product.boutique?.name })}
+            >
+              <View style={styles.boutiqueIcon}>
+                <Ionicons name="storefront" size={16} color={colors.secondary} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.boutiqueLabel}>Vendu par</Text>
+                <Text style={styles.boutiqueName} numberOfLines={1}>{product.boutique?.name || 'Cette boutique'}</Text>
+              </View>
+              <Text style={styles.boutiqueLink}>Voir la boutique</Text>
+              <Ionicons name="chevron-forward" size={16} color={colors.textFaint} />
+            </Pressable>
+          )}
+
           {variants.length > 0 && getAttributeKeys(variants).map((key) => (
             <View key={key} style={styles.attrGroup}>
               <Text style={styles.attrLabel}>{key}</Text>
@@ -317,6 +334,14 @@ const styles = StyleSheet.create({
   oldPrice: { fontSize: 14, color: colors.textFaint, textDecorationLine: 'line-through', fontWeight: '700' },
   freeDeliveryBox: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: '#ecfdf5', padding: 10, borderRadius: radius.sm },
   freeDeliveryText: { fontSize: 11, fontWeight: '800', color: colors.success, flexShrink: 1 },
+  boutiqueRow: {
+    flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: colors.surface,
+    borderWidth: 1, borderColor: colors.border, borderRadius: radius.md, padding: 12,
+  },
+  boutiqueIcon: { width: 32, height: 32, borderRadius: 12, backgroundColor: '#eff6ff', alignItems: 'center', justifyContent: 'center' },
+  boutiqueLabel: { fontSize: 9, fontWeight: '800', color: colors.textFaint, textTransform: 'uppercase' },
+  boutiqueName: { fontSize: 12, fontWeight: '800', color: colors.text, marginTop: 1 },
+  boutiqueLink: { fontSize: 10, fontWeight: '800', color: colors.secondary, textTransform: 'uppercase' },
   attrGroup: { gap: 8 },
   attrLabel: { fontSize: 12, fontWeight: '800', color: colors.textMuted, textTransform: 'uppercase' },
   attrOptions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },

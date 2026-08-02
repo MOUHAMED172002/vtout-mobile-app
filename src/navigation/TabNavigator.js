@@ -7,6 +7,7 @@ import { useCart } from '../context/CartContext';
 
 import HomeScreen from '../screens/HomeScreen';
 import CategoriesScreen from '../screens/CategoriesScreen';
+import BoutiquesScreen from '../screens/BoutiquesScreen';
 import CartScreen from '../screens/CartScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
@@ -15,6 +16,7 @@ const Tab = createBottomTabNavigator();
 const ICONS = {
   Accueil: 'home',
   Categories: 'grid',
+  Boutiques: 'storefront',
   Panier: 'cart',
   Profil: 'person',
 };
@@ -51,6 +53,7 @@ export default function TabNavigator() {
     >
       <Tab.Screen name="Accueil" component={HomeScreen} />
       <Tab.Screen name="Categories" component={CategoriesScreen} options={{ title: 'Catégories' }} />
+      <Tab.Screen name="Boutiques" component={BoutiquesScreen} />
       <Tab.Screen name="Panier" component={CartScreen} />
       <Tab.Screen name="Profil" component={ProfileScreen} />
     </Tab.Navigator>
