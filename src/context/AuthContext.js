@@ -85,6 +85,13 @@ export function AuthProvider({ children }) {
 
   const signOut = useCallback(async () => {
     try {
+      // Retire les jetons de push AVANT de couper la session (le Bearer
+      // doit encore être valide pour que l'appel soit authentifié).
+      await api.delete('/profiles/push-token');
+    } catch (err) {
+      // pas grave, les jetons expirés seront nettoyés automatiquement
+    }
+    try {
       await api.post('/auth/sign-out');
     } catch (err) {
       // le nettoyage local doit se faire même si l'appel réseau échoue

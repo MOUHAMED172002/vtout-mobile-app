@@ -82,8 +82,9 @@ Voir `src/context/AuthContext.js`.
   livrée, "Mes avis" (suppression).
 - Notifications : liste persistée (`/notifications/me`) + temps réel via
   `socket.io-client` (mêmes événements que le site : `order_status_updated`,
-  `new_message`, `admin_notification`). Cloche avec badge sur l'accueil et
-  dans l'en-tête de chaque espace pro.
+  `new_message`, `admin_notification`) **+ push OS** (voir section dédiée
+  ci-dessous). Cloche avec badge sur l'accueil et dans l'en-tête de chaque
+  espace pro.
 - Connexion / inscription / mot de passe oublié.
 
 ### Espace vendeur (`src/screens/supplier/`, `SupplierNavigator`)
@@ -116,15 +117,45 @@ basculer, et l'onglet Profil propose "Devenir vendeur" / "Devenir livreur"
 pour les comptes qui n'ont pas encore ces rôles. Voir
 `src/context/SpaceContext.js`.
 
+## Notifications push (OS)
+
+En plus du temps réel en app ouverte, l'app envoie de vraies notifications
+push (bannière système, appli fermée ou en arrière-plan), via le service
+push d'Expo. Ça touche **deux dépôts** :
+
+- **Mobile** (`src/services/pushService.js`) : demande la permission,
+  récupère le jeton push Expo de l'appareil, l'enregistre côté serveur.
+  Écran Notifications ouvert automatiquement au tap sur la notification
+  (`src/components/PushNotificationListener.js`).
+- **Serveur** (`server/`) : jeton stocké dans `profiles.metadata.expo_push_tokens`
+  (pas de migration de schéma). Chaque notification déjà créée en base
+  (`Notification.create(...)`, ~10 endroits dans le code : commandes,
+  litiges, finance...) déclenche automatiquement un envoi push via un hook
+  Sequelize `afterCreate` (`server/models/Notification.js` →
+  `server/services/pushNotificationService.js`) — **aucun des call sites
+  existants n'a été modifié**. Endpoints ajoutés :
+  `POST /profiles/push-token` (enregistrer), `DELETE /profiles/push-token`
+  (retirer — appelé automatiquement à la déconnexion).
+
+### ⚠️ Prérequis pour tester : build EAS, pas Expo Go
+
+Depuis le SDK 53, **Expo Go ne supporte plus les notifications push
+distantes** sur Android/iOS. Pour tester cette fonctionnalité :
+
+1. `npx eas init` (crée un projet EAS, nécessite un compte Expo gratuit) —
+   ça remplit automatiquement `extra.eas.projectId` dans `app.json`. Sans
+   ce `projectId`, `pushService.js` désactive silencieusement
+   l'enregistrement (log d'avertissement, pas de crash).
+2. `npx eas build --profile development --platform android` (ou `ios`)
+   pour générer un build de développement, à installer sur un appareil
+   physique (le simulateur iOS ne reçoit pas de vrais push).
+3. Le reste de l'app (achats, espaces vendeur/livreur/admin) fonctionne
+   normalement dans Expo Go — seul le push OS nécessite ce build.
+
 ## Prochaines étapes suggérées
 
-1. Notifications **push** (OS, appli fermée) : ce qui est fait aujourd'hui
-   est du temps réel en app ouverte (socket.io) + une liste persistée.
-   Du vrai push nécessite `expo-notifications`, l'enregistrement d'un
-   push token par utilisateur, et un envoi côté serveur (Expo push service
-   ou FCM/APNs) — implique des changements sur `server/`, non faits ici.
-2. Icônes/splash de production (`assets/`) — ceux fournis sont des
+1. Icônes/splash de production (`assets/`) — ceux fournis sont des
    placeholders Expo par défaut.
-3. Espace admin : si besoin d'aller plus loin, prioriser le CMS
+2. Espace admin : si besoin d'aller plus loin, prioriser le CMS
    (FAQ/blog/politiques) ou les paramètres système en second temps —
    volontairement laissés au site web pour l'instant.

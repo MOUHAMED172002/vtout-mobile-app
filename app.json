@@ -29,6 +29,14 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "color": "#f37021"
+        }
+      ]
+    ],
     "extra": {
       "apiUrl": "https://api.vtout.com/api"
     }

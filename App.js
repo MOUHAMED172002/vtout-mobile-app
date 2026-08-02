@@ -9,6 +9,8 @@ import { SpaceProvider } from './src/context/SpaceContext';
 import { NotificationProvider } from './src/context/NotificationContext';
 import { CartProvider } from './src/context/CartContext';
 import RootNavigator from './src/navigation/RootNavigator';
+import { navigationRef } from './src/navigation/navigationRef';
+import PushNotificationListener from './src/components/PushNotificationListener';
 
 export default function App() {
   return (
@@ -18,9 +20,10 @@ export default function App() {
           <SpaceProvider>
             <NotificationProvider>
               <CartProvider>
-                <NavigationContainer>
+                <NavigationContainer ref={navigationRef}>
                   <StatusBar style="dark" />
                   <RootNavigator />
+                  <PushNotificationListener />
                 </NavigationContainer>
               </CartProvider>
             </NotificationProvider>

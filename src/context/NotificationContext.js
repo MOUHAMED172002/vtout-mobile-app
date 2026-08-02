@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useAuth } from './AuthContext';
 import { socketService } from '../services/socketService';
+import { registerForPushNotificationsAsync } from '../services/pushService';
 import {
   getMyNotifications,
   markNotificationRead,
@@ -48,6 +49,17 @@ export function NotificationProvider({ children }) {
     }
     setNotifications([]);
   }, [isSignedIn, user?.id, load]);
+
+  // Enregistre le jeton de push Expo de cet appareil à la connexion. Le
+  // retrait à la déconnexion est géré par AuthContext.signOut() (qui a
+  // encore un Bearer valide au moment de l'appel). Sans effet si aucun
+  // build EAS n'est configuré (voir README) ou si l'app tourne dans
+  // Expo Go (SDK 53+).
+  useEffect(() => {
+    if (isSignedIn && user?.id) {
+      getToken().then((token) => registerForPushNotificationsAsync(token));
+    }
+  }, [isSignedIn, user?.id, getToken]);
 
   const markRead = useCallback(async (id) => {
     setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, is_read: true } : n)));
