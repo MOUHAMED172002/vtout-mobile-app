@@ -50,14 +50,19 @@ export default function ProductCard({ product, onPress }) {
   }, [product]);
 
   const [imgIndex, setImgIndex] = useState(0);
+  const [focused, setFocused] = useState(false);
 
   useEffect(() => {
-    if (images.length <= 1) return;
+    if (!focused || images.length <= 1) return;
     const interval = setInterval(() => {
       setImgIndex((i) => (i + 1) % images.length);
     }, CYCLE_INTERVAL);
     return () => clearInterval(interval);
-  }, [images.length]);
+  }, [focused, images.length]);
+
+  useEffect(() => {
+    if (!focused) setImgIndex(0);
+  }, [focused]);
 
   const salesCount = Number(product?.total_sold || 0);
   const isPopular = salesCount >= 100;
@@ -113,7 +118,12 @@ export default function ProductCard({ product, onPress }) {
 
   return (
     <>
-      <Pressable style={({ pressed }) => [styles.card, pressed && styles.pressed]} onPress={goToDetail}>
+      <Pressable
+        style={({ pressed }) => [styles.card, pressed && styles.pressed]}
+        onPress={goToDetail}
+        onPressIn={() => setFocused(true)}
+        onPressOut={() => setFocused(false)}
+      >
         <View style={styles.imageWrap}>
           {images.length > 0 ? (
             <Image source={{ uri: images[imgIndex] }} style={styles.image} contentFit="contain" transition={200} />
@@ -123,7 +133,7 @@ export default function ProductCard({ product, onPress }) {
             </View>
           )}
 
-          {images.length > 1 && (
+          {focused && images.length > 1 && (
             <View style={styles.dotsRow}>
               {images.map((_, idx) => (
                 <View key={idx} style={[styles.dot, idx === imgIndex && styles.dotActive]} />
@@ -165,7 +175,9 @@ export default function ProductCard({ product, onPress }) {
           {product?.free_delivery_communes?.length > 0 && (
             <View style={styles.deliveryRow}>
               <Ionicons name="location" size={9} color={colors.success} />
-              <Text style={styles.deliveryText} numberOfLines={1}>Livraison gratuite</Text>
+              <Text style={styles.deliveryText} numberOfLines={1}>
+                Livraison gratuite{product?.boutique?.commune_label ? ` · ${product.boutique.commune_label}` : ''}
+              </Text>
             </View>
           )}
           <View style={styles.priceRow}>

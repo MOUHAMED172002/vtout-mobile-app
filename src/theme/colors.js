@@ -14,6 +14,9 @@ export const lightColors = {
   success: '#10b981',
   danger: '#f43f5e',
   warning: '#f59e0b',
+  blush: '#fdeef4',
+  wine: '#6b2740',
+  wineMuted: '#c98aa0',
 };
 
 export const darkColors = {
@@ -31,6 +34,9 @@ export const darkColors = {
   success: '#22c55e',
   danger: '#fb7185',
   warning: '#fbbf24',
+  blush: '#241521',
+  wine: '#f4c9d9',
+  wineMuted: '#8a6070',
 };
 
 // Conservé pour compatibilité : équivaut à la palette claire.
