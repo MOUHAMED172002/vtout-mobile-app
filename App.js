@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 
 import { AuthProvider } from './src/context/AuthContext';
 import { SpaceProvider } from './src/context/SpaceContext';
@@ -16,12 +16,15 @@ import SupportChatBubble from './src/components/SupportChatBubble';
 
 function AppContent() {
   const { mode, colors } = useTheme();
+  const baseNavTheme = mode === 'dark' ? DarkTheme : DefaultTheme;
   return (
     <NavigationContainer
       ref={navigationRef}
       theme={{
+        ...baseNavTheme,
         dark: mode === 'dark',
         colors: {
+          ...baseNavTheme.colors,
           primary: colors.primary,
           background: colors.background,
           card: colors.surface,
