@@ -14,6 +14,7 @@ import { createAddress } from '../services/addressService';
 import { createOrder } from '../services/orderService';
 import { validateCoupon } from '../services/couponService';
 import { getAllConfigs } from '../services/configService';
+import { getMyFinancials } from '../services/walletService';
 
 export default function CheckoutScreen({ route, navigation }) {
   const { colors } = useTheme();
@@ -34,6 +35,20 @@ export default function CheckoutScreen({ route, navigation }) {
   const [validatingCoupon, setValidatingCoupon] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [feesConfig, setFeesConfig] = useState({ intra: 500, inter: 1000, crossing: {} });
+  const [walletBalance, setWalletBalance] = useState(0);
+
+  useEffect(() => {
+    if (!isSignedIn) return;
+    (async () => {
+      try {
+        const token = await getToken();
+        const data = await getMyFinancials(token);
+        setWalletBalance(Number(data?.balance || 0));
+      } catch {
+        setWalletBalance(0);
+      }
+    })();
+  }, [isSignedIn, getToken]);
 
   useEffect(() => {
     if (items.length === 0) {
@@ -267,6 +282,24 @@ export default function CheckoutScreen({ route, navigation }) {
               <Text style={styles.paymentSubtitle}>MTN, Moov, Carte bancaire</Text>
             </View>
           </Pressable>
+          {isSignedIn && walletBalance > 0 && (
+            <Pressable
+              style={[
+                styles.paymentOption,
+                paymentMethod === 'wallet' && styles.paymentOptionActive,
+                walletBalance < finalTotal && styles.paymentOptionDisabled,
+              ]}
+              onPress={() => walletBalance >= finalTotal && setPaymentMethod('wallet')}
+            >
+              <Ionicons name="wallet-outline" size={20} color={paymentMethod === 'wallet' ? colors.primary : colors.textMuted} />
+              <View style={{ flex: 1 }}>
+                <Text style={styles.paymentTitle}>Portefeuille Vtout</Text>
+                <Text style={styles.paymentSubtitle}>
+                  {walletBalance < finalTotal ? 'Solde insuffisant' : `Solde disponible : ${formatPrice(walletBalance)} F`}
+                </Text>
+              </View>
+            </Pressable>
+          )}
         </View>
 
         <View style={styles.card}>
