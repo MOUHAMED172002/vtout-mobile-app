@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "Vtout",
+    "slug": "vtout-mobile-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "scheme": "vtout",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0054a6"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.vtout.mobile"
+    },
+    "android": {
+      "package": "com.vtout.mobile",
+      "adaptiveIcon": {
+        "backgroundColor": "#0054a6",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "apiUrl": "https://api.vtout.com/api"
+    }
+  }
+}

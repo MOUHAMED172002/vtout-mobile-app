@@ -1,7 +1,9 @@
 # Vtout Mobile (Expo / React Native)
 
-Point de départ pour la version mobile de Vtout, avec la logique métier de ton
-backend réutilisée telle quelle (services API) et un design repensé pour le mobile.
+Application mobile de Vtout, avec la même logique métier que le site web
+(mêmes endpoints API, mêmes règles de prix/livraison/panier) mais un design
+entièrement repensé pour une app native (tabs, écrans plein écran, gestes
+natifs).
 
 ## Démarrer
 
@@ -10,52 +12,79 @@ npm install
 npx expo start
 ```
 
-Scanne le QR code avec l'app **Expo Go** (Android/iOS), ou lance un simulateur.
+Scanne le QR code avec l'app **Expo Go** (Android/iOS), ou lance un simulateur
+(`npx expo start --ios` / `--android`).
 
-## ⚠️ À configurer avant de lancer
+## Configuration
 
-1. **URL de l'API** — dans `app.json`, remplace :
-   ```
-   "extra": { "apiUrl": "https://TON_BACKEND_EN_LIGNE.com/api" }
-   ```
-   par l'URL de ton backend déjà en ligne (celui de `server/`).
+L'URL de l'API backend est définie dans `app.json` (`expo.extra.apiUrl`) :
 
-2. **Authentification** — ton site utilise **better-auth** (voir
-   `frontend/src/lib/auth-client.js` sur le repo web), pas Clerk. J'ai mis en
-   place un `AuthContext` minimal qui appelle `/auth/sign-in/email` et
-   `/auth/sign-up/email`. Vérifie dans `server/index.js` / `server/routes`
-   les routes exactes exposées par better-auth chez toi, et adapte
-   `src/context/AuthContext.js` en conséquence. Pour une intégration
-   robuste (gestion cookies/session), le client officiel Expo de better-auth
-   est recommandé : https://www.better-auth.com/docs/integrations/expo
+```json
+"extra": { "apiUrl": "https://api.vtout.com/api" }
+```
 
-## Ce qui est déjà fait
+C'est déjà pointé vers le backend en production. Pour tester en local contre
+un serveur `server/` lancé sur ta machine, remplace temporairement par
+`http://<IP_DE_TA_MACHINE>:3000/api` (pas `localhost`, un appareil/simulateur
+ne peut pas l'atteindre).
 
-- **Logique métier portée telle quelle** (`src/services/`) : produits,
-  panier, commandes, config, favoris, coupons, livraison, avis, utilisateur,
-  adresses — copiés depuis ton `frontend/src/services`, seul l'import du
-  client API a changé.
-- **Contexte Panier** (`src/context/CartContext.js`) : même comportement que
-  sur le site (panier serveur si connecté, panier local sinon), avec
-  `AsyncStorage` à la place de `localStorage`.
-- **Client API** (`src/api/client.js`) : axios + injection automatique du
-  token dans les headers (remplace les cookies `withCredentials` du web).
-- **Navigation** : tabs (Accueil / Panier / Profil) + stack pour le détail
-  produit et la recherche.
-- **Écrans** : Accueil (catégories + grille produits), Recherche, Détail
-  produit, Panier, Profil — design mobile natif, couleur de marque orange
-  (`#f97316`) reprise du site.
+## Authentification
+
+Le backend utilise **better-auth**. L'app appelle directement les endpoints
+REST (`/auth/sign-in/email`, `/auth/sign-up/email`, `/auth/get-session`,
+`/auth/sign-out`, `/auth/forget-password`) — pas besoin du SDK client
+`better-auth/react` (pensé pour le navigateur).
+
+Deux mécanismes de session cohabitent, comme le fait `authMiddleware.js`
+côté serveur :
+- le **cookie de session**, posé automatiquement par la requête de
+  connexion et rejoué par le client HTTP natif (`withCredentials: true`) ;
+- un **jeton Bearer** de secours (l'`id` de la session, récupéré via
+  `/auth/get-session`), stocké dans `expo-secure-store` et injecté dans le
+  header `Authorization` de chaque requête — c'est exactement le
+  mécanisme de compatibilité déjà utilisé par le site web
+  (`session.id` dans `AuthHooks.jsx`).
+
+Voir `src/context/AuthContext.js`.
+
+## Structure du code
+
+- `src/api/client.js` — instance axios (baseURL, injection du token).
+- `src/services/` — services métier portés depuis `frontend/src/services`
+  (produits, panier, commandes, favoris, coupons, adresses, avis, config,
+  localisation) : mêmes signatures, seul le client HTTP change.
+- `src/context/AuthContext.js` — session, connexion/inscription/déconnexion,
+  profil enrichi (rôle).
+- `src/context/CartContext.js` — panier serveur si connecté, sinon panier
+  local (`AsyncStorage`) — même comportement que le site.
+- `src/navigation/` — `TabNavigator` (Accueil / Catégories / Panier / Profil)
+  + `RootNavigator` (stack pour le détail produit, la recherche, le
+  checkout, les commandes, les favoris, les adresses, l'auth).
+- `src/screens/` — tous les écrans de l'app.
+- `src/components/` — `ProductCard`, `LocationPicker` (sélection de
+  quartier avec repli sur les données locales embarquées), `Button`,
+  `EmptyState`, `Loading`.
+
+## Fonctionnalités portées
+
+- Accueil (catégories + grille produits), recherche, liste par catégorie.
+- Fiche produit : galerie d'images, variantes/attributs, favoris, ajout au
+  panier, achat immédiat, produits similaires.
+- Panier (serveur/local), quantités, suppression.
+- Checkout : adresse (recherche de quartier, Bénin), calcul du supplément
+  de livraison (même logique intra/inter-département que le site), coupon
+  de réduction, paiement à la livraison ou en ligne (FedaPay, ouvert dans
+  le navigateur système via `expo-web-browser`).
+- Mes commandes / détail de commande, mes favoris, mes adresses.
+- Connexion / inscription / mot de passe oublié.
 
 ## Prochaines étapes suggérées
 
-1. Brancher l'auth réelle (better-auth) + écrans Connexion/Inscription.
-2. Écran Checkout (adresse, mode de livraison, paiement — `deliveryService`,
-   `couponService` déjà portés).
-3. Écran Mes commandes (`orderService`) et Favoris (`favoriteService`).
-4. Notifications push (le site a `notificationService` + `socketService` —
-   `socket.io-client` fonctionne aussi en RN).
-5. Portail fournisseur (`supplier-portal/`) en tant que 2ᵉ app RN, ou section
-   dédiée dans la même app selon ce que tu préfères.
-
-Dis-moi quel écran tu veux qu'on construise ensuite.
-# vtout-mobile-app
+1. Écran d'avis produits (lecture + dépôt d'un avis) — `reviewService` est
+   déjà porté.
+2. Notifications push (le site a un `notificationService` +
+   `socket.io-client`, compatible React Native).
+3. Portail fournisseur / espace livreur : hors périmètre de cette app
+   grand public, à traiter comme une app (ou section) dédiée si besoin.
+4. Icônes/splash de production (`assets/`) — ceux fournis sont des
+   placeholders Expo par défaut.

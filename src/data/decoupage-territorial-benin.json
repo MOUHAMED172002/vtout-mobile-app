@@ -1,0 +1,5100 @@
+[
+  {
+    "id_dep": 3,
+    "lib_dep": "ATLANTIQUE",
+    "communes": [
+      {
+        "id_com": 16,
+        "lib_com": "ABOMEY-CALAVI",
+        "arrondissements": [
+          {
+            "id_arrond": 89,
+            "lib_arrond": "AKASSATO",
+            "quartiers": [
+              {
+                "id_quart": 919,
+                "lib_quart": "ADJAGBO"
+              },
+              {
+                "id_quart": 920,
+                "lib_quart": "AGASSA-GODOMEY"
+              },
+              {
+                "id_quart": 921,
+                "lib_quart": "AGONME"
+              },
+              {
+                "id_quart": 922,
+                "lib_quart": "AGONSOUNDJA"
+              },
+              {
+                "id_quart": 923,
+                "lib_quart": "AKASSATO CENTRE"
+              },
+              {
+                "id_quart": 924,
+                "lib_quart": "GBETAGBO"
+              },
+              {
+                "id_quart": 925,
+                "lib_quart": "GLO-TOKPA"
+              },
+              {
+                "id_quart": 926,
+                "lib_quart": "HOUEKE-GBO"
+              },
+              {
+                "id_quart": 927,
+                "lib_quart": "HOUEKE-HONOU"
+              },
+              {
+                "id_quart": 928,
+                "lib_quart": "KOLETIN"
+              },
+              {
+                "id_quart": 929,
+                "lib_quart": "KPODJI-LES-MONTS"
+              },
+              {
+                "id_quart": 930,
+                "lib_quart": "MISSESSINTO"
+              },
+              {
+                "id_quart": 931,
+                "lib_quart": "ZEKANMEY-DOME"
+              },
+              {
+                "id_quart": 932,
+                "lib_quart": "ZOPAH PALMERAIE"
+              }
+            ]
+          },
+          {
+            "id_arrond": 90,
+            "lib_arrond": "GODOMEY",
+            "quartiers": [
+              {
+                "id_quart": 933,
+                "lib_quart": "ABIKOUHOLI"
+              },
+              {
+                "id_quart": 934,
+                "lib_quart": "AGBO-CODJI-SEDEGBE"
+              },
+              {
+                "id_quart": 935,
+                "lib_quart": "AGONKANMEY"
+              },
+              {
+                "id_quart": 936,
+                "lib_quart": "AIMEVO"
+              },
+              {
+                "id_quart": 937,
+                "lib_quart": "ALEGLETA"
+              },
+              {
+                "id_quart": 938,
+                "lib_quart": "AMANHOUN"
+              },
+              {
+                "id_quart": 939,
+                "lib_quart": "ASSROSSA"
+              },
+              {
+                "id_quart": 940,
+                "lib_quart": "ATROKPO-CODJI"
+              },
+              {
+                "id_quart": 941,
+                "lib_quart": "COCOCODJI"
+              },
+              {
+                "id_quart": 942,
+                "lib_quart": "COCOTOMEY"
+              },
+              {
+                "id_quart": 943,
+                "lib_quart": "DEKOUNGBE-EGLISE"
+              },
+              {
+                "id_quart": 944,
+                "lib_quart": "DEKOUNGBE-USINE"
+              },
+              {
+                "id_quart": 945,
+                "lib_quart": "DENOU"
+              },
+              {
+                "id_quart": 946,
+                "lib_quart": "DJEKPOTA"
+              },
+              {
+                "id_quart": 947,
+                "lib_quart": "DJOUKPA-TOGOUDO"
+              },
+              {
+                "id_quart": 948,
+                "lib_quart": "FANDJI"
+              },
+              {
+                "id_quart": 949,
+                "lib_quart": "FIGNONHOU"
+              },
+              {
+                "id_quart": 950,
+                "lib_quart": "FINAFA"
+              },
+              {
+                "id_quart": 951,
+                "lib_quart": "GANGANZOUNME"
+              },
+              {
+                "id_quart": 952,
+                "lib_quart": "GBEGNIGAN-MIDOKPO"
+              },
+              {
+                "id_quart": 953,
+                "lib_quart": "GBODJE-WOMEY"
+              },
+              {
+                "id_quart": 954,
+                "lib_quart": "GNINKINDJI"
+              },
+              {
+                "id_quart": 955,
+                "lib_quart": "GODOMEY-N'GBEHO"
+              },
+              {
+                "id_quart": 956,
+                "lib_quart": "GODOMEY-TOGOUDO"
+              },
+              {
+                "id_quart": 957,
+                "lib_quart": "HEDOME"
+              },
+              {
+                "id_quart": 958,
+                "lib_quart": "HELOUTO"
+              },
+              {
+                "id_quart": 959,
+                "lib_quart": "HOUAKOMEY"
+              },
+              {
+                "id_quart": 960,
+                "lib_quart": "HOUNSA-AGBODOKPA"
+              },
+              {
+                "id_quart": 961,
+                "lib_quart": "LA PAIX"
+              },
+              {
+                "id_quart": 962,
+                "lib_quart": "LOBOZOUNKPA"
+              },
+              {
+                "id_quart": 963,
+                "lib_quart": "MARIA-GLETA"
+              },
+              {
+                "id_quart": 964,
+                "lib_quart": "NINGBOTO"
+              },
+              {
+                "id_quart": 965,
+                "lib_quart": "NONHOUENOU"
+              },
+              {
+                "id_quart": 966,
+                "lib_quart": "OUNVENOUMEDE"
+              },
+              {
+                "id_quart": 967,
+                "lib_quart": "PLATEAU"
+              },
+              {
+                "id_quart": 968,
+                "lib_quart": "SALAMEY"
+              },
+              {
+                "id_quart": 969,
+                "lib_quart": "SEDJANNANKO"
+              },
+              {
+                "id_quart": 970,
+                "lib_quart": "SEDOMEY"
+              },
+              {
+                "id_quart": 971,
+                "lib_quart": "SELOLI-FANDJI"
+              },
+              {
+                "id_quart": 972,
+                "lib_quart": "SODO"
+              },
+              {
+                "id_quart": 973,
+                "lib_quart": "TANKPE"
+              },
+              {
+                "id_quart": 974,
+                "lib_quart": "TOGBIN-DAHO"
+              },
+              {
+                "id_quart": 975,
+                "lib_quart": "TOGBIN-KPEVI"
+              },
+              {
+                "id_quart": 976,
+                "lib_quart": "TOGNIN-FANDJI"
+              },
+              {
+                "id_quart": 977,
+                "lib_quart": "TOKPA"
+              },
+              {
+                "id_quart": 978,
+                "lib_quart": "WOMEY CENTRE"
+              },
+              {
+                "id_quart": 979,
+                "lib_quart": "YENANDJRO"
+              },
+              {
+                "id_quart": 980,
+                "lib_quart": "YOLOMAHOUTO"
+              },
+              {
+                "id_quart": 981,
+                "lib_quart": "ZOUNGA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 91,
+            "lib_arrond": "GOLO-DJIGBE",
+            "quartiers": [
+              {
+                "id_quart": 982,
+                "lib_quart": "ADJAME"
+              },
+              {
+                "id_quart": 983,
+                "lib_quart": "AGONGBE"
+              },
+              {
+                "id_quart": 984,
+                "lib_quart": "AGONKESSA"
+              },
+              {
+                "id_quart": 985,
+                "lib_quart": "ALLADACOME"
+              },
+              {
+                "id_quart": 986,
+                "lib_quart": "AZONSA"
+              },
+              {
+                "id_quart": 987,
+                "lib_quart": "DJISSOUKPA"
+              },
+              {
+                "id_quart": 988,
+                "lib_quart": "DOMEY-GBO"
+              },
+              {
+                "id_quart": 989,
+                "lib_quart": "GOLO-DJIGBE"
+              },
+              {
+                "id_quart": 990,
+                "lib_quart": "GOLO-FANTO"
+              },
+              {
+                "id_quart": 991,
+                "lib_quart": "LOHOUSSA"
+              },
+              {
+                "id_quart": 992,
+                "lib_quart": "MISSEBO-ESPACE SAINT"
+              },
+              {
+                "id_quart": 993,
+                "lib_quart": "YEKON-AGA"
+              },
+              {
+                "id_quart": 994,
+                "lib_quart": "YEKON-DO"
+              },
+              {
+                "id_quart": 995,
+                "lib_quart": "ZEKANMEY"
+              }
+            ]
+          },
+          {
+            "id_arrond": 92,
+            "lib_arrond": "HEVIE",
+            "quartiers": [
+              {
+                "id_quart": 996,
+                "lib_quart": "ADOVIE"
+              },
+              {
+                "id_quart": 997,
+                "lib_quart": "AKOSSAVIE"
+              },
+              {
+                "id_quart": 998,
+                "lib_quart": "DOSSOUNOU"
+              },
+              {
+                "id_quart": 999,
+                "lib_quart": "HEVIE CENTRE"
+              },
+              {
+                "id_quart": 1000,
+                "lib_quart": "HOUINME"
+              },
+              {
+                "id_quart": 1001,
+                "lib_quart": "HOUNYEVA"
+              },
+              {
+                "id_quart": 1002,
+                "lib_quart": "HOUNZEVIE"
+              },
+              {
+                "id_quart": 1003,
+                "lib_quart": "SOGAN"
+              },
+              {
+                "id_quart": 1004,
+                "lib_quart": "ZOUNGO"
+              }
+            ]
+          },
+          {
+            "id_arrond": 93,
+            "lib_arrond": "KPANROUN",
+            "quartiers": [
+              {
+                "id_quart": 1005,
+                "lib_quart": "ANAGBO"
+              },
+              {
+                "id_quart": 1006,
+                "lib_quart": "AVAGBE"
+              },
+              {
+                "id_quart": 1007,
+                "lib_quart": "BOZOUN"
+              },
+              {
+                "id_quart": 1008,
+                "lib_quart": "DJIGBO"
+              },
+              {
+                "id_quart": 1009,
+                "lib_quart": "HADJANAHO"
+              },
+              {
+                "id_quart": 1010,
+                "lib_quart": "KPANROUN"
+              },
+              {
+                "id_quart": 1011,
+                "lib_quart": "KPANROUN-DODOMEY"
+              },
+              {
+                "id_quart": 1012,
+                "lib_quart": "KPAVIEDJA"
+              },
+              {
+                "id_quart": 1013,
+                "lib_quart": "KPE"
+              }
+            ]
+          },
+          {
+            "id_arrond": 94,
+            "lib_arrond": "OUEDO",
+            "quartiers": [
+              {
+                "id_quart": 1014,
+                "lib_quart": "ADJAGBO"
+              },
+              {
+                "id_quart": 1015,
+                "lib_quart": "ADJAGBO-AIDJEDO"
+              },
+              {
+                "id_quart": 1016,
+                "lib_quart": "ADJAGLO-AIDJEDO"
+              },
+              {
+                "id_quart": 1017,
+                "lib_quart": "AHOUATO"
+              },
+              {
+                "id_quart": 1018,
+                "lib_quart": "ALANSANKOME"
+              },
+              {
+                "id_quart": 1019,
+                "lib_quart": "DASSEKOMEY"
+              },
+              {
+                "id_quart": 1020,
+                "lib_quart": "DESSATO"
+              },
+              {
+                "id_quart": 1021,
+                "lib_quart": "KPOSSIDJA"
+              },
+              {
+                "id_quart": 1022,
+                "lib_quart": "OUEDO CENTRE"
+              },
+              {
+                "id_quart": 1023,
+                "lib_quart": "OUEDO CENTRE"
+              }
+            ]
+          },
+          {
+            "id_arrond": 95,
+            "lib_arrond": "TOGBA",
+            "quartiers": [
+              {
+                "id_quart": 1024,
+                "lib_quart": "AHOSSOUGBETA"
+              },
+              {
+                "id_quart": 1025,
+                "lib_quart": "DRABO"
+              },
+              {
+                "id_quart": 1026,
+                "lib_quart": "FIFONSI"
+              },
+              {
+                "id_quart": 1027,
+                "lib_quart": "HOUETO"
+              },
+              {
+                "id_quart": 1028,
+                "lib_quart": "OUEGA-AGUE"
+              },
+              {
+                "id_quart": 1029,
+                "lib_quart": "OUEGA-TOKPA"
+              },
+              {
+                "id_quart": 1030,
+                "lib_quart": "SOME"
+              },
+              {
+                "id_quart": 1031,
+                "lib_quart": "TANKPE"
+              },
+              {
+                "id_quart": 1032,
+                "lib_quart": "TOGBA MARIA-GLETA"
+              },
+              {
+                "id_quart": 1033,
+                "lib_quart": "TOKAN"
+              },
+              {
+                "id_quart": 1034,
+                "lib_quart": "TOKAN AIDEGNON"
+              }
+            ]
+          },
+          {
+            "id_arrond": 96,
+            "lib_arrond": "ZINVIE",
+            "quartiers": [
+              {
+                "id_quart": 1035,
+                "lib_quart": "ADJOGANSA"
+              },
+              {
+                "id_quart": 1036,
+                "lib_quart": "DANGBODJI"
+              },
+              {
+                "id_quart": 1037,
+                "lib_quart": "DOKOMEY"
+              },
+              {
+                "id_quart": 1038,
+                "lib_quart": "GBODJE"
+              },
+              {
+                "id_quart": 1039,
+                "lib_quart": "GBODJOKO"
+              },
+              {
+                "id_quart": 1040,
+                "lib_quart": "HOUEGOUDO"
+              },
+              {
+                "id_quart": 1041,
+                "lib_quart": "KPOTOMEY"
+              },
+              {
+                "id_quart": 1042,
+                "lib_quart": "SOKAN"
+              },
+              {
+                "id_quart": 1043,
+                "lib_quart": "WAWATA"
+              },
+              {
+                "id_quart": 1044,
+                "lib_quart": "WAWATA-TODJA"
+              },
+              {
+                "id_quart": 1045,
+                "lib_quart": "YEVIE"
+              },
+              {
+                "id_quart": 1046,
+                "lib_quart": "YEVIE-NOUGO"
+              },
+              {
+                "id_quart": 1047,
+                "lib_quart": "ZINVIE-AGOLEDJI"
+              },
+              {
+                "id_quart": 1048,
+                "lib_quart": "ZINVIE-FANDJI"
+              },
+              {
+                "id_quart": 1049,
+                "lib_quart": "ZINVIE-ZOUNME"
+              }
+            ]
+          },
+          {
+            "id_arrond": 97,
+            "lib_arrond": "ABOMEY-CALAVI",
+            "quartiers": [
+              {
+                "id_quart": 1050,
+                "lib_quart": "AGAMANDIN"
+              },
+              {
+                "id_quart": 1051,
+                "lib_quart": "AGORI"
+              },
+              {
+                "id_quart": 1052,
+                "lib_quart": "AIFA"
+              },
+              {
+                "id_quart": 1053,
+                "lib_quart": "AITCHEDJI"
+              },
+              {
+                "id_quart": 1054,
+                "lib_quart": "ALEDJO"
+              },
+              {
+                "id_quart": 1055,
+                "lib_quart": "CITE LA VICTOIRE"
+              },
+              {
+                "id_quart": 1056,
+                "lib_quart": "CITE LES PALMIERS"
+              },
+              {
+                "id_quart": 1057,
+                "lib_quart": "FANDJI"
+              },
+              {
+                "id_quart": 1058,
+                "lib_quart": "FINAFA"
+              },
+              {
+                "id_quart": 1059,
+                "lib_quart": "GBODJO"
+              },
+              {
+                "id_quart": 1060,
+                "lib_quart": "KANSOUNKPA"
+              },
+              {
+                "id_quart": 1061,
+                "lib_quart": "SEME"
+              },
+              {
+                "id_quart": 1062,
+                "lib_quart": "TANKPE"
+              },
+              {
+                "id_quart": 1063,
+                "lib_quart": "TCHINANGBEGBO"
+              },
+              {
+                "id_quart": 1064,
+                "lib_quart": "TOKPA-ZOUNGO"
+              },
+              {
+                "id_quart": 1065,
+                "lib_quart": "TOKPA-ZOUNGO NORD"
+              },
+              {
+                "id_quart": 1066,
+                "lib_quart": "TOKPA-ZOUNGO SUD"
+              },
+              {
+                "id_quart": 1067,
+                "lib_quart": "ZOGBADJE"
+              },
+              {
+                "id_quart": 1068,
+                "lib_quart": "ZOPAH"
+              },
+              {
+                "id_quart": 1069,
+                "lib_quart": "ZOUNDJA"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id_com": 17,
+        "lib_com": "ALLADA",
+        "arrondissements": [
+          {
+            "id_arrond": 98,
+            "lib_arrond": "AGBANOU",
+            "quartiers": [
+              {
+                "id_quart": 1070,
+                "lib_quart": "ACCLOHOUE"
+              },
+              {
+                "id_quart": 1071,
+                "lib_quart": "AGBANOU"
+              },
+              {
+                "id_quart": 1072,
+                "lib_quart": "AGONDOKPOE"
+              },
+              {
+                "id_quart": 1073,
+                "lib_quart": "AGONGBLAMEY"
+              },
+              {
+                "id_quart": 1074,
+                "lib_quart": "ATTOTINGA"
+              },
+              {
+                "id_quart": 1075,
+                "lib_quart": "GBETA"
+              },
+              {
+                "id_quart": 1076,
+                "lib_quart": "GOUNONTOMEY"
+              },
+              {
+                "id_quart": 1077,
+                "lib_quart": "GOUSSIKPOTA"
+              },
+              {
+                "id_quart": 1078,
+                "lib_quart": "LOKOKPA"
+              },
+              {
+                "id_quart": 1079,
+                "lib_quart": "TEGBO"
+              },
+              {
+                "id_quart": 1080,
+                "lib_quart": "TOKPA-AVAGOUDO"
+              },
+              {
+                "id_quart": 1081,
+                "lib_quart": "WADON"
+              },
+              {
+                "id_quart": 1082,
+                "lib_quart": "ZOUNTA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 99,
+            "lib_arrond": "AHOUANNONZOUN",
+            "quartiers": [
+              {
+                "id_quart": 1083,
+                "lib_quart": "AHITO"
+              },
+              {
+                "id_quart": 1084,
+                "lib_quart": "BAWEKANMEY"
+              },
+              {
+                "id_quart": 1085,
+                "lib_quart": "DAHSRAMEY"
+              },
+              {
+                "id_quart": 1086,
+                "lib_quart": "HANAFIN"
+              },
+              {
+                "id_quart": 1087,
+                "lib_quart": "HESSA"
+              },
+              {
+                "id_quart": 1088,
+                "lib_quart": "HETIN"
+              },
+              {
+                "id_quart": 1089,
+                "lib_quart": "LOTO-DENOU"
+              },
+              {
+                "id_quart": 1090,
+                "lib_quart": "ZOUNGBODJI"
+              }
+            ]
+          },
+          {
+            "id_arrond": 100,
+            "lib_arrond": "ATTOGON",
+            "quartiers": [
+              {
+                "id_quart": 1091,
+                "lib_quart": "ASSIHOUI"
+              },
+              {
+                "id_quart": 1092,
+                "lib_quart": "ATTOGON CENTRE"
+              },
+              {
+                "id_quart": 1093,
+                "lib_quart": "AVANKAMEY"
+              },
+              {
+                "id_quart": 1094,
+                "lib_quart": "KPOGUETOMEY"
+              },
+              {
+                "id_quart": 1095,
+                "lib_quart": "NIAOULI"
+              },
+              {
+                "id_quart": 1096,
+                "lib_quart": "NOUZOUNKPA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 101,
+            "lib_arrond": "AVAKPA",
+            "quartiers": [
+              {
+                "id_quart": 1097,
+                "lib_quart": "ADJOHOUN"
+              },
+              {
+                "id_quart": 1098,
+                "lib_quart": "AVAKPA"
+              },
+              {
+                "id_quart": 1099,
+                "lib_quart": "GLOTOMEY"
+              },
+              {
+                "id_quart": 1100,
+                "lib_quart": "HOUKPOKPOUE"
+              }
+            ]
+          },
+          {
+            "id_arrond": 102,
+            "lib_arrond": "AYOU",
+            "quartiers": [
+              {
+                "id_quart": 1101,
+                "lib_quart": "AHOTA"
+              },
+              {
+                "id_quart": 1102,
+                "lib_quart": "GBEDJI"
+              },
+              {
+                "id_quart": 1103,
+                "lib_quart": "GBEOVA"
+              },
+              {
+                "id_quart": 1104,
+                "lib_quart": "HANGNAN"
+              },
+              {
+                "id_quart": 1105,
+                "lib_quart": "HOUNKPA"
+              },
+              {
+                "id_quart": 1106,
+                "lib_quart": "LANMANDJI"
+              },
+              {
+                "id_quart": 1107,
+                "lib_quart": "SEBO"
+              },
+              {
+                "id_quart": 1108,
+                "lib_quart": "TANMEY"
+              },
+              {
+                "id_quart": 1109,
+                "lib_quart": "TOKPA"
+              },
+              {
+                "id_quart": 1110,
+                "lib_quart": "ZINDAGBA"
+              },
+              {
+                "id_quart": 1111,
+                "lib_quart": "ZOUNGOUDO"
+              }
+            ]
+          },
+          {
+            "id_arrond": 103,
+            "lib_arrond": "HINVI",
+            "quartiers": [
+              {
+                "id_quart": 1112,
+                "lib_quart": "ALIGOUDO"
+              },
+              {
+                "id_quart": 1113,
+                "lib_quart": "DOVO"
+              },
+              {
+                "id_quart": 1114,
+                "lib_quart": "TANGA"
+              },
+              {
+                "id_quart": 1115,
+                "lib_quart": "TANGA-TODO"
+              },
+              {
+                "id_quart": 1116,
+                "lib_quart": "ZOUNGBOMEY"
+              }
+            ]
+          },
+          {
+            "id_arrond": 104,
+            "lib_arrond": "LISSEGAZOUN",
+            "quartiers": [
+              {
+                "id_quart": 1117,
+                "lib_quart": "ADJADJI-ATINKOUSA"
+              },
+              {
+                "id_quart": 1118,
+                "lib_quart": "ADJADJI-BATA"
+              },
+              {
+                "id_quart": 1119,
+                "lib_quart": "ADJADJI-COSSOE"
+              },
+              {
+                "id_quart": 1120,
+                "lib_quart": "ADJADJI-ZOUNGBOMEY"
+              },
+              {
+                "id_quart": 1121,
+                "lib_quart": "AOTA"
+              },
+              {
+                "id_quart": 1122,
+                "lib_quart": "ATTOUHONOU"
+              },
+              {
+                "id_quart": 1123,
+                "lib_quart": "AZOHOUE-GBEDJICOME"
+              },
+              {
+                "id_quart": 1124,
+                "lib_quart": "AZOHOUE-HONGBO"
+              },
+              {
+                "id_quart": 1125,
+                "lib_quart": "DJOHOUNGBONOU"
+              },
+              {
+                "id_quart": 1126,
+                "lib_quart": "GBETO"
+              },
+              {
+                "id_quart": 1127,
+                "lib_quart": "HOUEGOUDO"
+              },
+              {
+                "id_quart": 1128,
+                "lib_quart": "LISSEGAZOUN"
+              },
+              {
+                "id_quart": 1129,
+                "lib_quart": "SOLOKOUE"
+              },
+              {
+                "id_quart": 1130,
+                "lib_quart": "ZOUNME-AGA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 105,
+            "lib_arrond": "LON-AGONMEY",
+            "quartiers": [
+              {
+                "id_quart": 1131,
+                "lib_quart": "ADJRAKANDJI"
+              },
+              {
+                "id_quart": 1132,
+                "lib_quart": "AYAKPATA"
+              },
+              {
+                "id_quart": 1133,
+                "lib_quart": "AYAME"
+              },
+              {
+                "id_quart": 1134,
+                "lib_quart": "KPODJI"
+              },
+              {
+                "id_quart": 1135,
+                "lib_quart": "SEHOUNSA"
+              },
+              {
+                "id_quart": 1136,
+                "lib_quart": "TOGAZOUN"
+              },
+              {
+                "id_quart": 1137,
+                "lib_quart": "TOGO"
+              },
+              {
+                "id_quart": 1138,
+                "lib_quart": "WINYIKPA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 106,
+            "lib_arrond": "SEKOU",
+            "quartiers": [
+              {
+                "id_quart": 1139,
+                "lib_quart": "ADIMALE"
+              },
+              {
+                "id_quart": 1140,
+                "lib_quart": "ADJADANGAN"
+              },
+              {
+                "id_quart": 1141,
+                "lib_quart": "AGBANDONOU"
+              },
+              {
+                "id_quart": 1142,
+                "lib_quart": "AGBANTOKPA"
+              },
+              {
+                "id_quart": 1143,
+                "lib_quart": "DODJI-ALIHO"
+              },
+              {
+                "id_quart": 1144,
+                "lib_quart": "DODJIDANGBAN"
+              },
+              {
+                "id_quart": 1145,
+                "lib_quart": "DOVENOU"
+              },
+              {
+                "id_quart": 1146,
+                "lib_quart": "GANDAHO"
+              },
+              {
+                "id_quart": 1147,
+                "lib_quart": "HEDJANNANSOUN"
+              },
+              {
+                "id_quart": 1148,
+                "lib_quart": "HOLLANSATIN"
+              },
+              {
+                "id_quart": 1149,
+                "lib_quart": "HOUNDADJA"
+              },
+              {
+                "id_quart": 1150,
+                "lib_quart": "MIGBEHOUE"
+              },
+              {
+                "id_quart": 1151,
+                "lib_quart": "SEHE"
+              },
+              {
+                "id_quart": 1152,
+                "lib_quart": "SEKOU"
+              },
+              {
+                "id_quart": 1153,
+                "lib_quart": "SOHOUN"
+              },
+              {
+                "id_quart": 1154,
+                "lib_quart": "VEHOUI"
+              },
+              {
+                "id_quart": 1155,
+                "lib_quart": "WEDJAME"
+              },
+              {
+                "id_quart": 1156,
+                "lib_quart": "WIBATIN"
+              },
+              {
+                "id_quart": 1157,
+                "lib_quart": "YAAHOUE"
+              }
+            ]
+          },
+          {
+            "id_arrond": 107,
+            "lib_arrond": "TOKPA",
+            "quartiers": [
+              {
+                "id_quart": 1158,
+                "lib_quart": "BOLI"
+              },
+              {
+                "id_quart": 1159,
+                "lib_quart": "GBEDJI"
+              },
+              {
+                "id_quart": 1160,
+                "lib_quart": "HOUNGBADO"
+              },
+              {
+                "id_quart": 1161,
+                "lib_quart": "KOTOVI"
+              },
+              {
+                "id_quart": 1162,
+                "lib_quart": "WOGO"
+              },
+              {
+                "id_quart": 1163,
+                "lib_quart": "ZOUNLEDJI"
+              }
+            ]
+          },
+          {
+            "id_arrond": 108,
+            "lib_arrond": "ALLADA CENTRE",
+            "quartiers": [
+              {
+                "id_quart": 1164,
+                "lib_quart": "AHITO"
+              },
+              {
+                "id_quart": 1165,
+                "lib_quart": "ALLOMEY"
+              },
+              {
+                "id_quart": 1166,
+                "lib_quart": "AVAZOUNKPA"
+              },
+              {
+                "id_quart": 1167,
+                "lib_quart": "DAGLETA"
+              },
+              {
+                "id_quart": 1168,
+                "lib_quart": "DODOMEY"
+              },
+              {
+                "id_quart": 1169,
+                "lib_quart": "DOGOUDO"
+              },
+              {
+                "id_quart": 1170,
+                "lib_quart": "DOGOUDO CEG"
+              },
+              {
+                "id_quart": 1171,
+                "lib_quart": "DONOU"
+              },
+              {
+                "id_quart": 1172,
+                "lib_quart": "GBEGAMEY"
+              },
+              {
+                "id_quart": 1173,
+                "lib_quart": "GBOWELE"
+              },
+              {
+                "id_quart": 1174,
+                "lib_quart": "HOUINBATIN"
+              },
+              {
+                "id_quart": 1175,
+                "lib_quart": "SOKOUDENOU"
+              },
+              {
+                "id_quart": 1176,
+                "lib_quart": "SOYO"
+              },
+              {
+                "id_quart": 1177,
+                "lib_quart": "TOKPOTA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 109,
+            "lib_arrond": "TOGOUDO",
+            "quartiers": [
+              {
+                "id_quart": 1178,
+                "lib_quart": "GOVIE"
+              },
+              {
+                "id_quart": 1179,
+                "lib_quart": "KPODJAVA"
+              },
+              {
+                "id_quart": 1180,
+                "lib_quart": "TOGO"
+              },
+              {
+                "id_quart": 1181,
+                "lib_quart": "ZEBOU"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id_com": 18,
+        "lib_com": "KPOMASSE",
+        "arrondissements": [
+          {
+            "id_arrond": 110,
+            "lib_arrond": "AGANMALOME",
+            "quartiers": [
+              {
+                "id_quart": 1182,
+                "lib_quart": "AGANMALOME-CENTRE"
+              },
+              {
+                "id_quart": 1183,
+                "lib_quart": "AIDJEDO"
+              },
+              {
+                "id_quart": 1184,
+                "lib_quart": "HESSA"
+              },
+              {
+                "id_quart": 1185,
+                "lib_quart": "KOUGBEDJI"
+              },
+              {
+                "id_quart": 1186,
+                "lib_quart": "KOUZOUME"
+              },
+              {
+                "id_quart": 1187,
+                "lib_quart": "LOKOSSA"
+              },
+              {
+                "id_quart": 1188,
+                "lib_quart": "NOUGBOYIFI"
+              }
+            ]
+          },
+          {
+            "id_arrond": 111,
+            "lib_arrond": "AGBANTO",
+            "quartiers": [
+              {
+                "id_quart": 1189,
+                "lib_quart": "AGBANTO-MAGA"
+              },
+              {
+                "id_quart": 1190,
+                "lib_quart": "AGBANTO-SOTONCODJI"
+              },
+              {
+                "id_quart": 1191,
+                "lib_quart": "AGBANTO-ZOUNMIN"
+              },
+              {
+                "id_quart": 1192,
+                "lib_quart": "AGONVODJI-DAHO"
+              },
+              {
+                "id_quart": 1193,
+                "lib_quart": "AGONVODJI-KPEVI"
+              },
+              {
+                "id_quart": 1194,
+                "lib_quart": "GOGOTINKPONME"
+              },
+              {
+                "id_quart": 1195,
+                "lib_quart": "NAZOUME"
+              }
+            ]
+          },
+          {
+            "id_arrond": 112,
+            "lib_arrond": "AGONKANME",
+            "quartiers": [
+              {
+                "id_quart": 1196,
+                "lib_quart": "ADJAGLO"
+              },
+              {
+                "id_quart": 1197,
+                "lib_quart": "ADJAME"
+              },
+              {
+                "id_quart": 1198,
+                "lib_quart": "AGONKANME CENTRE"
+              },
+              {
+                "id_quart": 1199,
+                "lib_quart": "ASSOGBENOU-DAHO"
+              },
+              {
+                "id_quart": 1200,
+                "lib_quart": "ASSOGBENOU-KPEVI"
+              },
+              {
+                "id_quart": 1201,
+                "lib_quart": "GODONOUTIN"
+              },
+              {
+                "id_quart": 1202,
+                "lib_quart": "GOME"
+              },
+              {
+                "id_quart": 1203,
+                "lib_quart": "KPOTA"
+              },
+              {
+                "id_quart": 1204,
+                "lib_quart": "OUSSA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 113,
+            "lib_arrond": "DEDOME",
+            "quartiers": [
+              {
+                "id_quart": 1205,
+                "lib_quart": "COUFFONOU"
+              },
+              {
+                "id_quart": 1206,
+                "lib_quart": "DEDOME ACLOME"
+              },
+              {
+                "id_quart": 1207,
+                "lib_quart": "DEDOME KPODJI"
+              },
+              {
+                "id_quart": 1208,
+                "lib_quart": "HINMADOU"
+              },
+              {
+                "id_quart": 1209,
+                "lib_quart": "KPINDJAKANME"
+              },
+              {
+                "id_quart": 1210,
+                "lib_quart": "TELOKOE-AHOUYA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 114,
+            "lib_arrond": "DEKANME",
+            "quartiers": [
+              {
+                "id_quart": 1211,
+                "lib_quart": "AHOUANGO AGBIDICOME"
+              },
+              {
+                "id_quart": 1212,
+                "lib_quart": "AHOUANGO HINSOCOME"
+              },
+              {
+                "id_quart": 1213,
+                "lib_quart": "AZIZONKANME"
+              },
+              {
+                "id_quart": 1214,
+                "lib_quart": "FONCOME"
+              },
+              {
+                "id_quart": 1215,
+                "lib_quart": "GLEGBOTONOU"
+              },
+              {
+                "id_quart": 1216,
+                "lib_quart": "HOUEDJRO"
+              },
+              {
+                "id_quart": 1217,
+                "lib_quart": "HOUEYOGBE"
+              },
+              {
+                "id_quart": 1218,
+                "lib_quart": "KPAGO"
+              },
+              {
+                "id_quart": 1219,
+                "lib_quart": "KPODJI ATINGO"
+              },
+              {
+                "id_quart": 1220,
+                "lib_quart": "KPODJI CLOTOME"
+              },
+              {
+                "id_quart": 1221,
+                "lib_quart": "SEBO"
+              },
+              {
+                "id_quart": 1222,
+                "lib_quart": "YEME"
+              }
+            ]
+          },
+          {
+            "id_arrond": 115,
+            "lib_arrond": "SEGBEYA",
+            "quartiers": [
+              {
+                "id_quart": 1223,
+                "lib_quart": "ATCHAKANME"
+              },
+              {
+                "id_quart": 1224,
+                "lib_quart": "DANZOUNME"
+              },
+              {
+                "id_quart": 1225,
+                "lib_quart": "GBEFADJI"
+              },
+              {
+                "id_quart": 1226,
+                "lib_quart": "SEGBEYA AKPOUTOUHOUE"
+              },
+              {
+                "id_quart": 1227,
+                "lib_quart": "SEGBEYA AMONLE"
+              },
+              {
+                "id_quart": 1228,
+                "lib_quart": "SEGBEYA ZOUNDOME"
+              }
+            ]
+          },
+          {
+            "id_arrond": 116,
+            "lib_arrond": "SEGBOHOUE",
+            "quartiers": [
+              {
+                "id_quart": 1229,
+                "lib_quart": "ADJATOKPA"
+              },
+              {
+                "id_quart": 1230,
+                "lib_quart": "GUEZOHOUE"
+              },
+              {
+                "id_quart": 1231,
+                "lib_quart": "SEGBOHOUE ASSITO"
+              },
+              {
+                "id_quart": 1232,
+                "lib_quart": "SEGBOHOUE CENTRE"
+              },
+              {
+                "id_quart": 1233,
+                "lib_quart": "TOKPA-DAHO"
+              },
+              {
+                "id_quart": 1234,
+                "lib_quart": "VOVIO"
+              }
+            ]
+          },
+          {
+            "id_arrond": 117,
+            "lib_arrond": "TOKPA-DOME",
+            "quartiers": [
+              {
+                "id_quart": 1235,
+                "lib_quart": "AMOUKONOU"
+              },
+              {
+                "id_quart": 1236,
+                "lib_quart": "GBEFADJI-AIDJEDO"
+              },
+              {
+                "id_quart": 1237,
+                "lib_quart": "GBETOZO"
+              },
+              {
+                "id_quart": 1238,
+                "lib_quart": "GBOHO"
+              },
+              {
+                "id_quart": 1239,
+                "lib_quart": "HINZOUME"
+              },
+              {
+                "id_quart": 1240,
+                "lib_quart": "HOUETON"
+              },
+              {
+                "id_quart": 1241,
+                "lib_quart": "HOUNGBOGBA"
+              },
+              {
+                "id_quart": 1242,
+                "lib_quart": "LOKOGBO GNONWA"
+              },
+              {
+                "id_quart": 1243,
+                "lib_quart": "LOKOGBO ZOUNTA"
+              },
+              {
+                "id_quart": 1244,
+                "lib_quart": "OUNTOUN"
+              },
+              {
+                "id_quart": 1245,
+                "lib_quart": "SECOME"
+              },
+              {
+                "id_quart": 1246,
+                "lib_quart": "XWLACOME"
+              }
+            ]
+          },
+          {
+            "id_arrond": 118,
+            "lib_arrond": "KPOMASSE CENTRE",
+            "quartiers": [
+              {
+                "id_quart": 1247,
+                "lib_quart": "AIDJEDO"
+              },
+              {
+                "id_quart": 1248,
+                "lib_quart": "COCOUNDJI"
+              },
+              {
+                "id_quart": 1249,
+                "lib_quart": "DOGA"
+              },
+              {
+                "id_quart": 1250,
+                "lib_quart": "FIFADJI"
+              },
+              {
+                "id_quart": 1251,
+                "lib_quart": "GANGANHOULI"
+              },
+              {
+                "id_quart": 1252,
+                "lib_quart": "GBEDJEWIN ADJIBAMEY"
+              },
+              {
+                "id_quart": 1253,
+                "lib_quart": "HOUEGAN"
+              },
+              {
+                "id_quart": 1254,
+                "lib_quart": "LOKOSSA"
+              },
+              {
+                "id_quart": 1255,
+                "lib_quart": "MISSEBO"
+              },
+              {
+                "id_quart": 1256,
+                "lib_quart": "MISSITE"
+              },
+              {
+                "id_quart": 1257,
+                "lib_quart": "NONVIGNON"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id_com": 19,
+        "lib_com": "OUIDAH",
+        "arrondissements": [
+          {
+            "id_arrond": 119,
+            "lib_arrond": "AVLEKETE",
+            "quartiers": [
+              {
+                "id_quart": 1258,
+                "lib_quart": "ADOUNKO"
+              },
+              {
+                "id_quart": 1259,
+                "lib_quart": "ADOUNKO AYIGNON"
+              },
+              {
+                "id_quart": 1260,
+                "lib_quart": "AGBANZIN-KPOTA"
+              },
+              {
+                "id_quart": 1261,
+                "lib_quart": "AGBANZIN-KPOTA ZOUNVLAME"
+              },
+              {
+                "id_quart": 1262,
+                "lib_quart": "AGOUIN"
+              },
+              {
+                "id_quart": 1263,
+                "lib_quart": "AHOUANDJI"
+              },
+              {
+                "id_quart": 1264,
+                "lib_quart": "AVLEKETE"
+              },
+              {
+                "id_quart": 1265,
+                "lib_quart": "HIO"
+              },
+              {
+                "id_quart": 1266,
+                "lib_quart": "HIO VINAWA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 120,
+            "lib_arrond": "DJEGBADJI",
+            "quartiers": [
+              {
+                "id_quart": 1267,
+                "lib_quart": "AGBANLINDJEHOUE"
+              },
+              {
+                "id_quart": 1268,
+                "lib_quart": "AIDO"
+              },
+              {
+                "id_quart": 1269,
+                "lib_quart": "DEGOUE"
+              },
+              {
+                "id_quart": 1270,
+                "lib_quart": "DJEGBADJI"
+              },
+              {
+                "id_quart": 1271,
+                "lib_quart": "DJONDJI"
+              },
+              {
+                "id_quart": 1272,
+                "lib_quart": "KOUVENANFIDE"
+              },
+              {
+                "id_quart": 1273,
+                "lib_quart": "MEKO"
+              }
+            ]
+          },
+          {
+            "id_arrond": 121,
+            "lib_arrond": "GAKPE",
+            "quartiers": [
+              {
+                "id_quart": 1274,
+                "lib_quart": "AMOULEHOUE"
+              },
+              {
+                "id_quart": 1275,
+                "lib_quart": "FONKOUNME"
+              },
+              {
+                "id_quart": 1276,
+                "lib_quart": "GAKPE"
+              },
+              {
+                "id_quart": 1277,
+                "lib_quart": "TOHONOU"
+              }
+            ]
+          },
+          {
+            "id_arrond": 122,
+            "lib_arrond": "HOUAKPE-DAHO",
+            "quartiers": [
+              {
+                "id_quart": 1278,
+                "lib_quart": "AZIZAKOUE"
+              },
+              {
+                "id_quart": 1279,
+                "lib_quart": "DJEGBAME"
+              },
+              {
+                "id_quart": 1280,
+                "lib_quart": "GBEHONOU"
+              },
+              {
+                "id_quart": 1281,
+                "lib_quart": "GBEZOUNME"
+              },
+              {
+                "id_quart": 1282,
+                "lib_quart": "HOUAKPE-DAHO"
+              },
+              {
+                "id_quart": 1283,
+                "lib_quart": "SEYIGBE"
+              },
+              {
+                "id_quart": 1284,
+                "lib_quart": "TOLIGBE"
+              }
+            ]
+          },
+          {
+            "id_arrond": 123,
+            "lib_arrond": "PAHOU",
+            "quartiers": [
+              {
+                "id_quart": 1285,
+                "lib_quart": "ACADJAME"
+              },
+              {
+                "id_quart": 1286,
+                "lib_quart": "ADJRA-ADOVIE"
+              },
+              {
+                "id_quart": 1287,
+                "lib_quart": "ADJRA-HOUNVE"
+              },
+              {
+                "id_quart": 1288,
+                "lib_quart": "AHOUICODJI"
+              },
+              {
+                "id_quart": 1289,
+                "lib_quart": "AHOZON"
+              },
+              {
+                "id_quart": 1290,
+                "lib_quart": "HOUNDJAVA"
+              },
+              {
+                "id_quart": 1291,
+                "lib_quart": "HOUNHANMEDE"
+              },
+              {
+                "id_quart": 1292,
+                "lib_quart": "KPOVIE"
+              },
+              {
+                "id_quart": 1293,
+                "lib_quart": "PAHOU CENTRE"
+              },
+              {
+                "id_quart": 1294,
+                "lib_quart": "SELLOLI-BAZOUNKPA"
+              },
+              {
+                "id_quart": 1295,
+                "lib_quart": "ZOUNGOUDO"
+              }
+            ]
+          },
+          {
+            "id_arrond": 124,
+            "lib_arrond": "SAVI",
+            "quartiers": [
+              {
+                "id_quart": 1296,
+                "lib_quart": "ADJOHOUNDJA-MONSO"
+              },
+              {
+                "id_quart": 1297,
+                "lib_quart": "ASSOGBENOU-DAHO"
+              },
+              {
+                "id_quart": 1298,
+                "lib_quart": "BOSSOUVI"
+              },
+              {
+                "id_quart": 1299,
+                "lib_quart": "DEKOUENOU"
+              },
+              {
+                "id_quart": 1300,
+                "lib_quart": "HOUEYIHO"
+              },
+              {
+                "id_quart": 1301,
+                "lib_quart": "MINANTINKPON"
+              },
+              {
+                "id_quart": 1302,
+                "lib_quart": "OUESSE"
+              },
+              {
+                "id_quart": 1303,
+                "lib_quart": "SAVI-HOUETON"
+              }
+            ]
+          },
+          {
+            "id_arrond": 125,
+            "lib_arrond": "OUIDAH I",
+            "quartiers": [
+              {
+                "id_quart": 1304,
+                "lib_quart": "ABATTA"
+              },
+              {
+                "id_quart": 1305,
+                "lib_quart": "AGBESSIKPE DJIKA"
+              },
+              {
+                "id_quart": 1306,
+                "lib_quart": "DANGBEHOUE"
+              },
+              {
+                "id_quart": 1307,
+                "lib_quart": "OKE-AGBEDE"
+              },
+              {
+                "id_quart": 1308,
+                "lib_quart": "SOGBADJI"
+              },
+              {
+                "id_quart": 1309,
+                "lib_quart": "ZOMAI"
+              },
+              {
+                "id_quart": 1310,
+                "lib_quart": "ZOMAI-KPOTA"
+              },
+              {
+                "id_quart": 1311,
+                "lib_quart": "ZOUNGBODJI CENTRE"
+              }
+            ]
+          },
+          {
+            "id_arrond": 126,
+            "lib_arrond": "OUIDAH II",
+            "quartiers": [
+              {
+                "id_quart": 1312,
+                "lib_quart": "AHOUANDJIGO"
+              },
+              {
+                "id_quart": 1313,
+                "lib_quart": "GANVE"
+              },
+              {
+                "id_quart": 1314,
+                "lib_quart": "GBENA-NORD"
+              },
+              {
+                "id_quart": 1315,
+                "lib_quart": "GBENA-SUD"
+              },
+              {
+                "id_quart": 1316,
+                "lib_quart": "GBETO-NORD"
+              },
+              {
+                "id_quart": 1317,
+                "lib_quart": "GBETO-SUD"
+              },
+              {
+                "id_quart": 1318,
+                "lib_quart": "HOUEDJEDO"
+              },
+              {
+                "id_quart": 1319,
+                "lib_quart": "LEBOU ALAFIA"
+              },
+              {
+                "id_quart": 1320,
+                "lib_quart": "LEBOU CAMPTO"
+              }
+            ]
+          },
+          {
+            "id_arrond": 127,
+            "lib_arrond": "OUIDAH III",
+            "quartiers": [
+              {
+                "id_quart": 1321,
+                "lib_quart": "AGBADJIHONTO"
+              },
+              {
+                "id_quart": 1322,
+                "lib_quart": "AGBANOU"
+              },
+              {
+                "id_quart": 1323,
+                "lib_quart": "FONSRAME"
+              },
+              {
+                "id_quart": 1324,
+                "lib_quart": "GOMEY"
+              },
+              {
+                "id_quart": 1325,
+                "lib_quart": "HEHOUNLI"
+              },
+              {
+                "id_quart": 1326,
+                "lib_quart": "KPASSE"
+              },
+              {
+                "id_quart": 1327,
+                "lib_quart": "YAMADJAKO"
+              },
+              {
+                "id_quart": 1328,
+                "lib_quart": "ZONGO MALECOME"
+              }
+            ]
+          },
+          {
+            "id_arrond": 128,
+            "lib_arrond": "OUIDAH IV",
+            "quartiers": [
+              {
+                "id_quart": 1329,
+                "lib_quart": "DOCOMEY"
+              },
+              {
+                "id_quart": 1330,
+                "lib_quart": "TOVE KPASSEZOUNTO"
+              },
+              {
+                "id_quart": 1331,
+                "lib_quart": "TOVE ZOBETO"
+              },
+              {
+                "id_quart": 1332,
+                "lib_quart": "VASSEHO"
+              },
+              {
+                "id_quart": 1333,
+                "lib_quart": "WAGNIHO"
+              },
+              {
+                "id_quart": 1334,
+                "lib_quart": "WOMEY"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id_com": 20,
+        "lib_com": "SO-AVA",
+        "arrondissements": [
+          {
+            "id_arrond": 129,
+            "lib_arrond": "AHOMEY-LOKPO",
+            "quartiers": [
+              {
+                "id_quart": 1335,
+                "lib_quart": "AHOMEY-LOKPO CENTRE"
+              },
+              {
+                "id_quart": 1336,
+                "lib_quart": "AHOMEY-OUNMEY"
+              },
+              {
+                "id_quart": 1337,
+                "lib_quart": "ASSEDOKPA"
+              },
+              {
+                "id_quart": 1338,
+                "lib_quart": "BESSETONOU"
+              },
+              {
+                "id_quart": 1339,
+                "lib_quart": "HENI"
+              },
+              {
+                "id_quart": 1340,
+                "lib_quart": "KINTO AGUE"
+              },
+              {
+                "id_quart": 1341,
+                "lib_quart": "KINTO DOKPAKPA"
+              },
+              {
+                "id_quart": 1342,
+                "lib_quart": "KINTO OUDJRA"
+              },
+              {
+                "id_quart": 1343,
+                "lib_quart": "ZOUNGOMEY"
+              },
+              {
+                "id_quart": 1344,
+                "lib_quart": "ZOUNKPODE"
+              }
+            ]
+          },
+          {
+            "id_arrond": 130,
+            "lib_arrond": "DEKANMEY",
+            "quartiers": [
+              {
+                "id_quart": 1345,
+                "lib_quart": "ANAVIECOMEY"
+              },
+              {
+                "id_quart": 1346,
+                "lib_quart": "DJEKPE"
+              },
+              {
+                "id_quart": 1347,
+                "lib_quart": "KPAFE"
+              },
+              {
+                "id_quart": 1348,
+                "lib_quart": "KPOVIECOMEY"
+              },
+              {
+                "id_quart": 1349,
+                "lib_quart": "SAKOMEY"
+              }
+            ]
+          },
+          {
+            "id_arrond": 131,
+            "lib_arrond": "GANVIE 1",
+            "quartiers": [
+              {
+                "id_quart": 1350,
+                "lib_quart": "AGONMEKOMEY"
+              },
+              {
+                "id_quart": 1351,
+                "lib_quart": "AGOUNDANKOMEY"
+              },
+              {
+                "id_quart": 1352,
+                "lib_quart": "GANSOUGBAMEY"
+              },
+              {
+                "id_quart": 1353,
+                "lib_quart": "GBAMEY-TCHEWA"
+              },
+              {
+                "id_quart": 1354,
+                "lib_quart": "GOUNSOEDJI"
+              },
+              {
+                "id_quart": 1355,
+                "lib_quart": "HINDAGAO"
+              },
+              {
+                "id_quart": 1356,
+                "lib_quart": "KPASSIKOMEY"
+              },
+              {
+                "id_quart": 1357,
+                "lib_quart": "SOKOMEY"
+              },
+              {
+                "id_quart": 1358,
+                "lib_quart": "TOHOKOMEY"
+              },
+              {
+                "id_quart": 1359,
+                "lib_quart": "YOKAGAO"
+              }
+            ]
+          },
+          {
+            "id_arrond": 132,
+            "lib_arrond": "GANVIE 2",
+            "quartiers": [
+              {
+                "id_quart": 1360,
+                "lib_quart": "AGBONGAMEY"
+              },
+              {
+                "id_quart": 1361,
+                "lib_quart": "AHOUANMONGAO"
+              },
+              {
+                "id_quart": 1362,
+                "lib_quart": "DAKOMEY"
+              },
+              {
+                "id_quart": 1363,
+                "lib_quart": "DAKOMEY-YOHONOUKON"
+              },
+              {
+                "id_quart": 1364,
+                "lib_quart": "DOSSOUGAO"
+              },
+              {
+                "id_quart": 1365,
+                "lib_quart": "GOUNSOEGBAMEY"
+              },
+              {
+                "id_quart": 1366,
+                "lib_quart": "GUEDEVIE"
+              },
+              {
+                "id_quart": 1367,
+                "lib_quart": "GUEDEVIE-GBEGBESSA"
+              },
+              {
+                "id_quart": 1368,
+                "lib_quart": "HAVE"
+              },
+              {
+                "id_quart": 1369,
+                "lib_quart": "KINDJI"
+              },
+              {
+                "id_quart": 1370,
+                "lib_quart": "SINHOUNGBOMEY"
+              }
+            ]
+          },
+          {
+            "id_arrond": 133,
+            "lib_arrond": "HOUEDO-AGUEKON",
+            "quartiers": [
+              {
+                "id_quart": 1371,
+                "lib_quart": "DOMEGUEDJI"
+              },
+              {
+                "id_quart": 1372,
+                "lib_quart": "GANVIECOMEY"
+              },
+              {
+                "id_quart": 1373,
+                "lib_quart": "GBAGBODJI"
+              },
+              {
+                "id_quart": 1374,
+                "lib_quart": "GBEGBOME OUEKEKOME"
+              },
+              {
+                "id_quart": 1375,
+                "lib_quart": "GBEGODO"
+              },
+              {
+                "id_quart": 1376,
+                "lib_quart": "GBESSOU"
+              },
+              {
+                "id_quart": 1377,
+                "lib_quart": "GBLONTO"
+              },
+              {
+                "id_quart": 1378,
+                "lib_quart": "SOKOMEY"
+              }
+            ]
+          },
+          {
+            "id_arrond": 134,
+            "lib_arrond": "VEKKY",
+            "quartiers": [
+              {
+                "id_quart": 1379,
+                "lib_quart": "ANIANKOMEY"
+              },
+              {
+                "id_quart": 1380,
+                "lib_quart": "AVLEZOUNMEY"
+              },
+              {
+                "id_quart": 1381,
+                "lib_quart": "DOGODO"
+              },
+              {
+                "id_quart": 1382,
+                "lib_quart": "EGUEKOMEY"
+              },
+              {
+                "id_quart": 1383,
+                "lib_quart": "GBETINGAO"
+              },
+              {
+                "id_quart": 1384,
+                "lib_quart": "HLOUAZOUNMEY"
+              },
+              {
+                "id_quart": 1385,
+                "lib_quart": "HOUNHOUE"
+              },
+              {
+                "id_quart": 1386,
+                "lib_quart": "KPACOMEY"
+              },
+              {
+                "id_quart": 1387,
+                "lib_quart": "LOKPODJI"
+              },
+              {
+                "id_quart": 1388,
+                "lib_quart": "NONHOUETO"
+              },
+              {
+                "id_quart": 1389,
+                "lib_quart": "SO-CHANHOUETODO"
+              },
+              {
+                "id_quart": 1390,
+                "lib_quart": "SOMAI"
+              },
+              {
+                "id_quart": 1391,
+                "lib_quart": "TCHINANCOMEY"
+              },
+              {
+                "id_quart": 1392,
+                "lib_quart": "TOTAKOUN"
+              },
+              {
+                "id_quart": 1393,
+                "lib_quart": "VEKKY DAHO"
+              },
+              {
+                "id_quart": 1394,
+                "lib_quart": "VEKKY DOGBODJI"
+              },
+              {
+                "id_quart": 1395,
+                "lib_quart": "ZOUNHOMEY"
+              }
+            ]
+          },
+          {
+            "id_arrond": 135,
+            "lib_arrond": "SO-AVA",
+            "quartiers": [
+              {
+                "id_quart": 1396,
+                "lib_quart": "AHOMEY DOMEY-ZOUNMEY"
+              },
+              {
+                "id_quart": 1397,
+                "lib_quart": "AHOMEY-FONSA"
+              },
+              {
+                "id_quart": 1398,
+                "lib_quart": "AHOMEY-GBEKPA"
+              },
+              {
+                "id_quart": 1399,
+                "lib_quart": "AHOMEY-GBLON"
+              },
+              {
+                "id_quart": 1400,
+                "lib_quart": "DOGODO"
+              },
+              {
+                "id_quart": 1401,
+                "lib_quart": "DOKODJI"
+              },
+              {
+                "id_quart": 1402,
+                "lib_quart": "HOUNDOMEY"
+              },
+              {
+                "id_quart": 1403,
+                "lib_quart": "SINDOMEY"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id_com": 21,
+        "lib_com": "TOFFO",
+        "arrondissements": [
+          {
+            "id_arrond": 136,
+            "lib_arrond": "AGUE",
+            "quartiers": [
+              {
+                "id_quart": 1404,
+                "lib_quart": "AGUE"
+              },
+              {
+                "id_quart": 1405,
+                "lib_quart": "BADOVITA"
+              },
+              {
+                "id_quart": 1406,
+                "lib_quart": "HOUEGLE"
+              },
+              {
+                "id_quart": 1407,
+                "lib_quart": "KINZOUN"
+              },
+              {
+                "id_quart": 1408,
+                "lib_quart": "NIARIN"
+              },
+              {
+                "id_quart": 1409,
+                "lib_quart": "SEDJE"
+              },
+              {
+                "id_quart": 1410,
+                "lib_quart": "TAKON"
+              }
+            ]
+          },
+          {
+            "id_arrond": 137,
+            "lib_arrond": "COLLI",
+            "quartiers": [
+              {
+                "id_quart": 1411,
+                "lib_quart": "AGBAME"
+              },
+              {
+                "id_quart": 1412,
+                "lib_quart": "BOSSOUVI"
+              },
+              {
+                "id_quart": 1413,
+                "lib_quart": "DOGOUDO"
+              },
+              {
+                "id_quart": 1414,
+                "lib_quart": "HELITA"
+              },
+              {
+                "id_quart": 1415,
+                "lib_quart": "HOUNYEME"
+              },
+              {
+                "id_quart": 1416,
+                "lib_quart": "KOUDJANANKO"
+              }
+            ]
+          },
+          {
+            "id_arrond": 138,
+            "lib_arrond": "COUSSI",
+            "quartiers": [
+              {
+                "id_quart": 1417,
+                "lib_quart": "ABOLOU"
+              },
+              {
+                "id_quart": 1418,
+                "lib_quart": "ADJAHO"
+              },
+              {
+                "id_quart": 1419,
+                "lib_quart": "AGAGA"
+              },
+              {
+                "id_quart": 1420,
+                "lib_quart": "AGBAGA"
+              },
+              {
+                "id_quart": 1421,
+                "lib_quart": "AGBLOME"
+              },
+              {
+                "id_quart": 1422,
+                "lib_quart": "AHOGBEME"
+              },
+              {
+                "id_quart": 1423,
+                "lib_quart": "CASSAGBO"
+              },
+              {
+                "id_quart": 1424,
+                "lib_quart": "DOWA"
+              },
+              {
+                "id_quart": 1425,
+                "lib_quart": "HONLI"
+              },
+              {
+                "id_quart": 1426,
+                "lib_quart": "SEDESSA ALIGOUDO"
+              },
+              {
+                "id_quart": 1427,
+                "lib_quart": "ZA"
+              },
+              {
+                "id_quart": 1428,
+                "lib_quart": "ZIMBENOU"
+              }
+            ]
+          },
+          {
+            "id_arrond": 139,
+            "lib_arrond": "DAME",
+            "quartiers": [
+              {
+                "id_quart": 1429,
+                "lib_quart": "ADJAKAME"
+              },
+              {
+                "id_quart": 1430,
+                "lib_quart": "AGBOTAGON"
+              },
+              {
+                "id_quart": 1431,
+                "lib_quart": "AGON"
+              },
+              {
+                "id_quart": 1432,
+                "lib_quart": "COGBO-CAMPEMENT"
+              },
+              {
+                "id_quart": 1433,
+                "lib_quart": "DAME CENTRE"
+              },
+              {
+                "id_quart": 1434,
+                "lib_quart": "DOLOUVI"
+              },
+              {
+                "id_quart": 1435,
+                "lib_quart": "GUEME"
+              },
+              {
+                "id_quart": 1436,
+                "lib_quart": "HESSAVI-COME"
+              },
+              {
+                "id_quart": 1437,
+                "lib_quart": "MAZOUNKPA"
+              },
+              {
+                "id_quart": 1438,
+                "lib_quart": "TOGO"
+              }
+            ]
+          },
+          {
+            "id_arrond": 140,
+            "lib_arrond": "DJANGLANME",
+            "quartiers": [
+              {
+                "id_quart": 1439,
+                "lib_quart": "DAME-GBEDJI"
+              },
+              {
+                "id_quart": 1440,
+                "lib_quart": "HOUNGO-DAME"
+              },
+              {
+                "id_quart": 1441,
+                "lib_quart": "HOUNGO-GOVE"
+              },
+              {
+                "id_quart": 1442,
+                "lib_quart": "KPOKPA"
+              },
+              {
+                "id_quart": 1443,
+                "lib_quart": "TOGOUDO"
+              },
+              {
+                "id_quart": 1444,
+                "lib_quart": "TOGOUIN"
+              },
+              {
+                "id_quart": 1445,
+                "lib_quart": "ZOHOUNKPO"
+              },
+              {
+                "id_quart": 1446,
+                "lib_quart": "ZOUNDJI"
+              }
+            ]
+          },
+          {
+            "id_arrond": 141,
+            "lib_arrond": "HOUEGBO",
+            "quartiers": [
+              {
+                "id_quart": 1447,
+                "lib_quart": "AKPE"
+              },
+              {
+                "id_quart": 1448,
+                "lib_quart": "HOUEGBO TOHOME"
+              },
+              {
+                "id_quart": 1449,
+                "lib_quart": "HOUEGBO-GARE"
+              },
+              {
+                "id_quart": 1450,
+                "lib_quart": "HOUENOUSSOU"
+              },
+              {
+                "id_quart": 1451,
+                "lib_quart": "YENAWA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 142,
+            "lib_arrond": "KPOME",
+            "quartiers": [
+              {
+                "id_quart": 1452,
+                "lib_quart": "ADJIDO"
+              },
+              {
+                "id_quart": 1453,
+                "lib_quart": "AGLADOKPA"
+              },
+              {
+                "id_quart": 1454,
+                "lib_quart": "AZONME"
+              },
+              {
+                "id_quart": 1455,
+                "lib_quart": "DOME"
+              },
+              {
+                "id_quart": 1456,
+                "lib_quart": "GANME"
+              }
+            ]
+          },
+          {
+            "id_arrond": 143,
+            "lib_arrond": "SEHOUE",
+            "quartiers": [
+              {
+                "id_quart": 1457,
+                "lib_quart": "ACLONME"
+              },
+              {
+                "id_quart": 1458,
+                "lib_quart": "AGAGA"
+              },
+              {
+                "id_quart": 1459,
+                "lib_quart": "AGBOZOUNKPA"
+              },
+              {
+                "id_quart": 1460,
+                "lib_quart": "AKLISSA"
+              },
+              {
+                "id_quart": 1461,
+                "lib_quart": "BAKANME"
+              },
+              {
+                "id_quart": 1462,
+                "lib_quart": "FANDJI"
+              },
+              {
+                "id_quart": 1463,
+                "lib_quart": "SOME"
+              },
+              {
+                "id_quart": 1464,
+                "lib_quart": "VODJE"
+              },
+              {
+                "id_quart": 1465,
+                "lib_quart": "ZOUNGAME"
+              }
+            ]
+          },
+          {
+            "id_arrond": 144,
+            "lib_arrond": "SEY",
+            "quartiers": [
+              {
+                "id_quart": 1466,
+                "lib_quart": "AGAHOUNKPOKON"
+              },
+              {
+                "id_quart": 1467,
+                "lib_quart": "AGONME"
+              },
+              {
+                "id_quart": 1468,
+                "lib_quart": "AHLANKPA"
+              },
+              {
+                "id_quart": 1469,
+                "lib_quart": "AVISSA"
+              },
+              {
+                "id_quart": 1470,
+                "lib_quart": "AYAHONOU"
+              },
+              {
+                "id_quart": 1471,
+                "lib_quart": "AZONSA"
+              },
+              {
+                "id_quart": 1472,
+                "lib_quart": "KPOZOUNME"
+              },
+              {
+                "id_quart": 1473,
+                "lib_quart": "LANHONNOU"
+              }
+            ]
+          },
+          {
+            "id_arrond": 145,
+            "lib_arrond": "TOFFO",
+            "quartiers": [
+              {
+                "id_quart": 1474,
+                "lib_quart": "GBEDE-AGONSA"
+              },
+              {
+                "id_quart": 1475,
+                "lib_quart": "GOMEY"
+              },
+              {
+                "id_quart": 1476,
+                "lib_quart": "HOUNNOUVIE"
+              },
+              {
+                "id_quart": 1477,
+                "lib_quart": "SEDJI"
+              },
+              {
+                "id_quart": 1478,
+                "lib_quart": "TOFFO-GARE"
+              },
+              {
+                "id_quart": 1479,
+                "lib_quart": "ZEKO"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id_com": 22,
+        "lib_com": "TORI-BOSSITO",
+        "arrondissements": [
+          {
+            "id_arrond": 146,
+            "lib_arrond": "AVAME",
+            "quartiers": [
+              {
+                "id_quart": 1480,
+                "lib_quart": "AGUETA"
+              },
+              {
+                "id_quart": 1481,
+                "lib_quart": "AVAME CENTRE"
+              },
+              {
+                "id_quart": 1482,
+                "lib_quart": "GBEDJOUGO"
+              },
+              {
+                "id_quart": 1483,
+                "lib_quart": "HLA"
+              },
+              {
+                "id_quart": 1484,
+                "lib_quart": "HOUNGO"
+              },
+              {
+                "id_quart": 1485,
+                "lib_quart": "MASSETOME"
+              }
+            ]
+          },
+          {
+            "id_arrond": 147,
+            "lib_arrond": "AZOHOUE-ALIHO",
+            "quartiers": [
+              {
+                "id_quart": 1486,
+                "lib_quart": "DENOU"
+              },
+              {
+                "id_quart": 1487,
+                "lib_quart": "HAYAKPA"
+              },
+              {
+                "id_quart": 1488,
+                "lib_quart": "TANDAHOTA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 148,
+            "lib_arrond": "AZOHOUE-CADA",
+            "quartiers": [
+              {
+                "id_quart": 1489,
+                "lib_quart": "AZOHOUE CADA HOUNGO"
+              },
+              {
+                "id_quart": 1490,
+                "lib_quart": "AZOHOUE CADA NORD"
+              },
+              {
+                "id_quart": 1491,
+                "lib_quart": "AZOHOUE CADA SUD"
+              },
+              {
+                "id_quart": 1492,
+                "lib_quart": "AZOHOUE-CADA CENTRE"
+              },
+              {
+                "id_quart": 1493,
+                "lib_quart": "AZONGO"
+              },
+              {
+                "id_quart": 1494,
+                "lib_quart": "GBEDAKONOU"
+              },
+              {
+                "id_quart": 1495,
+                "lib_quart": "KETESSA AGLADJI"
+              },
+              {
+                "id_quart": 1496,
+                "lib_quart": "ZOUNGBOME"
+              },
+              {
+                "id_quart": 1497,
+                "lib_quart": "ZOUNVESSEHOU"
+              }
+            ]
+          },
+          {
+            "id_arrond": 149,
+            "lib_arrond": "TORI-CADA",
+            "quartiers": [
+              {
+                "id_quart": 1498,
+                "lib_quart": "ADJAHASSA"
+              },
+              {
+                "id_quart": 1499,
+                "lib_quart": "ANAVIE"
+              },
+              {
+                "id_quart": 1500,
+                "lib_quart": "DOHINONKO"
+              },
+              {
+                "id_quart": 1501,
+                "lib_quart": "DOKANME"
+              },
+              {
+                "id_quart": 1502,
+                "lib_quart": "GBEGOUDO"
+              },
+              {
+                "id_quart": 1503,
+                "lib_quart": "GBETAGA"
+              },
+              {
+                "id_quart": 1504,
+                "lib_quart": "GBOHOUE"
+              },
+              {
+                "id_quart": 1505,
+                "lib_quart": "HETIN-YENAWA"
+              },
+              {
+                "id_quart": 1506,
+                "lib_quart": "HOUEDAGA"
+              },
+              {
+                "id_quart": 1507,
+                "lib_quart": "LOKOSSA"
+              },
+              {
+                "id_quart": 1508,
+                "lib_quart": "SOGBE"
+              },
+              {
+                "id_quart": 1509,
+                "lib_quart": "SOKLOGBO"
+              },
+              {
+                "id_quart": 1510,
+                "lib_quart": "TORI-CADA CENTRE"
+              },
+              {
+                "id_quart": 1511,
+                "lib_quart": "ZEBE"
+              },
+              {
+                "id_quart": 1512,
+                "lib_quart": "ZOUNGOUDO"
+              }
+            ]
+          },
+          {
+            "id_arrond": 150,
+            "lib_arrond": "TORI-GARE",
+            "quartiers": [
+              {
+                "id_quart": 1513,
+                "lib_quart": "AGAZOUN"
+              },
+              {
+                "id_quart": 1514,
+                "lib_quart": "AGOUAKO"
+              },
+              {
+                "id_quart": 1515,
+                "lib_quart": "AKADJAME"
+              },
+              {
+                "id_quart": 1516,
+                "lib_quart": "AYIKINKO"
+              },
+              {
+                "id_quart": 1517,
+                "lib_quart": "DOSSOU-SOMEY"
+              },
+              {
+                "id_quart": 1518,
+                "lib_quart": "GBEGOUDO"
+              },
+              {
+                "id_quart": 1519,
+                "lib_quart": "SEIGONME"
+              },
+              {
+                "id_quart": 1520,
+                "lib_quart": "TORI-GARE CENTRE"
+              }
+            ]
+          },
+          {
+            "id_arrond": 151,
+            "lib_arrond": "TORI-BOSSITO",
+            "quartiers": [
+              {
+                "id_quart": 1521,
+                "lib_quart": "AGONKON"
+              },
+              {
+                "id_quart": 1522,
+                "lib_quart": "AHOUEME"
+              },
+              {
+                "id_quart": 1523,
+                "lib_quart": "AIDOHOUE"
+              },
+              {
+                "id_quart": 1524,
+                "lib_quart": "BOSSITO"
+              },
+              {
+                "id_quart": 1525,
+                "lib_quart": "FASSINOUHOKON"
+              },
+              {
+                "id_quart": 1526,
+                "lib_quart": "GBEDEWAHOUE"
+              },
+              {
+                "id_quart": 1527,
+                "lib_quart": "GBOVIE"
+              },
+              {
+                "id_quart": 1528,
+                "lib_quart": "HEKANDJI"
+              },
+              {
+                "id_quart": 1529,
+                "lib_quart": "HONVIE"
+              },
+              {
+                "id_quart": 1530,
+                "lib_quart": "HOUNGBAGBA"
+              },
+              {
+                "id_quart": 1531,
+                "lib_quart": "HOUNNONCO"
+              },
+              {
+                "id_quart": 1532,
+                "lib_quart": "KOKANHOUE"
+              },
+              {
+                "id_quart": 1533,
+                "lib_quart": "MAGUEVIE"
+              },
+              {
+                "id_quart": 1534,
+                "lib_quart": "TOCOLI"
+              },
+              {
+                "id_quart": 1535,
+                "lib_quart": "TOGOUDO"
+              },
+              {
+                "id_quart": 1536,
+                "lib_quart": "WANHO"
+              },
+              {
+                "id_quart": 1537,
+                "lib_quart": "ZOUNME"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id_com": 23,
+        "lib_com": "ZE",
+        "arrondissements": [
+          {
+            "id_arrond": 152,
+            "lib_arrond": "ADJAN",
+            "quartiers": [
+              {
+                "id_quart": 1538,
+                "lib_quart": "ADJAN"
+              },
+              {
+                "id_quart": 1539,
+                "lib_quart": "ADJAN-GLA"
+              },
+              {
+                "id_quart": 1540,
+                "lib_quart": "ADJAN-HOUETA"
+              },
+              {
+                "id_quart": 1541,
+                "lib_quart": "ANAGBO"
+              },
+              {
+                "id_quart": 1542,
+                "lib_quart": "DODJI-AGA"
+              },
+              {
+                "id_quart": 1543,
+                "lib_quart": "TANTA"
+              },
+              {
+                "id_quart": 1544,
+                "lib_quart": "WASSA"
+              },
+              {
+                "id_quart": 1545,
+                "lib_quart": "ZANZOUN"
+              }
+            ]
+          },
+          {
+            "id_arrond": 153,
+            "lib_arrond": "DAWE",
+            "quartiers": [
+              {
+                "id_quart": 1546,
+                "lib_quart": "AGONZOUNKPA"
+              },
+              {
+                "id_quart": 1547,
+                "lib_quart": "AHOUALI"
+              },
+              {
+                "id_quart": 1548,
+                "lib_quart": "AKADJAME"
+              },
+              {
+                "id_quart": 1549,
+                "lib_quart": "DAWE-CENTRE"
+              },
+              {
+                "id_quart": 1550,
+                "lib_quart": "DOME-SEKO"
+              },
+              {
+                "id_quart": 1551,
+                "lib_quart": "TOMASSEAHOUA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 154,
+            "lib_arrond": "DJIGBE",
+            "quartiers": [
+              {
+                "id_quart": 1552,
+                "lib_quart": "AGOUNDJI"
+              },
+              {
+                "id_quart": 1553,
+                "lib_quart": "AWASSOU"
+              },
+              {
+                "id_quart": 1554,
+                "lib_quart": "DJIGBE-AGUE"
+              },
+              {
+                "id_quart": 1555,
+                "lib_quart": "DJIGBE-GBODJE"
+              },
+              {
+                "id_quart": 1556,
+                "lib_quart": "GBAGODO"
+              },
+              {
+                "id_quart": 1557,
+                "lib_quart": "SESSIVALI"
+              },
+              {
+                "id_quart": 1558,
+                "lib_quart": "WO-TOGOUDO"
+              }
+            ]
+          },
+          {
+            "id_arrond": 155,
+            "lib_arrond": "DODJI-BATA",
+            "quartiers": [
+              {
+                "id_quart": 1559,
+                "lib_quart": "ADJAME"
+              },
+              {
+                "id_quart": 1560,
+                "lib_quart": "ADOHOUNSA"
+              },
+              {
+                "id_quart": 1561,
+                "lib_quart": "AGONDOTAN"
+              },
+              {
+                "id_quart": 1562,
+                "lib_quart": "AKOUEDJROMEDE"
+              },
+              {
+                "id_quart": 1563,
+                "lib_quart": "DJOKO"
+              },
+              {
+                "id_quart": 1564,
+                "lib_quart": "GANDAHO"
+              },
+              {
+                "id_quart": 1565,
+                "lib_quart": "GBETO-FONGBO"
+              },
+              {
+                "id_quart": 1566,
+                "lib_quart": "GONFANDJI"
+              },
+              {
+                "id_quart": 1567,
+                "lib_quart": "HOUNTAKON"
+              },
+              {
+                "id_quart": 1568,
+                "lib_quart": "KPATCHAME"
+              },
+              {
+                "id_quart": 1569,
+                "lib_quart": "WANKON"
+              },
+              {
+                "id_quart": 1570,
+                "lib_quart": "WEDJI"
+              }
+            ]
+          },
+          {
+            "id_arrond": 156,
+            "lib_arrond": "HEKANME",
+            "quartiers": [
+              {
+                "id_quart": 1571,
+                "lib_quart": "AGBATA"
+              },
+              {
+                "id_quart": 1572,
+                "lib_quart": "AKPALIHONOU"
+              },
+              {
+                "id_quart": 1573,
+                "lib_quart": "AWOKPA"
+              },
+              {
+                "id_quart": 1574,
+                "lib_quart": "GBOZOUNME"
+              },
+              {
+                "id_quart": 1575,
+                "lib_quart": "HEKANME"
+              },
+              {
+                "id_quart": 1576,
+                "lib_quart": "HOUEDOTA"
+              },
+              {
+                "id_quart": 1577,
+                "lib_quart": "HOUEDOTA-DJOKO"
+              },
+              {
+                "id_quart": 1578,
+                "lib_quart": "HOUEHOUNTA"
+              },
+              {
+                "id_quart": 1579,
+                "lib_quart": "MANGASSA"
+              },
+              {
+                "id_quart": 1580,
+                "lib_quart": "TOGOUDO"
+              }
+            ]
+          },
+          {
+            "id_arrond": 157,
+            "lib_arrond": "KOUNDOKPOE",
+            "quartiers": [
+              {
+                "id_quart": 1581,
+                "lib_quart": "AIFA"
+              },
+              {
+                "id_quart": 1582,
+                "lib_quart": "HOUEGNONKPA"
+              },
+              {
+                "id_quart": 1583,
+                "lib_quart": "HOUEHOUNTA-TOZOUNKPA"
+              },
+              {
+                "id_quart": 1584,
+                "lib_quart": "KOUNDOKPOE"
+              },
+              {
+                "id_quart": 1585,
+                "lib_quart": "TANGNIGBADJI"
+              },
+              {
+                "id_quart": 1586,
+                "lib_quart": "TOGBONOU"
+              },
+              {
+                "id_quart": 1587,
+                "lib_quart": "WEDJAME"
+              }
+            ]
+          },
+          {
+            "id_arrond": 158,
+            "lib_arrond": "SEDJE-DENOU",
+            "quartiers": [
+              {
+                "id_quart": 1588,
+                "lib_quart": "AGBOHOUNSOU"
+              },
+              {
+                "id_quart": 1589,
+                "lib_quart": "AGONDENOU"
+              },
+              {
+                "id_quart": 1590,
+                "lib_quart": "AGONGBO"
+              },
+              {
+                "id_quart": 1591,
+                "lib_quart": "AGUIAKPA"
+              },
+              {
+                "id_quart": 1592,
+                "lib_quart": "SEDJE-DENOU"
+              },
+              {
+                "id_quart": 1593,
+                "lib_quart": "SEDJE-KPOTA"
+              },
+              {
+                "id_quart": 1594,
+                "lib_quart": "SEDJE-ZOUNMEY-AGA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 159,
+            "lib_arrond": "SEDJE-HOUEGOUDO",
+            "quartiers": [
+              {
+                "id_quart": 1595,
+                "lib_quart": "AGLANGBIN"
+              },
+              {
+                "id_quart": 1596,
+                "lib_quart": "AHOZONNOUDE"
+              },
+              {
+                "id_quart": 1597,
+                "lib_quart": "AKPOMEY"
+              },
+              {
+                "id_quart": 1598,
+                "lib_quart": "AYAHOUNTA-FIFADJI"
+              },
+              {
+                "id_quart": 1599,
+                "lib_quart": "BODJI"
+              },
+              {
+                "id_quart": 1600,
+                "lib_quart": "MISSEBO"
+              },
+              {
+                "id_quart": 1601,
+                "lib_quart": "SEDJANNAKO"
+              },
+              {
+                "id_quart": 1602,
+                "lib_quart": "SEDJE-HOUEGOUDO"
+              }
+            ]
+          },
+          {
+            "id_arrond": 160,
+            "lib_arrond": "TANGBO",
+            "quartiers": [
+              {
+                "id_quart": 1603,
+                "lib_quart": "ADJAGO"
+              },
+              {
+                "id_quart": 1604,
+                "lib_quart": "AGBODJEDO"
+              },
+              {
+                "id_quart": 1605,
+                "lib_quart": "ANAVIE"
+              },
+              {
+                "id_quart": 1606,
+                "lib_quart": "AVLESSA"
+              },
+              {
+                "id_quart": 1607,
+                "lib_quart": "AZONKANME"
+              },
+              {
+                "id_quart": 1608,
+                "lib_quart": "DJITIN-AGA"
+              },
+              {
+                "id_quart": 1609,
+                "lib_quart": "GLEGBODJI AGAH"
+              },
+              {
+                "id_quart": 1610,
+                "lib_quart": "GLEGBODJI DO"
+              },
+              {
+                "id_quart": 1611,
+                "lib_quart": "HOUEZE"
+              },
+              {
+                "id_quart": 1612,
+                "lib_quart": "TANGBO-AGA"
+              },
+              {
+                "id_quart": 1613,
+                "lib_quart": "TANGBO-DO"
+              },
+              {
+                "id_quart": 1614,
+                "lib_quart": "TANMEY"
+              },
+              {
+                "id_quart": 1615,
+                "lib_quart": "YEVI"
+              }
+            ]
+          },
+          {
+            "id_arrond": 161,
+            "lib_arrond": "YOKPO",
+            "quartiers": [
+              {
+                "id_quart": 1616,
+                "lib_quart": "ADJAKPA"
+              },
+              {
+                "id_quart": 1617,
+                "lib_quart": "ADJRAKO"
+              },
+              {
+                "id_quart": 1618,
+                "lib_quart": "AWONSEDJA"
+              },
+              {
+                "id_quart": 1619,
+                "lib_quart": "HOUNLIKO"
+              },
+              {
+                "id_quart": 1620,
+                "lib_quart": "HOUNSAGOUDO"
+              },
+              {
+                "id_quart": 1621,
+                "lib_quart": "KOUDJANNADA-TOTA"
+              },
+              {
+                "id_quart": 1622,
+                "lib_quart": "WAWATA-DANDJI"
+              },
+              {
+                "id_quart": 1623,
+                "lib_quart": "WAWATA-ZOUNTO"
+              },
+              {
+                "id_quart": 1624,
+                "lib_quart": "YOKPO-CENTRE"
+              }
+            ]
+          },
+          {
+            "id_arrond": 162,
+            "lib_arrond": "ZE",
+            "quartiers": [
+              {
+                "id_quart": 1625,
+                "lib_quart": "AKPALI"
+              },
+              {
+                "id_quart": 1626,
+                "lib_quart": "AKPALI-DO"
+              },
+              {
+                "id_quart": 1627,
+                "lib_quart": "DOKOTA"
+              },
+              {
+                "id_quart": 1628,
+                "lib_quart": "DOKOTA-AGA"
+              },
+              {
+                "id_quart": 1629,
+                "lib_quart": "GOULO"
+              },
+              {
+                "id_quart": 1630,
+                "lib_quart": "GUEKOUMEDE"
+              },
+              {
+                "id_quart": 1631,
+                "lib_quart": "HAVIKPA"
+              },
+              {
+                "id_quart": 1632,
+                "lib_quart": "HOUEDAZOUNKPA"
+              },
+              {
+                "id_quart": 1633,
+                "lib_quart": "SODJI"
+              },
+              {
+                "id_quart": 1634,
+                "lib_quart": "WAGA"
+              },
+              {
+                "id_quart": 1635,
+                "lib_quart": "ZANNOUDJI"
+              },
+              {
+                "id_quart": 1636,
+                "lib_quart": "ZE"
+              },
+              {
+                "id_quart": 1637,
+                "lib_quart": "ZE-WEDJI"
+              },
+              {
+                "id_quart": 1638,
+                "lib_quart": "ZOUNGBOMEY"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id_dep": 4,
+    "lib_dep": "BORGOU",
+    "communes": [
+      {
+        "id_com": 28,
+        "lib_com": "PARAKOU",
+        "arrondissements": [
+          {
+            "id_arrond": 186,
+            "lib_arrond": "1ER ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 1935,
+                "lib_quart": "ALAGA"
+              },
+              {
+                "id_quart": 1936,
+                "lib_quart": "ALBARIKA"
+              },
+              {
+                "id_quart": 1937,
+                "lib_quart": "BAKINKOURA"
+              },
+              {
+                "id_quart": 1938,
+                "lib_quart": "BAKPEROU"
+              },
+              {
+                "id_quart": 1939,
+                "lib_quart": "BANIKANNI-DOUWEROU"
+              },
+              {
+                "id_quart": 1940,
+                "lib_quart": "BEYAROU"
+              },
+              {
+                "id_quart": 1941,
+                "lib_quart": "BOSSO-CAMPS-PEULHS"
+              },
+              {
+                "id_quart": 1942,
+                "lib_quart": "BOUNDAROU"
+              },
+              {
+                "id_quart": 1943,
+                "lib_quart": "CAMP-ADAGBE"
+              },
+              {
+                "id_quart": 1944,
+                "lib_quart": "DAMAGOUROU"
+              },
+              {
+                "id_quart": 1945,
+                "lib_quart": "DEPOT"
+              },
+              {
+                "id_quart": 1946,
+                "lib_quart": "GAANON"
+              },
+              {
+                "id_quart": 1947,
+                "lib_quart": "GOUNIN"
+              },
+              {
+                "id_quart": 1948,
+                "lib_quart": "KABASSIRA"
+              },
+              {
+                "id_quart": 1949,
+                "lib_quart": "KADERA"
+              },
+              {
+                "id_quart": 1950,
+                "lib_quart": "KPEBIE"
+              },
+              {
+                "id_quart": 1951,
+                "lib_quart": "KPEROU-GUERA"
+              },
+              {
+                "id_quart": 1952,
+                "lib_quart": "MADINA"
+              },
+              {
+                "id_quart": 1953,
+                "lib_quart": "MONNON"
+              },
+              {
+                "id_quart": 1954,
+                "lib_quart": "OUEZE"
+              },
+              {
+                "id_quart": 1955,
+                "lib_quart": "SAWARAROU"
+              },
+              {
+                "id_quart": 1956,
+                "lib_quart": "SINAGOUROU"
+              },
+              {
+                "id_quart": 1957,
+                "lib_quart": "SOUROU"
+              },
+              {
+                "id_quart": 1958,
+                "lib_quart": "THIAN"
+              },
+              {
+                "id_quart": 1959,
+                "lib_quart": "TITIROU"
+              },
+              {
+                "id_quart": 1960,
+                "lib_quart": "TOUROU-DISPENSAIRE"
+              },
+              {
+                "id_quart": 1961,
+                "lib_quart": "TOUROU-PALAIS-ROYAL"
+              },
+              {
+                "id_quart": 1962,
+                "lib_quart": "WOROU-TOKOROU"
+              },
+              {
+                "id_quart": 1963,
+                "lib_quart": "ZAZIRA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 187,
+            "lib_arrond": "2EME ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 1964,
+                "lib_quart": "AGBA AGBA"
+              },
+              {
+                "id_quart": 1965,
+                "lib_quart": "ASSAGBININ BAKA"
+              },
+              {
+                "id_quart": 1966,
+                "lib_quart": "BAKOUNOUROU"
+              },
+              {
+                "id_quart": 1967,
+                "lib_quart": "BANIKANNI"
+              },
+              {
+                "id_quart": 1968,
+                "lib_quart": "BANIKANNI-ENI"
+              },
+              {
+                "id_quart": 1969,
+                "lib_quart": "BANIKANNI-MADJATOM"
+              },
+              {
+                "id_quart": 1970,
+                "lib_quart": "BAPARAPE"
+              },
+              {
+                "id_quart": 1971,
+                "lib_quart": "GOROMOSSO"
+              },
+              {
+                "id_quart": 1972,
+                "lib_quart": "KOROBOROROU"
+              },
+              {
+                "id_quart": 1973,
+                "lib_quart": "KOROBOROROU-PEULH"
+              },
+              {
+                "id_quart": 1974,
+                "lib_quart": "LADJIFARANI"
+              },
+              {
+                "id_quart": 1975,
+                "lib_quart": "LADJIFARANI-PETIT PERE"
+              },
+              {
+                "id_quart": 1976,
+                "lib_quart": "LEMANDA"
+              },
+              {
+                "id_quart": 1977,
+                "lib_quart": "NIMA-SOKOUNON"
+              },
+              {
+                "id_quart": 1978,
+                "lib_quart": "ROSE-CROIX BAH MORA"
+              },
+              {
+                "id_quart": 1979,
+                "lib_quart": "WOUBEKOU-GAH"
+              },
+              {
+                "id_quart": 1980,
+                "lib_quart": "ZONGO-ZENON"
+              }
+            ]
+          },
+          {
+            "id_arrond": 188,
+            "lib_arrond": "3EME ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 1981,
+                "lib_quart": "AMANWIGNON"
+              },
+              {
+                "id_quart": 1982,
+                "lib_quart": "DOKPAROU"
+              },
+              {
+                "id_quart": 1983,
+                "lib_quart": "GAH"
+              },
+              {
+                "id_quart": 1984,
+                "lib_quart": "GANOU"
+              },
+              {
+                "id_quart": 1985,
+                "lib_quart": "GBIRA"
+              },
+              {
+                "id_quart": 1986,
+                "lib_quart": "GUEMA"
+              },
+              {
+                "id_quart": 1987,
+                "lib_quart": "NIKKIKPEROU"
+              },
+              {
+                "id_quart": 1988,
+                "lib_quart": "SWINROU-KPASSAGAMBOU"
+              },
+              {
+                "id_quart": 1989,
+                "lib_quart": "TRANZA"
+              },
+              {
+                "id_quart": 1990,
+                "lib_quart": "WANSIROU"
+              },
+              {
+                "id_quart": 1991,
+                "lib_quart": "WORE"
+              },
+              {
+                "id_quart": 1992,
+                "lib_quart": "ZONGO"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id_dep": 8,
+    "lib_dep": "LITTORAL",
+    "communes": [
+      {
+        "id_com": 48,
+        "lib_com": "COTONOU",
+        "arrondissements": [
+          {
+            "id_arrond": 342,
+            "lib_arrond": "APKAPKA",
+            "quartiers": [
+              {
+                "id_quart": 3361,
+                "lib_quart": "AVOTROU AIMONLONFIDE"
+              },
+              {
+                "id_quart": 3362,
+                "lib_quart": "AVOTROU GBEGO"
+              },
+              {
+                "id_quart": 3363,
+                "lib_quart": "AVOTROU HOUEZEKOME"
+              },
+              {
+                "id_quart": 3364,
+                "lib_quart": "DANDJI"
+              },
+              {
+                "id_quart": 3365,
+                "lib_quart": "DANDJI HOKANME"
+              },
+              {
+                "id_quart": 3366,
+                "lib_quart": "DONATEN"
+              },
+              {
+                "id_quart": 3367,
+                "lib_quart": "FINAGNON"
+              },
+              {
+                "id_quart": 3368,
+                "lib_quart": "N'VENAMEDE"
+              },
+              {
+                "id_quart": 3369,
+                "lib_quart": "SURU LERE"
+              },
+              {
+                "id_quart": 3370,
+                "lib_quart": "TANTO"
+              },
+              {
+                "id_quart": 3371,
+                "lib_quart": "TCHANHOUNKPAME"
+              },
+              {
+                "id_quart": 3372,
+                "lib_quart": "TOKPLEGBE"
+              },
+              {
+                "id_quart": 3373,
+                "lib_quart": "YAGBE"
+              }
+            ]
+          },
+          {
+            "id_arrond": 343,
+            "lib_arrond": "APKAPKA",
+            "quartiers": [
+              {
+                "id_quart": 3374,
+                "lib_quart": "AHOUASSA"
+              },
+              {
+                "id_quart": 3375,
+                "lib_quart": "DJEDJE-LAYE"
+              },
+              {
+                "id_quart": 3376,
+                "lib_quart": "GANKPODO"
+              },
+              {
+                "id_quart": 3377,
+                "lib_quart": "IREDE"
+              },
+              {
+                "id_quart": 3378,
+                "lib_quart": "KOWEGBO"
+              },
+              {
+                "id_quart": 3379,
+                "lib_quart": "KPONDEHOU"
+              },
+              {
+                "id_quart": 3380,
+                "lib_quart": "KPONDEHOU TCHEMEI"
+              },
+              {
+                "id_quart": 3381,
+                "lib_quart": "LOM-NAVA"
+              },
+              {
+                "id_quart": 3382,
+                "lib_quart": "MINONTCHOU"
+              },
+              {
+                "id_quart": 3383,
+                "lib_quart": "SENADE SEKOU"
+              },
+              {
+                "id_quart": 3384,
+                "lib_quart": "SENANDE"
+              },
+              {
+                "id_quart": 3385,
+                "lib_quart": "YENAWA"
+              },
+              {
+                "id_quart": 3386,
+                "lib_quart": "YENAWA DAHO"
+              }
+            ]
+          },
+          {
+            "id_arrond": 344,
+            "lib_arrond": "APKAPKA",
+            "quartiers": [
+              {
+                "id_quart": 3387,
+                "lib_quart": "ADJEGOUNLE"
+              },
+              {
+                "id_quart": 3388,
+                "lib_quart": "ADOGLETA"
+              },
+              {
+                "id_quart": 3389,
+                "lib_quart": "AGBATO"
+              },
+              {
+                "id_quart": 3390,
+                "lib_quart": "AGBODJEDO"
+              },
+              {
+                "id_quart": 3391,
+                "lib_quart": "AYELAWADJE"
+              },
+              {
+                "id_quart": 3392,
+                "lib_quart": "AYELAWADJE AGONGOME"
+              },
+              {
+                "id_quart": 3393,
+                "lib_quart": "FIFATIN"
+              },
+              {
+                "id_quart": 3394,
+                "lib_quart": "GBENONKPO"
+              },
+              {
+                "id_quart": 3395,
+                "lib_quart": "HLACOMEY"
+              },
+              {
+                "id_quart": 3396,
+                "lib_quart": "KPANKPAN"
+              },
+              {
+                "id_quart": 3397,
+                "lib_quart": "MIDOMBO"
+              },
+              {
+                "id_quart": 3398,
+                "lib_quart": "SEGBEYA NORD"
+              },
+              {
+                "id_quart": 3399,
+                "lib_quart": "SEGBEYA SUD"
+              }
+            ]
+          },
+          {
+            "id_arrond": 345,
+            "lib_arrond": "4EME ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 3400,
+                "lib_quart": "ABOKICODJI CENTRE"
+              },
+              {
+                "id_quart": 3401,
+                "lib_quart": "ABOKICODJI LAGUNE"
+              },
+              {
+                "id_quart": 3402,
+                "lib_quart": "AKPAKPA DODOME"
+              },
+              {
+                "id_quart": 3403,
+                "lib_quart": "DEDOKPO"
+              },
+              {
+                "id_quart": 3404,
+                "lib_quart": "ENAGNON"
+              },
+              {
+                "id_quart": 3405,
+                "lib_quart": "FIFADJI HOUTO"
+              },
+              {
+                "id_quart": 3406,
+                "lib_quart": "GBEDJEWIN"
+              },
+              {
+                "id_quart": 3407,
+                "lib_quart": "MISSESSIN"
+              },
+              {
+                "id_quart": 3408,
+                "lib_quart": "OHE"
+              },
+              {
+                "id_quart": 3409,
+                "lib_quart": "SODJEATINME CENTRE"
+              },
+              {
+                "id_quart": 3410,
+                "lib_quart": "SODJEATINME EST"
+              },
+              {
+                "id_quart": 3411,
+                "lib_quart": "SODJEATINME OUEST"
+              }
+            ]
+          },
+          {
+            "id_arrond": 346,
+            "lib_arrond": "5EME ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 3412,
+                "lib_quart": "AVLEKETE JONQUET"
+              },
+              {
+                "id_quart": 3413,
+                "lib_quart": "BOCOSSI TOKPA"
+              },
+              {
+                "id_quart": 3414,
+                "lib_quart": "DOTA"
+              },
+              {
+                "id_quart": 3415,
+                "lib_quart": "GBEDOKPO"
+              },
+              {
+                "id_quart": 3416,
+                "lib_quart": "GBETO"
+              },
+              {
+                "id_quart": 3417,
+                "lib_quart": "GUINKOMEY"
+              },
+              {
+                "id_quart": 3418,
+                "lib_quart": "MIFONGOU"
+              },
+              {
+                "id_quart": 3419,
+                "lib_quart": "MISSEBO"
+              },
+              {
+                "id_quart": 3420,
+                "lib_quart": "MISSITE"
+              },
+              {
+                "id_quart": 3421,
+                "lib_quart": "NOUVEAU PONT"
+              },
+              {
+                "id_quart": 3422,
+                "lib_quart": "TOKPA HOHO"
+              },
+              {
+                "id_quart": 3423,
+                "lib_quart": "XWLACODJI KPODJI"
+              },
+              {
+                "id_quart": 3424,
+                "lib_quart": "XWLACODJI PLAGE"
+              },
+              {
+                "id_quart": 3425,
+                "lib_quart": "ZONGO EHUZU"
+              },
+              {
+                "id_quart": 3426,
+                "lib_quart": "ZONGO NIMA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 347,
+            "lib_arrond": "6EME ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 3427,
+                "lib_quart": "AHOUANSORI AGATA"
+              },
+              {
+                "id_quart": 3428,
+                "lib_quart": "AHOUANSORI AGUE"
+              },
+              {
+                "id_quart": 3429,
+                "lib_quart": "AHOUANSORI LADJI"
+              },
+              {
+                "id_quart": 3430,
+                "lib_quart": "AHOUANSORI TOWETA"
+              },
+              {
+                "id_quart": 3431,
+                "lib_quart": "AHOUANSORI TOWETA KPOTAI"
+              },
+              {
+                "id_quart": 3432,
+                "lib_quart": "AIDJEDO"
+              },
+              {
+                "id_quart": 3433,
+                "lib_quart": "AIDJEDO AHITO"
+              },
+              {
+                "id_quart": 3434,
+                "lib_quart": "AIDJEDO GBEGO"
+              },
+              {
+                "id_quart": 3435,
+                "lib_quart": "AIDJEDO VIGNON"
+              },
+              {
+                "id_quart": 3436,
+                "lib_quart": "DANTOKPA"
+              },
+              {
+                "id_quart": 3437,
+                "lib_quart": "DJIDJE"
+              },
+              {
+                "id_quart": 3438,
+                "lib_quart": "DJIDJE AICHEDJI"
+              },
+              {
+                "id_quart": 3439,
+                "lib_quart": "GBEDJROMEDE"
+              },
+              {
+                "id_quart": 3440,
+                "lib_quart": "GBEDJROMEDE SUD"
+              },
+              {
+                "id_quart": 3441,
+                "lib_quart": "HINDE NORD"
+              },
+              {
+                "id_quart": 3442,
+                "lib_quart": "HINDE SUD"
+              },
+              {
+                "id_quart": 3443,
+                "lib_quart": "JERICHO NORD"
+              },
+              {
+                "id_quart": 3444,
+                "lib_quart": "JERICHO SUD"
+              },
+              {
+                "id_quart": 3445,
+                "lib_quart": "VOSSA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 348,
+            "lib_arrond": "7EME ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 3446,
+                "lib_quart": "DAGBEDJI SIKE"
+              },
+              {
+                "id_quart": 3447,
+                "lib_quart": "ENAGNON-SIKE"
+              },
+              {
+                "id_quart": 3448,
+                "lib_quart": "FIGNON SIKE"
+              },
+              {
+                "id_quart": 3449,
+                "lib_quart": "GBEDOMIDJI"
+              },
+              {
+                "id_quart": 3450,
+                "lib_quart": "GBENAN"
+              },
+              {
+                "id_quart": 3451,
+                "lib_quart": "GBEWA"
+              },
+              {
+                "id_quart": 3452,
+                "lib_quart": "MISSITE-SIKE"
+              },
+              {
+                "id_quart": 3453,
+                "lib_quart": "SEDAMI"
+              },
+              {
+                "id_quart": 3454,
+                "lib_quart": "SEDJRO SAINT MICHEL"
+              },
+              {
+                "id_quart": 3455,
+                "lib_quart": "SEHOGAN SIKE"
+              },
+              {
+                "id_quart": 3456,
+                "lib_quart": "TODOTE"
+              },
+              {
+                "id_quart": 3457,
+                "lib_quart": "YEVEDO"
+              }
+            ]
+          },
+          {
+            "id_arrond": 349,
+            "lib_arrond": "8EME ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 3458,
+                "lib_quart": "AGBODJEDO STE RITA"
+              },
+              {
+                "id_quart": 3459,
+                "lib_quart": "AGONTINKON"
+              },
+              {
+                "id_quart": 3460,
+                "lib_quart": "GBEDAGBA"
+              },
+              {
+                "id_quart": 3461,
+                "lib_quart": "HOUEHOUN"
+              },
+              {
+                "id_quart": 3462,
+                "lib_quart": "HOUENOUSSOU STE RITA"
+              },
+              {
+                "id_quart": 3463,
+                "lib_quart": "MEDEDJRO"
+              },
+              {
+                "id_quart": 3464,
+                "lib_quart": "MINONKPO WOLOGUEDE"
+              },
+              {
+                "id_quart": 3465,
+                "lib_quart": "TONATO"
+              }
+            ]
+          },
+          {
+            "id_arrond": 350,
+            "lib_arrond": "9EME ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 3466,
+                "lib_quart": "FIFADJI"
+              },
+              {
+                "id_quart": 3467,
+                "lib_quart": "KINDONOU"
+              },
+              {
+                "id_quart": 3468,
+                "lib_quart": "MENONTIN"
+              },
+              {
+                "id_quart": 3469,
+                "lib_quart": "VOSSA-KPODJI"
+              },
+              {
+                "id_quart": 3470,
+                "lib_quart": "ZOGBO"
+              },
+              {
+                "id_quart": 3471,
+                "lib_quart": "ZOGBOHOUE"
+              }
+            ]
+          },
+          {
+            "id_arrond": 351,
+            "lib_arrond": "10EME ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 3472,
+                "lib_quart": "AGOUNVOCODJI"
+              },
+              {
+                "id_quart": 3473,
+                "lib_quart": "GBENONKPO"
+              },
+              {
+                "id_quart": 3474,
+                "lib_quart": "KOUHOUNOU"
+              },
+              {
+                "id_quart": 3475,
+                "lib_quart": "MIDEDJI"
+              },
+              {
+                "id_quart": 3476,
+                "lib_quart": "MISSEKPLE"
+              },
+              {
+                "id_quart": 3477,
+                "lib_quart": "MISSOGBE"
+              },
+              {
+                "id_quart": 3478,
+                "lib_quart": "SETOVI"
+              },
+              {
+                "id_quart": 3479,
+                "lib_quart": "VEDOKO"
+              },
+              {
+                "id_quart": 3480,
+                "lib_quart": "YENAWA-FIFADJI"
+              }
+            ]
+          },
+          {
+            "id_arrond": 352,
+            "lib_arrond": "11EME ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 3481,
+                "lib_quart": "GBEDIGA GUEDEHOUNGUE"
+              },
+              {
+                "id_quart": 3482,
+                "lib_quart": "GBEGAMEY AHITO"
+              },
+              {
+                "id_quart": 3483,
+                "lib_quart": "GBEGAMEY CENTRE"
+              },
+              {
+                "id_quart": 3484,
+                "lib_quart": "GBEGAMEY DODO AYIDJE"
+              },
+              {
+                "id_quart": 3485,
+                "lib_quart": "GBEGAMEY GBAGOUDO"
+              },
+              {
+                "id_quart": 3486,
+                "lib_quart": "GBEGAMEY MIFONGOU"
+              },
+              {
+                "id_quart": 3487,
+                "lib_quart": "HOUEYIHO"
+              },
+              {
+                "id_quart": 3488,
+                "lib_quart": "HOUEYIHO TANOU"
+              },
+              {
+                "id_quart": 3489,
+                "lib_quart": "SAINT JEAN GBEDIGA"
+              },
+              {
+                "id_quart": 3490,
+                "lib_quart": "VODJE ALLOBATIN"
+              },
+              {
+                "id_quart": 3491,
+                "lib_quart": "VODJE AYIDOTE"
+              },
+              {
+                "id_quart": 3492,
+                "lib_quart": "VODJE CENTRE"
+              },
+              {
+                "id_quart": 3493,
+                "lib_quart": "VODJE FINAGNON"
+              }
+            ]
+          },
+          {
+            "id_arrond": 353,
+            "lib_arrond": "12EME ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 3494,
+                "lib_quart": "AHOUANLEKO"
+              },
+              {
+                "id_quart": 3495,
+                "lib_quart": "AIBATIN DODO"
+              },
+              {
+                "id_quart": 3496,
+                "lib_quart": "AKOGBATO"
+              },
+              {
+                "id_quart": 3497,
+                "lib_quart": "CADJEHOUN AGONGA"
+              },
+              {
+                "id_quart": 3498,
+                "lib_quart": "CADJEHOUN AUPIAIS"
+              },
+              {
+                "id_quart": 3499,
+                "lib_quart": "CADJEHOUN AZALOKOGON"
+              },
+              {
+                "id_quart": 3500,
+                "lib_quart": "CADJEHOUN DETINSA"
+              },
+              {
+                "id_quart": 3501,
+                "lib_quart": "CADJEHOUN GARE"
+              },
+              {
+                "id_quart": 3502,
+                "lib_quart": "CADJEHOUN KPOTA"
+              },
+              {
+                "id_quart": 3503,
+                "lib_quart": "FIDJROSSE CENTRE"
+              },
+              {
+                "id_quart": 3504,
+                "lib_quart": "FIDJROSSE KPOTA"
+              },
+              {
+                "id_quart": 3505,
+                "lib_quart": "FIYEGNON HOUTA"
+              },
+              {
+                "id_quart": 3506,
+                "lib_quart": "FIYEGNON JACQUOT"
+              },
+              {
+                "id_quart": 3507,
+                "lib_quart": "GBODJETIN"
+              },
+              {
+                "id_quart": 3508,
+                "lib_quart": "HAIE VIVE"
+              },
+              {
+                "id_quart": 3509,
+                "lib_quart": "HLAZOUNTO"
+              },
+              {
+                "id_quart": 3510,
+                "lib_quart": "LES COCOTIERS"
+              },
+              {
+                "id_quart": 3511,
+                "lib_quart": "VODJE KPOTA"
+              },
+              {
+                "id_quart": 3512,
+                "lib_quart": "YEMICODJI"
+              }
+            ]
+          },
+          {
+            "id_arrond": 354,
+            "lib_arrond": "13EME ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 3513,
+                "lib_quart": "AGLA AGONGBOMEY"
+              },
+              {
+                "id_quart": 3514,
+                "lib_quart": "AGLA AKPLOMEY"
+              },
+              {
+                "id_quart": 3515,
+                "lib_quart": "AGLA FIGARO"
+              },
+              {
+                "id_quart": 3516,
+                "lib_quart": "AGLA LES PYLONES"
+              },
+              {
+                "id_quart": 3517,
+                "lib_quart": "AGLA PETIT CHATEAU"
+              },
+              {
+                "id_quart": 3518,
+                "lib_quart": "AGLA SUD"
+              },
+              {
+                "id_quart": 3519,
+                "lib_quart": "AGLAFINAFA"
+              },
+              {
+                "id_quart": 3520,
+                "lib_quart": "AHOGBOHOUE CITE DE L'EXPERIENCE"
+              },
+              {
+                "id_quart": 3521,
+                "lib_quart": "AHOGBOHOUE CITE EUCARISTIE"
+              },
+              {
+                "id_quart": 3522,
+                "lib_quart": "AIBATIN KPOTA"
+              },
+              {
+                "id_quart": 3523,
+                "lib_quart": "CITE ADJAHA"
+              },
+              {
+                "id_quart": 3524,
+                "lib_quart": "GBEDEGBE"
+              },
+              {
+                "id_quart": 3525,
+                "lib_quart": "HOUENOUSSOU"
+              },
+              {
+                "id_quart": 3526,
+                "lib_quart": "MISSITE"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id_dep": 10,
+    "lib_dep": "OUEME",
+    "communes": [
+      {
+        "id_com": 62,
+        "lib_com": "PORTO-NOVO",
+        "arrondissements": [
+          {
+            "id_arrond": 431,
+            "lib_arrond": "1ER ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 4260,
+                "lib_quart": "ACCRON-GOGANKOMEY"
+              },
+              {
+                "id_quart": 4261,
+                "lib_quart": "ADJEGOUNLE"
+              },
+              {
+                "id_quart": 4262,
+                "lib_quart": "ADOMEY"
+              },
+              {
+                "id_quart": 4263,
+                "lib_quart": "AHOUANTIKOMEY"
+              },
+              {
+                "id_quart": 4264,
+                "lib_quart": "AKPASSA ODO OBA"
+              },
+              {
+                "id_quart": 4265,
+                "lib_quart": "AVASSA BAGORO AGBOKOMEY"
+              },
+              {
+                "id_quart": 4266,
+                "lib_quart": "AYETORO"
+              },
+              {
+                "id_quart": 4267,
+                "lib_quart": "AYIMLONFIDE"
+              },
+              {
+                "id_quart": 4268,
+                "lib_quart": "DEGUEKOME"
+              },
+              {
+                "id_quart": 4269,
+                "lib_quart": "DOTA-ATTINGBANSA-AZONZAKOMEY"
+              },
+              {
+                "id_quart": 4270,
+                "lib_quart": "GANTO"
+              },
+              {
+                "id_quart": 4271,
+                "lib_quart": "GBASSOU-ITABODO"
+              },
+              {
+                "id_quart": 4272,
+                "lib_quart": "GBECON"
+              },
+              {
+                "id_quart": 4273,
+                "lib_quart": "GUEVIE-ZINKOMEY"
+              },
+              {
+                "id_quart": 4274,
+                "lib_quart": "HONDJI-HONNOU FILLA"
+              },
+              {
+                "id_quart": 4275,
+                "lib_quart": "HOUEGBO-HLINKOMEY"
+              },
+              {
+                "id_quart": 4276,
+                "lib_quart": "HOUEYOGBE-GBEDJI"
+              },
+              {
+                "id_quart": 4277,
+                "lib_quart": "HOUEZOUNMEY"
+              },
+              {
+                "id_quart": 4278,
+                "lib_quart": "IDI-ARABA"
+              },
+              {
+                "id_quart": 4279,
+                "lib_quart": "ILEFIE"
+              },
+              {
+                "id_quart": 4280,
+                "lib_quart": "KPOTA SANDODO"
+              },
+              {
+                "id_quart": 4281,
+                "lib_quart": "LOKOSSA"
+              },
+              {
+                "id_quart": 4282,
+                "lib_quart": "OGANLA-GARE-EST"
+              },
+              {
+                "id_quart": 4283,
+                "lib_quart": "SADOGNON-ADJEGOUNLE"
+              },
+              {
+                "id_quart": 4284,
+                "lib_quart": "SADOGNON-WOUSSA"
+              },
+              {
+                "id_quart": 4285,
+                "lib_quart": "SAGBO KOSSOUKODE"
+              },
+              {
+                "id_quart": 4286,
+                "lib_quart": "SOKOMEY-TOFFINKOMEY"
+              },
+              {
+                "id_quart": 4287,
+                "lib_quart": "TOGOH - ADANKOMEY"
+              },
+              {
+                "id_quart": 4288,
+                "lib_quart": "VEKPA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 432,
+            "lib_arrond": "2EME ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 4289,
+                "lib_quart": "AGBOKOU AGA"
+              },
+              {
+                "id_quart": 4290,
+                "lib_quart": "AGBOKOU BASSODJI MAIRIE"
+              },
+              {
+                "id_quart": 4291,
+                "lib_quart": "AGBOKOU CENTRE SOCIAL"
+              },
+              {
+                "id_quart": 4292,
+                "lib_quart": "AGBOKOU ODO"
+              },
+              {
+                "id_quart": 4293,
+                "lib_quart": "ATTAKE OLORY-TOGBE"
+              },
+              {
+                "id_quart": 4294,
+                "lib_quart": "ATTAKE YIDI"
+              },
+              {
+                "id_quart": 4295,
+                "lib_quart": "DJEGAN DAHO"
+              },
+              {
+                "id_quart": 4296,
+                "lib_quart": "DONOUKIN LISSESSA"
+              },
+              {
+                "id_quart": 4297,
+                "lib_quart": "GBEZOUNKPA"
+              },
+              {
+                "id_quart": 4298,
+                "lib_quart": "GUEVIE DJEGANTO"
+              },
+              {
+                "id_quart": 4299,
+                "lib_quart": "HINKOUDE"
+              },
+              {
+                "id_quart": 4300,
+                "lib_quart": "KANDEVIE RADIO HOKON"
+              },
+              {
+                "id_quart": 4301,
+                "lib_quart": "KOUTONGBE"
+              },
+              {
+                "id_quart": 4302,
+                "lib_quart": "SEDJEKO"
+              },
+              {
+                "id_quart": 4303,
+                "lib_quart": "TCHINVIE"
+              },
+              {
+                "id_quart": 4304,
+                "lib_quart": "ZOUNKPA HOUETO"
+              }
+            ]
+          },
+          {
+            "id_arrond": 433,
+            "lib_arrond": "3EME ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 4305,
+                "lib_quart": "ADJINA NORD"
+              },
+              {
+                "id_quart": 4306,
+                "lib_quart": "ADJINA SUD"
+              },
+              {
+                "id_quart": 4307,
+                "lib_quart": "AVAKPA KPODJI"
+              },
+              {
+                "id_quart": 4308,
+                "lib_quart": "AVAKPA-TOKPA"
+              },
+              {
+                "id_quart": 4309,
+                "lib_quart": "DJASSIN DAHO"
+              },
+              {
+                "id_quart": 4310,
+                "lib_quart": "DJASSIN ZOUNME"
+              },
+              {
+                "id_quart": 4311,
+                "lib_quart": "FOUN-FOUN DJAGUIDI"
+              },
+              {
+                "id_quart": 4312,
+                "lib_quart": "FOUN-FOUN GBEGO"
+              },
+              {
+                "id_quart": 4313,
+                "lib_quart": "FOUN-FOUN SODJI"
+              },
+              {
+                "id_quart": 4314,
+                "lib_quart": "FOUN-FOUN TOKPA"
+              },
+              {
+                "id_quart": 4315,
+                "lib_quart": "HASSOU AGUE"
+              },
+              {
+                "id_quart": 4316,
+                "lib_quart": "OGANLA ATAKPAME"
+              },
+              {
+                "id_quart": 4317,
+                "lib_quart": "OGANLA NORD"
+              },
+              {
+                "id_quart": 4318,
+                "lib_quart": "OGANLA POSTE"
+              },
+              {
+                "id_quart": 4319,
+                "lib_quart": "OGANLA SOKE"
+              },
+              {
+                "id_quart": 4320,
+                "lib_quart": "OGANLA SUD"
+              },
+              {
+                "id_quart": 4321,
+                "lib_quart": "OUINLINDA AHOLOUKOMEY"
+              },
+              {
+                "id_quart": 4322,
+                "lib_quart": "OUINLINDA HOPITAL"
+              },
+              {
+                "id_quart": 4323,
+                "lib_quart": "ZEBOU AGA"
+              },
+              {
+                "id_quart": 4324,
+                "lib_quart": "ZEBOU AHOUANGBO"
+              },
+              {
+                "id_quart": 4325,
+                "lib_quart": "ZEBOU -ITATIGRI"
+              },
+              {
+                "id_quart": 4326,
+                "lib_quart": "ZEBOU -MASSE"
+              }
+            ]
+          },
+          {
+            "id_arrond": 434,
+            "lib_arrond": "4EME ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 4327,
+                "lib_quart": "ANAVIE"
+              },
+              {
+                "id_quart": 4328,
+                "lib_quart": "ANAVIE VOIRIE"
+              },
+              {
+                "id_quart": 4329,
+                "lib_quart": "DJEGAN KPEVI"
+              },
+              {
+                "id_quart": 4330,
+                "lib_quart": "DODJI"
+              },
+              {
+                "id_quart": 4331,
+                "lib_quart": "GBEDJROMEDE FUSION"
+              },
+              {
+                "id_quart": 4332,
+                "lib_quart": "GBODJE"
+              },
+              {
+                "id_quart": 4333,
+                "lib_quart": "GUEVIE"
+              },
+              {
+                "id_quart": 4334,
+                "lib_quart": "HLOGOU OU HLONGOU"
+              },
+              {
+                "id_quart": 4335,
+                "lib_quart": "HOUINME CHATEAU D'EAU"
+              },
+              {
+                "id_quart": 4336,
+                "lib_quart": "HOUINME DJAGUIDI"
+              },
+              {
+                "id_quart": 4337,
+                "lib_quart": "HOUINME GANTO"
+              },
+              {
+                "id_quart": 4338,
+                "lib_quart": "HOUINME GBEDJROMEDE"
+              },
+              {
+                "id_quart": 4339,
+                "lib_quart": "HOUNSA"
+              },
+              {
+                "id_quart": 4340,
+                "lib_quart": "HOUNSOUKO"
+              },
+              {
+                "id_quart": 4341,
+                "lib_quart": "KANDEVIE MISSOGBE"
+              },
+              {
+                "id_quart": 4342,
+                "lib_quart": "KANDEVIE OWODE"
+              },
+              {
+                "id_quart": 4343,
+                "lib_quart": "KPOGBONME"
+              },
+              {
+                "id_quart": 4344,
+                "lib_quart": "SETO - GBODJE"
+              }
+            ]
+          },
+          {
+            "id_arrond": 435,
+            "lib_arrond": "5EME ARRONDISSEMENT",
+            "quartiers": [
+              {
+                "id_quart": 4345,
+                "lib_quart": "AKONABOE"
+              },
+              {
+                "id_quart": 4346,
+                "lib_quart": "DJLADO"
+              },
+              {
+                "id_quart": 4347,
+                "lib_quart": "DOWA"
+              },
+              {
+                "id_quart": 4348,
+                "lib_quart": "DOWA ALIOGBOGO"
+              },
+              {
+                "id_quart": 4349,
+                "lib_quart": "DOWA DEDOME"
+              },
+              {
+                "id_quart": 4350,
+                "lib_quart": "HOUINVIE"
+              },
+              {
+                "id_quart": 4351,
+                "lib_quart": "LOUHO"
+              },
+              {
+                "id_quart": 4352,
+                "lib_quart": "OUANDO"
+              },
+              {
+                "id_quart": 4353,
+                "lib_quart": "OUANDO CLEKANME"
+              },
+              {
+                "id_quart": 4354,
+                "lib_quart": "OUANDO KOTIN"
+              },
+              {
+                "id_quart": 4355,
+                "lib_quart": "TOKPOTA DADJROUGBE"
+              },
+              {
+                "id_quart": 4356,
+                "lib_quart": "TOKPOTA DAVO"
+              },
+              {
+                "id_quart": 4357,
+                "lib_quart": "TOKPOTA VEDO"
+              },
+              {
+                "id_quart": 4358,
+                "lib_quart": "TOKPOTA ZEBE"
+              },
+              {
+                "id_quart": 4359,
+                "lib_quart": "TOKPOTA ZINLIVALI"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id_com": 63,
+        "lib_com": "SEME-PODJI",
+        "arrondissements": [
+          {
+            "id_arrond": 436,
+            "lib_arrond": "AGBLANGANDAN",
+            "quartiers": [
+              {
+                "id_quart": 4360,
+                "lib_quart": "AGBALILAME"
+              },
+              {
+                "id_quart": 4361,
+                "lib_quart": "AGBLANGANDAN"
+              },
+              {
+                "id_quart": 4362,
+                "lib_quart": "AKPOKPOTA"
+              },
+              {
+                "id_quart": 4363,
+                "lib_quart": "DAVATIN"
+              },
+              {
+                "id_quart": 4364,
+                "lib_quart": "GBAKPODJI"
+              },
+              {
+                "id_quart": 4365,
+                "lib_quart": "KADJACOME"
+              },
+              {
+                "id_quart": 4366,
+                "lib_quart": "KPAKPAKANME"
+              },
+              {
+                "id_quart": 4367,
+                "lib_quart": "LOKOKOUKOUME"
+              },
+              {
+                "id_quart": 4368,
+                "lib_quart": "MOUDOKOME"
+              },
+              {
+                "id_quart": 4369,
+                "lib_quart": "SEKANDJI"
+              },
+              {
+                "id_quart": 4370,
+                "lib_quart": "SEKANDJI ALLAMANDOSSI"
+              },
+              {
+                "id_quart": 4371,
+                "lib_quart": "SEKANDJI HOUEYOGBE"
+              }
+            ]
+          },
+          {
+            "id_arrond": 437,
+            "lib_arrond": "AHOLOUYEME",
+            "quartiers": [
+              {
+                "id_quart": 4372,
+                "lib_quart": "AGONSA GBO"
+              },
+              {
+                "id_quart": 4373,
+                "lib_quart": "AHOLOUYEME"
+              },
+              {
+                "id_quart": 4374,
+                "lib_quart": "DENOU"
+              },
+              {
+                "id_quart": 4375,
+                "lib_quart": "DJEHO"
+              },
+              {
+                "id_quart": 4376,
+                "lib_quart": "GOHO"
+              },
+              {
+                "id_quart": 4377,
+                "lib_quart": "KETONOU"
+              },
+              {
+                "id_quart": 4378,
+                "lib_quart": "TORRI-AGONSA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 438,
+            "lib_arrond": "DJEREGBE",
+            "quartiers": [
+              {
+                "id_quart": 4379,
+                "lib_quart": "AWANOU"
+              },
+              {
+                "id_quart": 4380,
+                "lib_quart": "DJEREGBE"
+              },
+              {
+                "id_quart": 4381,
+                "lib_quart": "DJEREGBE HOUELA"
+              },
+              {
+                "id_quart": 4382,
+                "lib_quart": "GBEHONME"
+              },
+              {
+                "id_quart": 4383,
+                "lib_quart": "GBOKPA"
+              },
+              {
+                "id_quart": 4384,
+                "lib_quart": "HOUEKE"
+              },
+              {
+                "id_quart": 4385,
+                "lib_quart": "HOUINTA"
+              }
+            ]
+          },
+          {
+            "id_arrond": 439,
+            "lib_arrond": "EKPE",
+            "quartiers": [
+              {
+                "id_quart": 4386,
+                "lib_quart": "DJEFFA GLEGBONOU"
+              },
+              {
+                "id_quart": 4387,
+                "lib_quart": "DJEFFA HOUEDOME"
+              },
+              {
+                "id_quart": 4388,
+                "lib_quart": "DJEFFA HOUEDOME GBAGO"
+              },
+              {
+                "id_quart": 4389,
+                "lib_quart": "DJEFFA KOWENOU"
+              },
+              {
+                "id_quart": 4390,
+                "lib_quart": "EKPE WECHINDAHOME"
+              },
+              {
+                "id_quart": 4391,
+                "lib_quart": "EKPE GBEDJAME"
+              },
+              {
+                "id_quart": 4392,
+                "lib_quart": "EKPE KANHONNOU"
+              },
+              {
+                "id_quart": 4393,
+                "lib_quart": "EKPE-KPECOME"
+              },
+              {
+                "id_quart": 4394,
+                "lib_quart": "EKPE-MARINA"
+              },
+              {
+                "id_quart": 4395,
+                "lib_quart": "EKPE-PK10"
+              },
+              {
+                "id_quart": 4396,
+                "lib_quart": "EKPE-SEYIVE"
+              },
+              {
+                "id_quart": 4397,
+                "lib_quart": "TCHONVI"
+              },
+              {
+                "id_quart": 4398,
+                "lib_quart": "TCHONVI AGBOLOGOUN"
+              }
+            ]
+          },
+          {
+            "id_arrond": 440,
+            "lib_arrond": "TOHOUE",
+            "quartiers": [
+              {
+                "id_quart": 4399,
+                "lib_quart": "AHLOME"
+              },
+              {
+                "id_quart": 4400,
+                "lib_quart": "AYOKPO"
+              },
+              {
+                "id_quart": 4401,
+                "lib_quart": "DJA"
+              },
+              {
+                "id_quart": 4402,
+                "lib_quart": "GLOGBO"
+              },
+              {
+                "id_quart": 4403,
+                "lib_quart": "GLOGBO PLAGE"
+              },
+              {
+                "id_quart": 4404,
+                "lib_quart": "HOVIDOKPO"
+              },
+              {
+                "id_quart": 4405,
+                "lib_quart": "KPOGUIDI"
+              },
+              {
+                "id_quart": 4406,
+                "lib_quart": "KRAKE-DAHO"
+              },
+              {
+                "id_quart": 4407,
+                "lib_quart": "TOHOUE"
+              },
+              {
+                "id_quart": 4408,
+                "lib_quart": "WEGBEGO-ADIEME"
+              }
+            ]
+          },
+          {
+            "id_arrond": 441,
+            "lib_arrond": "SEME-PODJI",
+            "quartiers": [
+              {
+                "id_quart": 4409,
+                "lib_quart": "AGONGO"
+              },
+              {
+                "id_quart": 4410,
+                "lib_quart": "OKOUN-SEME"
+              },
+              {
+                "id_quart": 4411,
+                "lib_quart": "PODJI-AGUE"
+              },
+              {
+                "id_quart": 4412,
+                "lib_quart": "PODJI-AGUE GBAGO"
+              },
+              {
+                "id_quart": 4413,
+                "lib_quart": "PODJI-MISSERETE"
+              },
+              {
+                "id_quart": 4414,
+                "lib_quart": "SEME-PODJI"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
