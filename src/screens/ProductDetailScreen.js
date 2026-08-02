@@ -205,10 +205,11 @@ export default function ProductDetailScreen({ route, navigation }) {
           <Text style={styles.name}>{product.name}</Text>
 
           {product.review_count > 0 && (
-            <View style={styles.ratingRow}>
+            <Pressable style={styles.ratingRow} onPress={() => navigation.navigate('ProductReviews', { productId: product.id })}>
               <Ionicons name="star" size={13} color={colors.primary} />
               <Text style={styles.ratingText}>{Number(product.average_rating).toFixed(1)} · {product.review_count} avis</Text>
-            </View>
+              <Ionicons name="chevron-forward" size={13} color={colors.textFaint} />
+            </Pressable>
           )}
 
           <View style={styles.priceRow}>

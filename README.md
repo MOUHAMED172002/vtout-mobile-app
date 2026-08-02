@@ -77,6 +77,13 @@ Voir `src/context/AuthContext.js`.
   de réduction, paiement à la livraison ou en ligne (FedaPay, ouvert dans
   le navigateur système via `expo-web-browser`).
 - Mes commandes / détail de commande, mes favoris, mes adresses.
+- Avis produits : lecture (fiche produit → "Voir tous les avis"), dépôt
+  d'un avis avec note/commentaire/photos (jusqu'à 3) depuis une commande
+  livrée, "Mes avis" (suppression).
+- Notifications : liste persistée (`/notifications/me`) + temps réel via
+  `socket.io-client` (mêmes événements que le site : `order_status_updated`,
+  `new_message`, `admin_notification`). Cloche avec badge sur l'accueil et
+  dans l'en-tête de chaque espace pro.
 - Connexion / inscription / mot de passe oublié.
 
 ### Espace vendeur (`src/screens/supplier/`, `SupplierNavigator`)
@@ -111,12 +118,13 @@ pour les comptes qui n'ont pas encore ces rôles. Voir
 
 ## Prochaines étapes suggérées
 
-1. Écran d'avis produits (lecture + dépôt d'un avis) — `reviewService` est
-   déjà porté.
-2. Notifications push (le site a un `notificationService` +
-   `socket.io-client`, compatible React Native).
-3. Icônes/splash de production (`assets/`) — ceux fournis sont des
+1. Notifications **push** (OS, appli fermée) : ce qui est fait aujourd'hui
+   est du temps réel en app ouverte (socket.io) + une liste persistée.
+   Du vrai push nécessite `expo-notifications`, l'enregistrement d'un
+   push token par utilisateur, et un envoi côté serveur (Expo push service
+   ou FCM/APNs) — implique des changements sur `server/`, non faits ici.
+2. Icônes/splash de production (`assets/`) — ceux fournis sont des
    placeholders Expo par défaut.
-4. Espace admin : si besoin d'aller plus loin, prioriser le CMS
+3. Espace admin : si besoin d'aller plus loin, prioriser le CMS
    (FAQ/blog/politiques) ou les paramètres système en second temps —
    volontairement laissés au site web pour l'instant.

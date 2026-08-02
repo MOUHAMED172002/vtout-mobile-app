@@ -21,6 +21,10 @@ import RegisterScreen from '../screens/RegisterScreen';
 import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 import SupplierRegisterScreen from '../screens/supplier/SupplierRegisterScreen';
 import BecomeDeliveryScreen from '../screens/delivery/BecomeDeliveryScreen';
+import NotificationsScreen from '../screens/NotificationsScreen';
+import ProductReviewsScreen from '../screens/ProductReviewsScreen';
+import WriteReviewScreen from '../screens/WriteReviewScreen';
+import MyReviewsScreen from '../screens/MyReviewsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -60,6 +64,10 @@ export default function RootNavigator() {
       <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} options={{ title: 'Mot de passe oublié' }} />
       <Stack.Screen name="SupplierRegister" component={SupplierRegisterScreen} options={{ title: 'Devenir vendeur' }} />
       <Stack.Screen name="BecomeDelivery" component={BecomeDeliveryScreen} options={{ title: 'Candidature livreur' }} />
+      <Stack.Screen name="Notifications" component={NotificationsScreen} options={{ title: 'Notifications' }} />
+      <Stack.Screen name="ProductReviews" component={ProductReviewsScreen} options={{ title: 'Avis clients' }} />
+      <Stack.Screen name="WriteReview" component={WriteReviewScreen} options={{ title: 'Laisser un avis' }} />
+      <Stack.Screen name="MyReviews" component={MyReviewsScreen} options={{ title: 'Mes avis' }} />
     </Stack.Navigator>
   );
 }

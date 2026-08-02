@@ -1,9 +1,11 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
 import SpaceSwitcherButton from '../components/SpaceSwitcherButton';
+import NotificationBell from '../components/NotificationBell';
 
 import DeliveryHomeScreen from '../screens/delivery/DeliveryHomeScreen';
 import AvailableOrdersScreen from '../screens/delivery/AvailableOrdersScreen';
@@ -29,7 +31,12 @@ function DeliveryTabs() {
         headerTitleStyle: { fontWeight: '800', fontSize: 16 },
         headerShadowVisible: false,
         headerStyle: { backgroundColor: colors.surface },
-        headerRight: () => <SpaceSwitcherButton />,
+        headerRight: () => (
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+            <NotificationBell />
+            <SpaceSwitcherButton />
+          </View>
+        ),
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textFaint,
         tabBarStyle: { height: 60, paddingBottom: 8, paddingTop: 6, borderTopColor: colors.border },

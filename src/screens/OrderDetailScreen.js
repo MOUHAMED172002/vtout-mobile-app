@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Image, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import { colors, radius } from '../theme/colors';
 import { useAuth } from '../context/AuthContext';
 import { getOrderById } from '../services/orderService';
@@ -8,7 +9,9 @@ import { formatPrice, getThumbnail } from '../utils/format';
 import { getOrderStatusLabel, getOrderStatusColor } from '../utils/orderStatus';
 import Loading from '../components/Loading';
 
-export default function OrderDetailScreen({ route }) {
+const isDelivered = (status) => ['livrée', 'livree'].includes((status || '').toLowerCase());
+
+export default function OrderDetailScreen({ route, navigation }) {
   const { id } = route.params;
   const { getToken } = useAuth();
   const [order, setOrder] = useState(null);
@@ -73,6 +76,22 @@ export default function OrderDetailScreen({ route }) {
               <View style={{ flex: 1 }}>
                 <Text style={styles.itemName} numberOfLines={2}>{item.product?.name || 'Produit'}</Text>
                 <Text style={styles.itemQty}>{item.quantity} x {formatPrice(item.price)} F</Text>
+                {isDelivered(order.status) && item.product_id && (
+                  <Pressable
+                    style={styles.reviewLink}
+                    onPress={() => navigation.navigate('WriteReview', {
+                      orderId: order.id,
+                      product: {
+                        id: item.product_id,
+                        name: item.product?.name || 'Produit',
+                        image_url: item.product?.images?.[0]?.image_url || item.product?.image_url,
+                      },
+                    })}
+                  >
+                    <Ionicons name="star-outline" size={12} color={colors.primary} />
+                    <Text style={styles.reviewLinkText}>Laisser un avis</Text>
+                  </Pressable>
+                )}
               </View>
               <Text style={styles.itemTotal}>{formatPrice(item.price * item.quantity)} F</Text>
             </View>
@@ -110,6 +129,8 @@ const styles = StyleSheet.create({
   itemImage: { width: 48, height: 48, borderRadius: radius.sm },
   itemName: { fontSize: 12, fontWeight: '700', color: colors.text },
   itemQty: { fontSize: 11, color: colors.textMuted, fontWeight: '600', marginTop: 2 },
+  reviewLink: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 6 },
+  reviewLinkText: { fontSize: 10, fontWeight: '800', color: colors.primary, textTransform: 'uppercase' },
   itemTotal: { fontSize: 13, fontWeight: '800', color: colors.text },
   summaryRow: { flexDirection: 'row', justifyContent: 'space-between' },
   summaryLabel: { fontSize: 13, color: colors.textMuted, fontWeight: '700' },

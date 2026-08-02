@@ -5,10 +5,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { colors, radius } from '../theme/colors';
 import { useAuth } from '../context/AuthContext';
 import { useSpace } from '../context/SpaceContext';
+import { useNotifications } from '../context/NotificationContext';
 import Button from '../components/Button';
 
 const MENU_ITEMS = [
+  { label: 'Notifications', icon: 'notifications-outline', route: 'Notifications' },
   { label: 'Mes commandes', icon: 'receipt-outline', route: 'Orders' },
+  { label: 'Mes avis', icon: 'star-outline', route: 'MyReviews' },
   { label: 'Mes favoris', icon: 'heart-outline', route: 'Favorites' },
   { label: 'Mes adresses', icon: 'location-outline', route: 'Addresses' },
 ];
@@ -16,6 +19,7 @@ const MENU_ITEMS = [
 export default function ProfileScreen({ navigation }) {
   const { isLoaded, isSignedIn, user, profile, signOut, isSupplier, isDelivery, isAdmin } = useAuth();
   const { switchSpace, availableSpaces } = useSpace();
+  const { unreadCount } = useNotifications();
 
   const handleSignOut = () => {
     Alert.alert('Déconnexion', 'Voulez-vous vraiment vous déconnecter ?', [
@@ -70,6 +74,11 @@ export default function ProfileScreen({ navigation }) {
                 <Ionicons name={item.icon} size={18} color={colors.primary} />
               </View>
               <Text style={styles.menuLabel}>{item.label}</Text>
+              {item.route === 'Notifications' && unreadCount > 0 && (
+                <View style={styles.menuBadge}>
+                  <Text style={styles.menuBadgeText}>{unreadCount > 9 ? '9+' : unreadCount}</Text>
+                </View>
+              )}
               <Ionicons name="chevron-forward" size={18} color={colors.textFaint} />
             </Pressable>
           ))}
@@ -145,4 +154,6 @@ const styles = StyleSheet.create({
   menuRow: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, borderBottomWidth: 1, borderBottomColor: colors.border },
   menuIconWrap: { width: 34, height: 34, borderRadius: 10, backgroundColor: 'rgba(243,112,33,0.1)', alignItems: 'center', justifyContent: 'center' },
   menuLabel: { flex: 1, fontSize: 14, fontWeight: '700', color: colors.text },
+  menuBadge: { backgroundColor: colors.danger, minWidth: 20, height: 20, borderRadius: 10, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 5, marginRight: 6 },
+  menuBadgeText: { color: '#fff', fontSize: 10, fontWeight: '800' },
 });

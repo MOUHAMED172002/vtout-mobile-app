@@ -25,3 +25,16 @@ export const deleteReview = async (id, token) => {
   });
   return data;
 };
+
+// `files` : tableau d'objets RN { uri, name, type } issus d'expo-image-picker.
+export const uploadReviewImages = async (files, token) => {
+  const formData = new FormData();
+  files.forEach((file) => formData.append('images', file));
+  const { data } = await api.post('/upload/multiple', formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return data.urls || [];
+};

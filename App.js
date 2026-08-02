@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { AuthProvider } from './src/context/AuthContext';
 import { SpaceProvider } from './src/context/SpaceContext';
+import { NotificationProvider } from './src/context/NotificationContext';
 import { CartProvider } from './src/context/CartContext';
 import RootNavigator from './src/navigation/RootNavigator';
 
@@ -15,12 +16,14 @@ export default function App() {
       <SafeAreaProvider>
         <AuthProvider>
           <SpaceProvider>
-            <CartProvider>
-              <NavigationContainer>
-                <StatusBar style="dark" />
-                <RootNavigator />
-              </NavigationContainer>
-            </CartProvider>
+            <NotificationProvider>
+              <CartProvider>
+                <NavigationContainer>
+                  <StatusBar style="dark" />
+                  <RootNavigator />
+                </NavigationContainer>
+              </CartProvider>
+            </NotificationProvider>
           </SpaceProvider>
         </AuthProvider>
       </SafeAreaProvider>

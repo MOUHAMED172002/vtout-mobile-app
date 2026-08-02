@@ -6,6 +6,7 @@ import { colors, radius } from '../theme/colors';
 import { getProducts, getCategories } from '../services/productService';
 import ProductCard from '../components/ProductCard';
 import Loading from '../components/Loading';
+import NotificationBell from '../components/NotificationBell';
 import { getThumbnail } from '../utils/format';
 
 export default function HomeScreen({ navigation }) {
@@ -37,8 +38,11 @@ export default function HomeScreen({ navigation }) {
   const ListHeader = (
     <View>
       <View style={styles.hero}>
-        <View style={styles.heroBadge}>
-          <Text style={styles.heroBadgeText}>🇧🇯 Marketplace N°1 du Bénin</Text>
+        <View style={styles.heroTopRow}>
+          <View style={styles.heroBadge}>
+            <Text style={styles.heroBadgeText}>🇧🇯 Marketplace N°1 du Bénin</Text>
+          </View>
+          <NotificationBell dark />
         </View>
         <Text style={styles.heroTitle}>Achetez et faites{'\n'}livrer <Text style={styles.heroTitleAccent}>partout</Text>.</Text>
         <Pressable style={styles.searchBar} onPress={() => navigation.navigate('Search')}>
@@ -123,6 +127,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     gap: 14,
   },
+  heroTopRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   heroBadge: { alignSelf: 'flex-start', backgroundColor: 'rgba(243,112,33,0.18)', borderWidth: 1, borderColor: 'rgba(243,112,33,0.4)', paddingHorizontal: 12, paddingVertical: 5, borderRadius: radius.full },
   heroBadgeText: { color: colors.primary, fontSize: 10, fontWeight: '800' },
   heroTitle: { color: '#fff', fontSize: 26, fontWeight: '900', lineHeight: 32 },
