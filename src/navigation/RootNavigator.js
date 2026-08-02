@@ -26,6 +26,18 @@ import ProductReviewsScreen from '../screens/ProductReviewsScreen';
 import WriteReviewScreen from '../screens/WriteReviewScreen';
 import MyReviewsScreen from '../screens/MyReviewsScreen';
 import BoutiqueStoreScreen from '../screens/BoutiqueStoreScreen';
+import WalletScreen from '../screens/WalletScreen';
+import InfoHubScreen from '../screens/info/InfoHubScreen';
+import AboutScreen from '../screens/info/AboutScreen';
+import HowItWorksScreen from '../screens/info/HowItWorksScreen';
+import FaqScreen from '../screens/info/FaqScreen';
+import PolicyDetailScreen from '../screens/info/PolicyDetailScreen';
+import BlogListScreen from '../screens/info/BlogListScreen';
+import BlogDetailScreen from '../screens/info/BlogDetailScreen';
+import TestimonialsScreen from '../screens/info/TestimonialsScreen';
+import ContactScreen from '../screens/info/ContactScreen';
+import PromotionsScreen from '../screens/info/PromotionsScreen';
+import SupportChatScreen from '../screens/info/SupportChatScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -70,6 +82,18 @@ export default function RootNavigator() {
       <Stack.Screen name="WriteReview" component={WriteReviewScreen} options={{ title: 'Laisser un avis' }} />
       <Stack.Screen name="MyReviews" component={MyReviewsScreen} options={{ title: 'Mes avis' }} />
       <Stack.Screen name="BoutiqueStore" component={BoutiqueStoreScreen} options={{ title: 'Boutique' }} />
+      <Stack.Screen name="Wallet" component={WalletScreen} options={{ title: 'Mon portefeuille' }} />
+      <Stack.Screen name="InfoHub" component={InfoHubScreen} options={{ title: 'Aide & À propos' }} />
+      <Stack.Screen name="About" component={AboutScreen} options={{ title: 'À propos de Vtout' }} />
+      <Stack.Screen name="HowItWorks" component={HowItWorksScreen} options={{ title: 'Comment ça marche' }} />
+      <Stack.Screen name="Faq" component={FaqScreen} options={{ title: 'Questions fréquentes' }} />
+      <Stack.Screen name="PolicyDetail" component={PolicyDetailScreen} options={({ route }) => ({ title: route.params?.title || 'Mentions légales' })} />
+      <Stack.Screen name="BlogList" component={BlogListScreen} options={{ title: 'Blog' }} />
+      <Stack.Screen name="BlogDetail" component={BlogDetailScreen} options={{ title: 'Article' }} />
+      <Stack.Screen name="Testimonials" component={TestimonialsScreen} options={{ title: 'Témoignages' }} />
+      <Stack.Screen name="Contact" component={ContactScreen} options={{ title: 'Contactez-nous' }} />
+      <Stack.Screen name="Promotions" component={PromotionsScreen} options={{ title: 'Promotions' }} />
+      <Stack.Screen name="SupportChat" component={SupportChatScreen} options={{ title: 'Support Vtout' }} />
     </Stack.Navigator>
   );
 }

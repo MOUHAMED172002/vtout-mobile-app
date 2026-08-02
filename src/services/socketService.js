@@ -26,6 +26,10 @@ class SocketService {
     this.socket.on('admin_notification', (data) => this.notify('admin_notification', data));
   }
 
+  emit(event, data) {
+    this.socket?.emit(event, data);
+  }
+
   subscribe(event, callback) {
     if (!this.listeners.has(event)) this.listeners.set(event, []);
     this.listeners.get(event).push(callback);

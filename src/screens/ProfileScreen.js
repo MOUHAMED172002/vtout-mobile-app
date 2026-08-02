@@ -11,9 +11,11 @@ import Button from '../components/Button';
 const MENU_ITEMS = [
   { label: 'Notifications', icon: 'notifications-outline', route: 'Notifications' },
   { label: 'Mes commandes', icon: 'receipt-outline', route: 'Orders' },
+  { label: 'Mon portefeuille', icon: 'wallet-outline', route: 'Wallet' },
   { label: 'Mes avis', icon: 'star-outline', route: 'MyReviews' },
   { label: 'Mes favoris', icon: 'heart-outline', route: 'Favorites' },
   { label: 'Mes adresses', icon: 'location-outline', route: 'Addresses' },
+  { label: 'Aide & À propos', icon: 'information-circle-outline', route: 'InfoHub' },
 ];
 
 export default function ProfileScreen({ navigation }) {

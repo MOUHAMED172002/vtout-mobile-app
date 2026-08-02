@@ -11,6 +11,7 @@ import { CartProvider } from './src/context/CartContext';
 import RootNavigator from './src/navigation/RootNavigator';
 import { navigationRef } from './src/navigation/navigationRef';
 import PushNotificationListener from './src/components/PushNotificationListener';
+import SupportChatBubble from './src/components/SupportChatBubble';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
                   <StatusBar style="dark" />
                   <RootNavigator />
                   <PushNotificationListener />
+                  <SupportChatBubble />
                 </NavigationContainer>
               </CartProvider>
             </NotificationProvider>
