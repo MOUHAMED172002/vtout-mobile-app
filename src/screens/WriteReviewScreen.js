@@ -3,7 +3,8 @@ import { View, Text, TextInput, ScrollView, Pressable, Image, StyleSheet, Alert 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { colors, radius } from '../theme/colors';
+import { radius } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { getOrderById } from '../services/orderService';
 import { createReview, uploadReviewImages } from '../services/reviewService';
@@ -13,6 +14,8 @@ import Button from '../components/Button';
 const RATING_LABELS = ['Très mauvais', 'Mauvais', 'Moyen', 'Très bien', 'Excellent'];
 
 export default function WriteReviewScreen({ route, navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { orderId, product: initialProduct } = route.params || {};
   const { getToken } = useAuth();
 
@@ -183,7 +186,7 @@ export default function WriteReviewScreen({ route, navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   field: { gap: 8 },
   label: { fontSize: 11, fontWeight: '800', color: colors.textMuted, textTransform: 'uppercase' },

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { colors } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 import { useSpace } from '../context/SpaceContext';
 
 import TabNavigator from './TabNavigator';
@@ -41,13 +41,6 @@ import SupportChatScreen from '../screens/info/SupportChatScreen';
 
 const Stack = createNativeStackNavigator();
 
-const headerOptions = {
-  headerTintColor: colors.text,
-  headerTitleStyle: { fontWeight: '800', fontSize: 16 },
-  headerShadowVisible: false,
-  headerStyle: { backgroundColor: colors.surface },
-};
-
 // Racine affichée sous "Tabs" : dépend de l'espace actif (client / vendeur /
 // livreur / admin). Un compte qui cumule plusieurs rôles peut basculer via
 // le bouton SpaceSwitcherButton présent dans l'en-tête de chaque espace.
@@ -60,6 +53,13 @@ function SpaceRoot() {
 }
 
 export default function RootNavigator() {
+  const { colors } = useTheme();
+  const headerOptions = {
+    headerTintColor: colors.text,
+    headerTitleStyle: { fontWeight: '800', fontSize: 16 },
+    headerShadowVisible: false,
+    headerStyle: { backgroundColor: colors.surface },
+  };
   return (
     <Stack.Navigator screenOptions={headerOptions}>
       <Stack.Screen name="Tabs" component={SpaceRoot} options={{ headerShown: false }} />

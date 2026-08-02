@@ -2,13 +2,16 @@ import React, { useState, useCallback, useRef } from 'react';
 import { View, TextInput, FlatList, StyleSheet, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../theme/colors';
+import { radius } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 import { searchProducts } from '../services/productService';
 import ProductCard from '../components/ProductCard';
 import Loading from '../components/Loading';
 import EmptyState from '../components/EmptyState';
 
 export default function SearchScreen({ navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -79,7 +82,7 @@ export default function SearchScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   searchBar: {
     flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: colors.surface,

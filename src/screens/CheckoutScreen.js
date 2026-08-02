@@ -3,7 +3,8 @@ import { View, Text, ScrollView, TextInput, StyleSheet, Pressable, Alert } from 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
-import { colors, radius } from '../theme/colors';
+import { radius } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import LocationPicker from '../components/LocationPicker';
@@ -15,6 +16,8 @@ import { validateCoupon } from '../services/couponService';
 import { getAllConfigs } from '../services/configService';
 
 export default function CheckoutScreen({ route, navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const items = route.params?.items || [];
   const subtotal = route.params?.total || 0;
   const { isSignedIn, getToken } = useAuth();
@@ -297,7 +300,7 @@ export default function CheckoutScreen({ route, navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   content: { padding: 16, gap: 14, paddingBottom: 24 },
   card: { backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: 16, gap: 10 },

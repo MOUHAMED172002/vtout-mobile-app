@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { View, Text, TextInput, FlatList, Pressable, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { getMyConversation } from '../../services/supportService';
 import { socketService } from '../../services/socketService';
@@ -10,6 +11,8 @@ import Loading from '../../components/Loading';
 import Button from '../../components/Button';
 
 export default function SupportChatScreen({ navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { isSignedIn, user, getToken } = useAuth();
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -119,7 +122,7 @@ export default function SupportChatScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   guestWrap: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 },
   guestIcon: { width: 72, height: 72, borderRadius: 36, backgroundColor: '#fff1e8', alignItems: 'center', justifyContent: 'center', marginBottom: 16 },

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, Pressable, TextInput, Alert, Linking } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import {
   assignOrder,
@@ -21,6 +22,8 @@ import { getOrderStatusLabel, getOrderStatusColor } from '../../utils/orderStatu
 import Button from '../../components/Button';
 
 export default function DeliveryDetailScreen({ route, navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken } = useAuth();
   const initialOrder = route.params?.order;
   const mode = route.params?.mode || 'mine'; // 'available' | 'mine'
@@ -217,7 +220,7 @@ export default function DeliveryDetailScreen({ route, navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   notFound: { textAlign: 'center', marginTop: 40, color: colors.textMuted, fontWeight: '700' },
   card: { backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: 16, gap: 10 },

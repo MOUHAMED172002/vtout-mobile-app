@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet, Image, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { getMySupplierProfile, getMyBoutiques } from '../../services/supplierService';
 import { getMySupplierProducts } from '../../services/supplierProductService';
@@ -15,6 +16,8 @@ import Button from '../../components/Button';
 import EmptyState from '../../components/EmptyState';
 
 export default function SupplierDashboardScreen({ navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { user, getToken } = useAuth();
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -207,7 +210,7 @@ const approvalLabel = (s) => (s === 'approved' ? 'Approuvé' : s === 'rejected' 
 const badgeStyleFor = (s) => ({ backgroundColor: s === 'approved' ? '#d1fae5' : s === 'rejected' ? '#fee2e2' : '#fef3c7' });
 const badgeTextStyleFor = (s) => ({ color: s === 'approved' ? '#059669' : s === 'rejected' ? '#dc2626' : '#d97706' });
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   noticeCard: {
     flexDirection: 'row', gap: 12, alignItems: 'flex-start', backgroundColor: '#fffbeb',

@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, RefreshControl, Switch, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { getAllProfiles, updateProfileStatus } from '../../services/adminUserService';
 import Loading from '../../components/Loading';
@@ -16,6 +17,8 @@ const ROLE_LABELS = {
 };
 
 export default function AdminUsersScreen() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken } = useAuth();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -120,7 +123,7 @@ export default function AdminUsersScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   searchBar: {
     flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: colors.surface,

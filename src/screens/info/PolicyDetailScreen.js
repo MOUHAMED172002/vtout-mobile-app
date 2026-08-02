@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Text, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { getPolicyByType, getCGV } from '../../services/contentService';
 import Loading from '../../components/Loading';
 import EmptyState from '../../components/EmptyState';
 
 export default function PolicyDetailScreen({ route, navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { type, title } = route.params || {};
   const [policy, setPolicy] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -39,7 +41,7 @@ export default function PolicyDetailScreen({ route, navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   title: { fontSize: 20, fontWeight: '900', color: colors.text, marginBottom: 16 },
   body: { fontSize: 13, color: colors.textMuted, fontWeight: '500', lineHeight: 21 },

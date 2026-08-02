@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, Pressable, FlatList, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { getProducts } from '../../services/productService';
 import ProductCard from '../../components/ProductCard';
 import Loading from '../../components/Loading';
@@ -14,6 +15,8 @@ const TABS = [
 ];
 
 export default function PromotionsScreen({ navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const [tab, setTab] = useState('flash');
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -59,7 +62,7 @@ export default function PromotionsScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   tabRow: { flexDirection: 'row', gap: 8, padding: 16, paddingBottom: 4 },
   tab: { flex: 1, height: 40, borderRadius: radius.md, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, alignItems: 'center', justifyContent: 'center' },

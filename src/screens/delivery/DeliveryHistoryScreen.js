@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, FlatList, Pressable, StyleSheet, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { getMyDeliveries, isDelivered, getDelivererFee, getOrderRef } from '../../services/deliveryOrderService';
 import { formatPrice } from '../../utils/format';
@@ -11,6 +12,8 @@ import Loading from '../../components/Loading';
 import EmptyState from '../../components/EmptyState';
 
 export default function DeliveryHistoryScreen({ navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken } = useAuth();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -83,7 +86,7 @@ export default function DeliveryHistoryScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   summaryCard: { backgroundColor: colors.navy, borderRadius: radius.lg, padding: 18, marginBottom: 4 },
   summaryLabel: { fontSize: 10, fontWeight: '800', color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: 1 },

@@ -2,7 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, FlatList, Pressable, StyleSheet, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../theme/colors';
+import { radius } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { getMyOrders } from '../services/orderService';
 import { formatPrice } from '../utils/format';
@@ -11,6 +12,8 @@ import Loading from '../components/Loading';
 import EmptyState from '../components/EmptyState';
 
 export default function OrdersScreen({ navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken } = useAuth();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -64,7 +67,7 @@ export default function OrdersScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   row: {
     flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: colors.surface,

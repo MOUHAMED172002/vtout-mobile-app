@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { colors } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { useNotifications } from '../context/NotificationContext';
 
@@ -10,6 +10,8 @@ import { useNotifications } from '../context/NotificationContext';
 // n'importe quel en-tête (client, vendeur, livreur, admin) : "Notifications"
 // est enregistré sur le stack racine, l'action remonte automatiquement.
 export default function NotificationBell({ dark = false }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const navigation = useNavigation();
   const { isSignedIn } = useAuth();
   const { unreadCount } = useNotifications();
@@ -28,7 +30,7 @@ export default function NotificationBell({ dark = false }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   trigger: {
     width: 34, height: 34, borderRadius: 17, backgroundColor: '#f1f5f9',
     alignItems: 'center', justifyContent: 'center',

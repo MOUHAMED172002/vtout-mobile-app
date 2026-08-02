@@ -1,5 +1,5 @@
-// Charte graphique Vtout (identique au site web)
-export const colors = {
+// Charte graphique Vtout (identique au site web), déclinée en clair et sombre.
+export const lightColors = {
   primary: '#f37021', // orange marque
   primaryDark: '#ea580c',
   secondary: '#0054a6', // bleu marque
@@ -15,6 +15,26 @@ export const colors = {
   danger: '#f43f5e',
   warning: '#f59e0b',
 };
+
+export const darkColors = {
+  primary: '#f37021',
+  primaryDark: '#fb8b3f',
+  secondary: '#3b82f6',
+  secondaryDark: '#2563eb',
+  navy: '#001e45',
+  background: '#0b1220',
+  surface: '#141b2d',
+  border: '#243049',
+  text: '#f1f5f9',
+  textMuted: '#94a3b8',
+  textFaint: '#64748b',
+  success: '#22c55e',
+  danger: '#fb7185',
+  warning: '#fbbf24',
+};
+
+// Conservé pour compatibilité : équivaut à la palette claire.
+export const colors = lightColors;
 
 export const radius = {
   sm: 10,

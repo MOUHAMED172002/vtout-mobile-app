@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, FlatList, Pressable, StyleSheet, TextInput, Image, Alert, Switch, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { getMySupplierProducts, deleteProduct, setProductAvailability } from '../../services/supplierProductService';
 import { formatPrice, getThumbnail } from '../../utils/format';
@@ -14,6 +15,8 @@ const badgeStyleFor = (s) => ({ backgroundColor: s === 'approved' ? '#d1fae5' : 
 const badgeTextStyleFor = (s) => ({ color: s === 'approved' ? '#059669' : s === 'rejected' ? '#dc2626' : '#d97706' });
 
 export default function SupplierProductsScreen({ navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken } = useAuth();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -148,7 +151,7 @@ export default function SupplierProductsScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   searchWrap: {
     flexDirection: 'row', alignItems: 'center', height: 46, marginHorizontal: 16, marginTop: 12,

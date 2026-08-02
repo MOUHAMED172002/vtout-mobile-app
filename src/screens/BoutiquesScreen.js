@@ -2,12 +2,15 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, TextInput, FlatList, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../theme/colors';
+import { radius } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 import { getBoutiques } from '../services/boutiqueService';
 import Loading from '../components/Loading';
 import EmptyState from '../components/EmptyState';
 
 export default function BoutiquesScreen({ navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const [boutiques, setBoutiques] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -79,7 +82,7 @@ export default function BoutiquesScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   header: { fontSize: 24, fontWeight: '900', color: colors.text, paddingHorizontal: 16, paddingTop: 12 },
   searchBar: {

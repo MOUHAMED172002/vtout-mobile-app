@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, ScrollView, StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { registerSupplier } from '../../services/supplierService';
 import LocationPicker from '../../components/LocationPicker';
 import Button from '../../components/Button';
 
 export default function SupplierRegisterScreen({ navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken, refreshProfile } = useAuth();
   const [shopName, setShopName] = useState('');
   const [phone, setPhone] = useState('');
@@ -77,7 +80,7 @@ export default function SupplierRegisterScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   content: { padding: 24, alignItems: 'center' },
   iconWrap: { width: 72, height: 72, borderRadius: 36, backgroundColor: '#fff1e8', alignItems: 'center', justifyContent: 'center', marginBottom: 16 },

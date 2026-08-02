@@ -2,11 +2,18 @@ import React from 'react';
 import { View, Text, Pressable, StyleSheet, ScrollView, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../theme/colors';
+import { radius } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { useSpace } from '../context/SpaceContext';
 import { useNotifications } from '../context/NotificationContext';
 import Button from '../components/Button';
+
+const THEME_OPTIONS = [
+  { key: 'light', label: 'Clair', icon: 'sunny-outline' },
+  { key: 'dark', label: 'Sombre', icon: 'moon-outline' },
+  { key: 'system', label: 'Auto', icon: 'phone-portrait-outline' },
+];
 
 const MENU_ITEMS = [
   { label: 'Notifications', icon: 'notifications-outline', route: 'Notifications' },
@@ -19,6 +26,8 @@ const MENU_ITEMS = [
 ];
 
 export default function ProfileScreen({ navigation }) {
+  const { colors, preference, setThemePreference } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { isLoaded, isSignedIn, user, profile, signOut, isSupplier, isDelivery, isAdmin } = useAuth();
   const { switchSpace, availableSpaces } = useSpace();
   const { unreadCount } = useNotifications();
@@ -107,6 +116,22 @@ export default function ProfileScreen({ navigation }) {
           </View>
         )}
 
+        <View>
+          <Text style={styles.sectionLabel}>Apparence</Text>
+          <View style={styles.themeRow}>
+            {THEME_OPTIONS.map((opt) => (
+              <Pressable
+                key={opt.key}
+                style={[styles.themeOption, preference === opt.key && styles.themeOptionActive]}
+                onPress={() => setThemePreference(opt.key)}
+              >
+                <Ionicons name={opt.icon} size={16} color={preference === opt.key ? '#fff' : colors.textMuted} />
+                <Text style={[styles.themeOptionText, preference === opt.key && styles.themeOptionTextActive]}>{opt.label}</Text>
+              </Pressable>
+            ))}
+          </View>
+        </View>
+
         {(!isSupplier || !isDelivery) && !isAdmin && (
           <View>
             <Text style={styles.sectionLabel}>Vendre ou livrer sur Vtout</Text>
@@ -137,7 +162,7 @@ export default function ProfileScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   guestWrap: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 },
   avatarPlaceholder: {
@@ -158,4 +183,12 @@ const styles = StyleSheet.create({
   menuLabel: { flex: 1, fontSize: 14, fontWeight: '700', color: colors.text },
   menuBadge: { backgroundColor: colors.danger, minWidth: 20, height: 20, borderRadius: 10, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 5, marginRight: 6 },
   menuBadgeText: { color: '#fff', fontSize: 10, fontWeight: '800' },
+  themeRow: { flexDirection: 'row', gap: 8 },
+  themeOption: {
+    flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6,
+    height: 42, borderRadius: radius.md, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border,
+  },
+  themeOptionActive: { backgroundColor: colors.navy, borderColor: colors.navy },
+  themeOptionText: { fontSize: 12, fontWeight: '700', color: colors.textMuted },
+  themeOptionTextActive: { color: '#fff' },
 });

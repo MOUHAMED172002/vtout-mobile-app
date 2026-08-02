@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, FlatList, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../theme/colors';
+import { radius } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 import { useNotifications } from '../context/NotificationContext';
 import EmptyState from '../components/EmptyState';
 
@@ -11,13 +12,6 @@ const TYPE_ICONS = {
   order: 'receipt-outline',
   alert: 'alert-circle-outline',
   info: 'information-circle-outline',
-};
-
-const TYPE_COLORS = {
-  wallet: colors.success,
-  order: colors.secondary,
-  alert: colors.danger,
-  info: colors.primary,
 };
 
 const timeAgo = (dateStr) => {
@@ -32,6 +26,14 @@ const timeAgo = (dateStr) => {
 };
 
 export default function NotificationsScreen() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
+  const TYPE_COLORS = {
+    wallet: colors.success,
+    order: colors.secondary,
+    alert: colors.danger,
+    info: colors.primary,
+  };
   const { notifications, loading, markRead, markAllRead, removeNotification } = useNotifications();
 
   return (
@@ -79,7 +81,7 @@ export default function NotificationsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, paddingTop: 12 },
   headerCount: { fontSize: 12, fontWeight: '700', color: colors.textMuted },

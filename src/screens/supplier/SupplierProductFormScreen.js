@@ -5,7 +5,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import {
   getMySupplierProducts, createProduct, updateProduct, uploadProductImage,
@@ -18,6 +19,8 @@ import Loading from '../../components/Loading';
 import Button from '../../components/Button';
 
 export default function SupplierProductFormScreen({ route, navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const editingId = route.params?.id || null;
   const { getToken } = useAuth();
 
@@ -325,7 +328,7 @@ export default function SupplierProductFormScreen({ route, navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   imagePicker: { alignSelf: 'center', width: 140, height: 140, borderRadius: radius.lg, overflow: 'hidden', position: 'relative' },
   image: { width: '100%', height: '100%' },

@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, RefreshControl, Switch, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import {
   getDeliveryProfile,
@@ -26,6 +27,8 @@ const isToday = (dateStr) => {
 };
 
 export default function DeliveryHomeScreen({ navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken, user, profile: authProfile } = useAuth();
   const [status, setStatus] = useState('loading'); // loading | not_registered | pending | rejected | active
   const [profile, setProfile] = useState(null);
@@ -226,6 +229,8 @@ export default function DeliveryHomeScreen({ navigation }) {
 }
 
 function StatCard({ icon, color, label, value }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   return (
     <View style={styles.statCard}>
       <View style={[styles.statIcon, { backgroundColor: `${color}18` }]}>
@@ -238,6 +243,8 @@ function StatCard({ icon, color, label, value }) {
 }
 
 function NavCard({ icon, title, subtitle, onPress }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   return (
     <Pressable style={({ pressed }) => [styles.navCard, pressed && { opacity: 0.85 }]} onPress={onPress}>
       <View style={styles.navIcon}>
@@ -252,7 +259,7 @@ function NavCard({ icon, title, subtitle, onPress }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   centerWrap: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 },
   bigIcon: { width: 88, height: 88, borderRadius: 44, backgroundColor: '#ffedd5', alignItems: 'center', justifyContent: 'center', marginBottom: 20 },

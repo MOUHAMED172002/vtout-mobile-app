@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { colors } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 
 export default function EmptyState({ icon = 'cube-outline', title, subtitle, action }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   return (
     <View style={styles.wrap}>
       <View style={styles.iconWrap}>
@@ -16,7 +18,7 @@ export default function EmptyState({ icon = 'cube-outline', title, subtitle, act
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   wrap: { alignItems: 'center', justifyContent: 'center', paddingVertical: 60, paddingHorizontal: 32, gap: 8 },
   iconWrap: {
     width: 72, height: 72, borderRadius: 36, backgroundColor: '#f1f5f9',

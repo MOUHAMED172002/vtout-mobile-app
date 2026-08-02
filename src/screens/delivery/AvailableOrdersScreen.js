@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable, RefreshControl, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import {
   getAvailableOrders,
@@ -19,6 +20,8 @@ import EmptyState from '../../components/EmptyState';
 // Remplace la carte interactive du site web par une liste triable/filtrable
 // par commune — pas besoin de mapbox côté mobile.
 export default function AvailableOrdersScreen({ navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken } = useAuth();
   const [orders, setOrders] = useState([]);
   const [hasDebt, setHasDebt] = useState(false);
@@ -169,7 +172,7 @@ export default function AvailableOrdersScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   debtBanner: {
     flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#fee2e2',

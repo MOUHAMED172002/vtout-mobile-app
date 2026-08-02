@@ -3,7 +3,8 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 
 const VALUES = [
   { icon: 'shield-checkmark', title: 'Confiance', text: "Vendeurs vérifiés et paiement sécurisé à chaque commande." },
@@ -13,6 +14,8 @@ const VALUES = [
 ];
 
 export default function AboutScreen() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   return (
     <SafeAreaView style={styles.safe} edges={['bottom']}>
       <ScrollView contentContainerStyle={{ paddingBottom: 32 }}>
@@ -51,7 +54,7 @@ export default function AboutScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   hero: { padding: 28, paddingTop: 24, gap: 12, borderBottomLeftRadius: radius.xl, borderBottomRightRadius: radius.xl },
   heroBadge: { color: colors.primary, fontSize: 11, fontWeight: '800' },

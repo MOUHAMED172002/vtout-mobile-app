@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { colors } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 import SpaceSwitcherButton from '../components/SpaceSwitcherButton';
 import NotificationBell from '../components/NotificationBell';
 
@@ -27,6 +27,7 @@ const ICONS = {
 };
 
 function SupplierTabs() {
+  const { colors } = useTheme();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -59,6 +60,7 @@ function SupplierTabs() {
 }
 
 export default function SupplierNavigator() {
+  const { colors } = useTheme();
   return (
     <Stack.Navigator
       screenOptions={{

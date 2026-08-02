@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { getDashboardStats } from '../../services/adminStatsService';
 import { formatPrice } from '../../utils/format';
@@ -12,6 +13,8 @@ import Loading from '../../components/Loading';
 const PERIODS = ['7J', '30J'];
 
 function StatCard({ label, value, icon, color }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   return (
     <View style={styles.statCard}>
       <View style={[styles.statIcon, { backgroundColor: `${color}18` }]}>
@@ -24,6 +27,8 @@ function StatCard({ label, value, icon, color }) {
 }
 
 function QuickAction({ label, icon, onPress }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   return (
     <Pressable style={({ pressed }) => [styles.quickAction, pressed && { opacity: 0.85 }]} onPress={onPress}>
       <View style={styles.quickActionIcon}>
@@ -36,6 +41,8 @@ function QuickAction({ label, icon, onPress }) {
 }
 
 export default function AdminDashboardScreen({ navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken } = useAuth();
   const [period, setPeriod] = useState('30J');
   const [data, setData] = useState(null);
@@ -152,7 +159,7 @@ export default function AdminDashboardScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   content: { padding: 16, gap: 20, paddingBottom: 40 },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },

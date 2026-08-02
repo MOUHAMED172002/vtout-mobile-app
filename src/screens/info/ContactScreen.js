@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Pressable, Linking, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { getAllConfigs } from '../../services/configService';
 import Loading from '../../components/Loading';
 
 export default function ContactScreen() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const [config, setConfig] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -54,7 +57,7 @@ export default function ContactScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   intro: { fontSize: 12.5, color: colors.textMuted, fontWeight: '600', marginBottom: 6, lineHeight: 18 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: 14 },

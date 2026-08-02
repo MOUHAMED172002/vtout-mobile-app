@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, FlatList, Pressable, StyleSheet, TextInput, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { getMyBoutiques, createBoutique, updateBoutique, deleteBoutique } from '../../services/supplierService';
 import LocationPicker from '../../components/LocationPicker';
@@ -11,6 +12,8 @@ import Loading from '../../components/Loading';
 import EmptyState from '../../components/EmptyState';
 
 export default function SupplierBoutiquesScreen() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken } = useAuth();
   const [boutiques, setBoutiques] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -162,7 +165,7 @@ export default function SupplierBoutiquesScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   card: {
     flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: colors.surface,

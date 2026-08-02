@@ -5,7 +5,8 @@ import {
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../theme/colors';
+import { radius } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 import { getProductById, getRelatedProducts } from '../services/productService';
 import { checkFavorite, addFavorite, removeFavorite } from '../services/favoriteService';
 import { useAuth } from '../context/AuthContext';
@@ -37,6 +38,8 @@ function uniqueAttributeValues(variants, attr) {
 }
 
 export default function ProductDetailScreen({ route, navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { id } = route.params;
   const { isSignedIn, getToken } = useAuth();
   const { addToCart } = useCart();
@@ -307,7 +310,7 @@ export default function ProductDetailScreen({ route, navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   notFound: { textAlign: 'center', marginTop: 40, color: colors.textMuted, fontWeight: '700' },
   imageWrap: { width, aspectRatio: 1, backgroundColor: '#f1f5f9', position: 'relative' },

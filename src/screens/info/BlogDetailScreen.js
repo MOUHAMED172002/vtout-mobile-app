@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Text, Image, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { getBlogBySlug } from '../../services/blogService';
 import { getOptimizedImage } from '../../utils/format';
 import Loading from '../../components/Loading';
 
 export default function BlogDetailScreen({ route, navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { slug } = route.params;
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -42,7 +44,7 @@ export default function BlogDetailScreen({ route, navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   notFound: { textAlign: 'center', marginTop: 40, color: colors.textMuted, fontWeight: '700' },
   image: { width: '100%', aspectRatio: 16 / 9, backgroundColor: '#f1f5f9' },

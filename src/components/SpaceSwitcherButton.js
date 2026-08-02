@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, Pressable, Modal, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../theme/colors';
+import { radius } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 import { useSpace } from '../context/SpaceContext';
 
 // Bouton d'en-tête permettant à un compte qui cumule plusieurs rôles
@@ -9,6 +10,8 @@ import { useSpace } from '../context/SpaceContext';
 // équivalent mobile du PortalSwitcher du site web. Ne s'affiche que si le
 // compte a plus d'un espace disponible.
 export default function SpaceSwitcherButton() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { space, switchSpace, availableSpaces } = useSpace();
   const [open, setOpen] = useState(false);
 
@@ -42,7 +45,7 @@ export default function SpaceSwitcherButton() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   trigger: {
     width: 34, height: 34, borderRadius: 17, backgroundColor: '#f1f5f9',
     alignItems: 'center', justifyContent: 'center', marginRight: 6,

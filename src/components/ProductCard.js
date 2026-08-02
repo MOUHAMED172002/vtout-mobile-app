@@ -3,7 +3,8 @@ import { View, Text, Pressable, StyleSheet, Dimensions, Modal } from 'react-nati
 import { Image } from 'expo-image';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../theme/colors';
+import { radius } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 import { formatPrice, getThumbnail, getProductDisplayPrice, isProductOutOfStock } from '../utils/format';
 
 const { width } = Dimensions.get('window');
@@ -30,6 +31,8 @@ function uniqueAttributeValues(variants, attr) {
 }
 
 export default function ProductCard({ product, onPress }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const navigation = useNavigation();
   const { currentPrice, basePrice, isSale, discountPercent } = useMemo(
     () => getProductDisplayPrice(product),
@@ -243,7 +246,7 @@ export default function ProductCard({ product, onPress }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   card: {
     width: CARD_WIDTH,
     backgroundColor: colors.surface,

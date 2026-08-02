@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, TextInput, FlatList, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../theme/colors';
+import { radius } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 import { getHierarchy } from '../services/locationService';
 import territoriesFallback from '../data/decoupage-territorial-benin.json';
 
@@ -55,6 +56,8 @@ function buildLocationList(rawData) {
 // Recherche + sélection d'un quartier de livraison (Bénin), avec repli sur
 // les données locales embarquées si l'API est injoignable.
 export default function LocationPicker({ value, onChange }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const [allLocations, setAllLocations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState(value?.formattedAddress || '');
@@ -152,7 +155,7 @@ export default function LocationPicker({ value, onChange }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   inputWrap: {
     flexDirection: 'row', alignItems: 'center', height: 52, backgroundColor: colors.surface,
     borderWidth: 1, borderColor: colors.border, borderRadius: radius.md, paddingHorizontal: 14,

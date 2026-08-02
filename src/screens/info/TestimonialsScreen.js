@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, TextInput, FlatList, Pressable, StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { getPlatformReviews, createPlatformReview } from '../../services/contentService';
 import Loading from '../../components/Loading';
@@ -10,6 +11,7 @@ import EmptyState from '../../components/EmptyState';
 import Button from '../../components/Button';
 
 function Stars({ rating, size = 12 }) {
+  const { colors } = useTheme();
   return (
     <View style={{ flexDirection: 'row', gap: 1 }}>
       {[1, 2, 3, 4, 5].map((s) => (
@@ -20,6 +22,8 @@ function Stars({ rating, size = 12 }) {
 }
 
 export default function TestimonialsScreen() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { isSignedIn, getToken } = useAuth();
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -111,7 +115,7 @@ export default function TestimonialsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   card: { backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: 14, gap: 8 },
   cardHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },

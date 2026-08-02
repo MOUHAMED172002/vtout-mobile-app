@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, FlatList, Pressable, StyleSheet, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../theme/colors';
+import { radius } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { formatPrice, getThumbnail } from '../utils/format';
@@ -11,6 +12,8 @@ import EmptyState from '../components/EmptyState';
 import Loading from '../components/Loading';
 
 export default function CartScreen({ navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { cart, loading, updateQuantity, removeFromCart } = useCart();
   const { isSignedIn } = useAuth();
 
@@ -105,7 +108,7 @@ export default function CartScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   header: { fontSize: 24, fontWeight: '900', color: colors.text, paddingHorizontal: 16, paddingTop: 12 },
   itemRow: {

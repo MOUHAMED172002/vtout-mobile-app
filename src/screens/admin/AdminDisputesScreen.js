@@ -2,24 +2,27 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, FlatList, Pressable, StyleSheet, RefreshControl, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { getAllDisputes, updateDisputeStatus } from '../../services/adminDisputeService';
 import { formatPrice } from '../../utils/format';
 import Loading from '../../components/Loading';
 import EmptyState from '../../components/EmptyState';
 
-const STATUS_CONFIG = {
+const getStatusConfig = (colors) => ({
   open: { label: 'À traiter', color: colors.warning },
   under_review: { label: 'En examen', color: colors.secondary },
   resolved: { label: 'Résolu', color: colors.success },
   cancelled: { label: 'Annulé', color: colors.textFaint },
-};
+});
 
 const STATUS_OPTIONS = ['open', 'under_review', 'resolved', 'cancelled'];
 
 function StatusBadge({ status }) {
-  const cfg = STATUS_CONFIG[status] || { label: status || 'Inconnu', color: colors.textMuted };
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
+  const cfg = getStatusConfig(colors)[status] || { label: status || 'Inconnu', color: colors.textMuted };
   return (
     <View style={[styles.badge, { backgroundColor: `${cfg.color}20` }]}>
       <Text style={[styles.badgeText, { color: cfg.color }]}>{cfg.label}</Text>
@@ -28,6 +31,9 @@ function StatusBadge({ status }) {
 }
 
 export default function AdminDisputesScreen() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
+  const STATUS_CONFIG = getStatusConfig(colors);
   const { getToken } = useAuth();
   const [disputes, setDisputes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -139,7 +145,7 @@ export default function AdminDisputesScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   card: { backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: 14, gap: 8 },
   cardHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },

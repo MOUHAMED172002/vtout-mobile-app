@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Pressable, FlatList, Image, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { getBlogs } from '../../services/blogService';
 import { getThumbnail } from '../../utils/format';
 import Loading from '../../components/Loading';
 import EmptyState from '../../components/EmptyState';
 
 export default function BlogListScreen({ navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -46,7 +49,7 @@ export default function BlogListScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   card: { flexDirection: 'row', gap: 12, backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: 12 },
   image: { width: 84, height: 84, borderRadius: radius.md },

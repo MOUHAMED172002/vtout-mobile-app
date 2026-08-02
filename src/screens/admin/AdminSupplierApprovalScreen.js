@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, FlatList, Pressable, StyleSheet, RefreshControl, Modal, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import {
   getSuppliers,
@@ -22,6 +23,8 @@ const isPendingSupplier = (s) => {
 };
 
 function TabSwitch({ tab, setTab, pendingSuppliers, pendingProducts }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   return (
     <View style={styles.tabSwitch}>
       <Pressable style={[styles.tabBtn, tab === 'suppliers' && styles.tabBtnActive]} onPress={() => setTab('suppliers')}>
@@ -39,6 +42,8 @@ function TabSwitch({ tab, setTab, pendingSuppliers, pendingProducts }) {
 }
 
 export default function AdminSupplierApprovalScreen() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken } = useAuth();
   const [tab, setTab] = useState('suppliers');
   const [suppliers, setSuppliers] = useState([]);
@@ -242,7 +247,7 @@ export default function AdminSupplierApprovalScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   tabSwitch: { flexDirection: 'row', gap: 8, padding: 16, paddingBottom: 4 },
   tabBtn: { flex: 1, paddingVertical: 10, borderRadius: radius.md, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, alignItems: 'center' },

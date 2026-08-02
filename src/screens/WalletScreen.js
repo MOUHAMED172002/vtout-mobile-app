@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, FlatList, TextInput, StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors, radius } from '../theme/colors';
+import { radius } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { getMyFinancials, requestPayout } from '../services/walletService';
 import { formatPrice } from '../utils/format';
@@ -10,6 +11,8 @@ import Button from '../components/Button';
 import EmptyState from '../components/EmptyState';
 
 export default function WalletScreen() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken } = useAuth();
   const [loading, setLoading] = useState(true);
   const [balance, setBalance] = useState(0);
@@ -117,7 +120,7 @@ export default function WalletScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   balanceCard: { backgroundColor: colors.navy, borderRadius: radius.lg, padding: 20 },
   balanceLabel: { fontSize: 11, fontWeight: '800', color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: 1 },

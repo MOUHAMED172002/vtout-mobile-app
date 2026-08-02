@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, ScrollView, Image, StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { getMySupplierOrders, updateOrderStatus, getEstimatedGain } from '../../services/supplierOrderService';
 import { formatPrice, getThumbnail } from '../../utils/format';
@@ -13,6 +14,8 @@ import Button from '../../components/Button';
 const FLOW = ['en_attente', 'confirmée', 'expédiée'];
 
 export default function SupplierOrderDetailScreen({ route, navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { id } = route.params;
   const { getToken } = useAuth();
   const [order, setOrder] = useState(null);
@@ -149,7 +152,7 @@ export default function SupplierOrderDetailScreen({ route, navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   notFound: { textAlign: 'center', marginTop: 40, color: colors.textMuted, fontWeight: '700' },
   card: { backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: 16, gap: 8 },

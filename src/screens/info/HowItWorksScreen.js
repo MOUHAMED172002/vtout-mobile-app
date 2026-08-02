@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, Pressable, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 
 const BUYER_STEPS = [
   { icon: 'search', title: 'Trouvez votre produit', text: 'Parcourez le catalogue, les catégories ou les boutiques de vendeurs vérifiés.' },
@@ -19,6 +20,8 @@ const SELLER_STEPS = [
 ];
 
 export default function HowItWorksScreen() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const [tab, setTab] = useState('buyer');
   const steps = tab === 'buyer' ? BUYER_STEPS : SELLER_STEPS;
 
@@ -53,7 +56,7 @@ export default function HowItWorksScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   tabRow: { flexDirection: 'row', gap: 8, padding: 16, paddingBottom: 4 },
   tab: { flex: 1, height: 44, borderRadius: radius.md, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, alignItems: 'center', justifyContent: 'center' },

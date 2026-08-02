@@ -1,8 +1,11 @@
 import React from 'react';
 import { Pressable, Text, StyleSheet, ActivityIndicator, View } from 'react-native';
-import { colors, radius } from '../theme/colors';
+import { radius } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Button({ title, onPress, variant = 'primary', loading = false, disabled = false, icon, style }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const isDisabled = disabled || loading;
   return (
     <Pressable
@@ -37,7 +40,7 @@ export default function Button({ title, onPress, variant = 'primary', loading = 
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   base: {
     height: 52,
     borderRadius: radius.md,

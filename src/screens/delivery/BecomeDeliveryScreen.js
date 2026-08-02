@@ -3,7 +3,8 @@ import { View, Text, TextInput, ScrollView, StyleSheet, Pressable, Image, Alert 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { registerLivreur, uploadKycImage } from '../../services/deliveryOrderService';
 import { getAllCommunes } from '../../utils/communes';
@@ -18,6 +19,8 @@ const VEHICLE_TYPES = [
 const ALL_COMMUNES = getAllCommunes();
 
 export default function BecomeDeliveryScreen({ navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken } = useAuth();
   const [fullname, setFullname] = useState('');
   const [phone, setPhone] = useState('');
@@ -176,7 +179,7 @@ export default function BecomeDeliveryScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   content: { padding: 20 },
   title: { fontSize: 20, fontWeight: '900', color: colors.text },

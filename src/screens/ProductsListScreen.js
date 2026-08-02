@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors } from '../theme/colors';
+import { useTheme } from '../context/ThemeContext';
 import { getProducts } from '../services/productService';
 import ProductCard from '../components/ProductCard';
 import Loading from '../components/Loading';
 import EmptyState from '../components/EmptyState';
 
 export default function ProductsListScreen({ route, navigation }) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { categoryId, title } = route.params || {};
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -53,6 +55,6 @@ export default function ProductsListScreen({ route, navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
 });

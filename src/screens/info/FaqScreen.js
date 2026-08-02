@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Pressable, FlatList, StyleSheet, LayoutAnimation, Platform, UIManager } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius } from '../../theme/colors';
+import { radius } from '../../theme/colors';
+import { useTheme } from '../../context/ThemeContext';
 import { getFaqs } from '../../services/contentService';
 import Loading from '../../components/Loading';
 import EmptyState from '../../components/EmptyState';
@@ -12,6 +13,8 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
 }
 
 export default function FaqScreen() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const [faqs, setFaqs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openId, setOpenId] = useState(null);
@@ -54,7 +57,7 @@ export default function FaqScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   card: { backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: 16 },
   questionRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
