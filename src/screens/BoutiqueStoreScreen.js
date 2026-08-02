@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../context/ThemeContext';
 import { getProducts } from '../services/productService';
 import ProductCard from '../components/ProductCard';
+import ProductFilterButton from '../components/ProductFilterButton';
 import Loading from '../components/Loading';
 import EmptyState from '../components/EmptyState';
 
@@ -13,6 +14,7 @@ export default function BoutiqueStoreScreen({ route, navigation }) {
   const { supplierId, name } = route.params || {};
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState({});
 
   useEffect(() => {
     navigation.setOptions({ title: name || 'Boutique' });
@@ -21,11 +23,11 @@ export default function BoutiqueStoreScreen({ route, navigation }) {
   useEffect(() => {
     if (!supplierId) return;
     setLoading(true);
-    getProducts({ supplier_id: supplierId, limit: 100 })
+    getProducts({ supplier_id: supplierId, limit: 100, ...filters })
       .then((data) => setProducts(data.products || data || []))
       .catch(() => setProducts([]))
       .finally(() => setLoading(false));
-  }, [supplierId]);
+  }, [supplierId, filters]);
 
   if (loading) return <Loading />;
 
@@ -39,7 +41,7 @@ export default function BoutiqueStoreScreen({ route, navigation }) {
           keyExtractor={(item) => String(item.id)}
           numColumns={2}
           columnWrapperStyle={{ gap: 12, paddingHorizontal: 16 }}
-          contentContainerStyle={{ gap: 12, paddingVertical: 16 }}
+          contentContainerStyle={{ gap: 12, paddingVertical: 16, paddingBottom: 90 }}
           ListHeaderComponent={
             <Text style={styles.count}>{products.length} produit{products.length > 1 ? 's' : ''}</Text>
           }
@@ -48,6 +50,7 @@ export default function BoutiqueStoreScreen({ route, navigation }) {
           )}
         />
       )}
+      <ProductFilterButton filters={filters} onApply={setFilters} />
     </SafeAreaView>
   );
 }

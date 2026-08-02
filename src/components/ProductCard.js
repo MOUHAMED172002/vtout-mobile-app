@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { radius } from '../theme/colors';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
+import { checkFavorite, addFavorite, removeFavorite } from '../services/favoriteService';
 import { formatPrice, getThumbnail, getProductDisplayPrice, isProductOutOfStock } from '../utils/format';
 
 const { width } = Dimensions.get('window');
@@ -34,6 +36,29 @@ export default function ProductCard({ product, onPress }) {
   const { colors } = useTheme();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
   const navigation = useNavigation();
+  const { isSignedIn, getToken } = useAuth();
+  const [isFav, setIsFav] = useState(false);
+
+  useEffect(() => {
+    if (!product?.id || !isSignedIn) { setIsFav(false); return; }
+    getToken().then((token) => checkFavorite(product.id, token).then(setIsFav).catch(() => {}));
+  }, [product?.id, isSignedIn, getToken]);
+
+  const toggleFavorite = async () => {
+    if (!isSignedIn) {
+      navigation.navigate('Login');
+      return;
+    }
+    const next = !isFav;
+    setIsFav(next);
+    try {
+      const token = await getToken();
+      if (next) await addFavorite(product.id, token);
+      else await removeFavorite(product.id, token);
+    } catch {
+      setIsFav((s) => !s);
+    }
+  };
   const { currentPrice, basePrice, isSale, discountPercent } = useMemo(
     () => getProductDisplayPrice(product),
     [product]
@@ -152,13 +177,18 @@ export default function ProductCard({ product, onPress }) {
             </View>
           )}
 
-          <View style={styles.quickActions}>
-            <Pressable style={styles.quickBtn} onPress={goToDetail}>
-              <Ionicons name="eye-outline" size={15} color={colors.text} />
+          <Pressable style={styles.favBtn} onPress={toggleFavorite}>
+            <Ionicons name={isFav ? 'heart' : 'heart-outline'} size={15} color={isFav ? colors.danger : colors.text} />
+          </Pressable>
+
+          <View style={styles.bottomActions}>
+            <Pressable style={styles.eyeBtn} onPress={goToDetail}>
+              <Ionicons name="eye-outline" size={14} color={colors.text} />
             </Pressable>
             {!outOfStock && (
-              <Pressable style={[styles.quickBtn, styles.quickBtnPrimary]} onPress={handleBuyNow}>
-                <Ionicons name="flash" size={14} color="#fff" />
+              <Pressable style={styles.buyPill} onPress={handleBuyNow}>
+                <Ionicons name="flash" size={12} color="#fff" />
+                <Text style={styles.buyPillText}>Acheter</Text>
               </Pressable>
             )}
           </View>
@@ -276,7 +306,7 @@ const createStyles = (colors) => StyleSheet.create({
   },
   image: { width: '100%', height: '100%' },
   imagePlaceholder: { alignItems: 'center', justifyContent: 'center' },
-  dotsRow: { position: 'absolute', bottom: 8, left: 0, right: 0, flexDirection: 'row', justifyContent: 'center', gap: 3 },
+  dotsRow: { position: 'absolute', bottom: 4, left: 0, right: 0, flexDirection: 'row', justifyContent: 'center', gap: 3 },
   dot: { width: 4, height: 4, borderRadius: 2, backgroundColor: 'rgba(255,255,255,0.6)' },
   dotActive: { width: 12, backgroundColor: '#fff' },
   discountBadge: {
@@ -297,12 +327,20 @@ const createStyles = (colors) => StyleSheet.create({
     justifyContent: 'center',
   },
   outOfStockText: { color: '#fff', fontSize: 11, fontWeight: '800', textTransform: 'uppercase' },
-  quickActions: { position: 'absolute', top: 8, right: 8, gap: 6 },
-  quickBtn: {
-    width: 28, height: 28, borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.92)',
+  favBtn: {
+    position: 'absolute', top: 8, right: 8, width: 28, height: 28, borderRadius: 14,
+    backgroundColor: 'rgba(255,255,255,0.92)', alignItems: 'center', justifyContent: 'center',
+  },
+  bottomActions: { position: 'absolute', bottom: 16, left: 8, flexDirection: 'row', alignItems: 'center', gap: 6 },
+  eyeBtn: {
+    width: 26, height: 26, borderRadius: 13, backgroundColor: 'rgba(255,255,255,0.92)',
     alignItems: 'center', justifyContent: 'center',
   },
-  quickBtnPrimary: { backgroundColor: colors.primary },
+  buyPill: {
+    flexDirection: 'row', alignItems: 'center', gap: 4, height: 26, borderRadius: 13,
+    paddingHorizontal: 10, backgroundColor: colors.primary,
+  },
+  buyPillText: { color: '#fff', fontSize: 10, fontWeight: '800' },
   info: { padding: 10, gap: 4 },
   ratingRow: { flexDirection: 'row', alignItems: 'center', gap: 3 },
   ratingText: { fontSize: 10, fontWeight: '800', color: colors.primary },
