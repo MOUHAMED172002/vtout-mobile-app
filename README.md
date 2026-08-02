@@ -67,6 +67,7 @@ Voir `src/context/AuthContext.js`.
 
 ## Fonctionnalités portées
 
+### Espace client
 - Accueil (catégories + grille produits), recherche, liste par catégorie.
 - Fiche produit : galerie d'images, variantes/attributs, favoris, ajout au
   panier, achat immédiat, produits similaires.
@@ -78,13 +79,44 @@ Voir `src/context/AuthContext.js`.
 - Mes commandes / détail de commande, mes favoris, mes adresses.
 - Connexion / inscription / mot de passe oublié.
 
+### Espace vendeur (`src/screens/supplier/`, `SupplierNavigator`)
+Porté depuis le vrai portail vendeur web (`supplier-portal/`, une app
+séparée — pas `frontend/src/component/Supplier` qui est du code mort côté
+web). Tableau de bord, commandes reçues (changement de statut), produits
+(liste, création/édition, activation), portefeuille (solde, historique,
+demande de retrait), boutiques, inscription vendeur.
+
+### Espace livreur (`src/screens/delivery/`, `DeliveryNavigator`)
+Porté depuis `frontend/src/component/Delivery/`. Bascule en/hors service,
+commandes disponibles (filtrables par commune — pas de carte interactive,
+contrairement au web qui utilise mapbox), mes livraisons en cours (statut,
+code de confirmation de livraison, appel client), historique, caisse non
+reversée, candidature livreur (KYC : pièce d'identité, véhicule, zones de
+service).
+
+### Espace admin simplifié (`src/screens/admin/`, `AdminNavigator`)
+Le back-office web fait 64 écrans (paramètres système, finance détaillée,
+CMS blog/FAQ, géographie...) — volontairement **hors périmètre mobile**,
+ça reste sur le site. L'app couvre : tableau de bord (stats clés, alertes
+stock, commandes récentes), commandes (changement de statut), validation
+rapide des vendeurs/produits en attente, utilisateurs (activer/désactiver),
+litiges.
+
+### Bascule entre espaces
+Un compte peut cumuler plusieurs rôles (ex: client + vendeur). Le bouton
+en haut à droite de chaque espace (`SpaceSwitcherButton`) permet de
+basculer, et l'onglet Profil propose "Devenir vendeur" / "Devenir livreur"
+pour les comptes qui n'ont pas encore ces rôles. Voir
+`src/context/SpaceContext.js`.
+
 ## Prochaines étapes suggérées
 
 1. Écran d'avis produits (lecture + dépôt d'un avis) — `reviewService` est
    déjà porté.
 2. Notifications push (le site a un `notificationService` +
    `socket.io-client`, compatible React Native).
-3. Portail fournisseur / espace livreur : hors périmètre de cette app
-   grand public, à traiter comme une app (ou section) dédiée si besoin.
-4. Icônes/splash de production (`assets/`) — ceux fournis sont des
+3. Icônes/splash de production (`assets/`) — ceux fournis sont des
    placeholders Expo par défaut.
+4. Espace admin : si besoin d'aller plus loin, prioriser le CMS
+   (FAQ/blog/politiques) ou les paramètres système en second temps —
+   volontairement laissés au site web pour l'instant.

@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, radius } from '../theme/colors';
 import { useAuth } from '../context/AuthContext';
+import { useSpace } from '../context/SpaceContext';
 import Button from '../components/Button';
 
 const MENU_ITEMS = [
@@ -13,7 +14,8 @@ const MENU_ITEMS = [
 ];
 
 export default function ProfileScreen({ navigation }) {
-  const { isLoaded, isSignedIn, user, profile, signOut } = useAuth();
+  const { isLoaded, isSignedIn, user, profile, signOut, isSupplier, isDelivery, isAdmin } = useAuth();
+  const { switchSpace, availableSpaces } = useSpace();
 
   const handleSignOut = () => {
     Alert.alert('Déconnexion', 'Voulez-vous vraiment vous déconnecter ?', [
@@ -73,6 +75,51 @@ export default function ProfileScreen({ navigation }) {
           ))}
         </View>
 
+        {availableSpaces.length > 1 && (
+          <View>
+            <Text style={styles.sectionLabel}>Mes espaces</Text>
+            <View style={styles.menuCard}>
+              {availableSpaces.filter((s) => s.key !== 'customer').map((s, idx, arr) => (
+                <Pressable
+                  key={s.key}
+                  style={[styles.menuRow, idx === arr.length - 1 && { borderBottomWidth: 0 }]}
+                  onPress={() => switchSpace(s.key)}
+                >
+                  <View style={styles.menuIconWrap}>
+                    <Ionicons name={s.icon} size={18} color={colors.primary} />
+                  </View>
+                  <Text style={styles.menuLabel}>{s.label}</Text>
+                  <Ionicons name="chevron-forward" size={18} color={colors.textFaint} />
+                </Pressable>
+              ))}
+            </View>
+          </View>
+        )}
+
+        {(!isSupplier || !isDelivery) && !isAdmin && (
+          <View>
+            <Text style={styles.sectionLabel}>Vendre ou livrer sur Vtout</Text>
+            <View style={{ gap: 10 }}>
+              {!isSupplier && (
+                <Button
+                  title="Devenir vendeur"
+                  variant="outline"
+                  onPress={() => navigation.navigate('SupplierRegister')}
+                  icon={<Ionicons name="storefront-outline" size={16} color={colors.text} />}
+                />
+              )}
+              {!isDelivery && (
+                <Button
+                  title="Devenir livreur"
+                  variant="outline"
+                  onPress={() => navigation.navigate('BecomeDelivery')}
+                  icon={<Ionicons name="bicycle-outline" size={16} color={colors.text} />}
+                />
+              )}
+            </View>
+          </View>
+        )}
+
         <Button title="Se déconnecter" variant="outline" onPress={handleSignOut} icon={<Ionicons name="log-out-outline" size={16} color={colors.text} />} />
       </ScrollView>
     </SafeAreaView>
@@ -93,6 +140,7 @@ const styles = StyleSheet.create({
   avatarInitial: { color: '#fff', fontSize: 24, fontWeight: '900' },
   name: { fontSize: 18, fontWeight: '900', color: colors.text },
   email: { fontSize: 12, color: colors.textMuted, fontWeight: '600', marginTop: 2 },
+  sectionLabel: { fontSize: 11, fontWeight: '800', color: colors.textMuted, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 10 },
   menuCard: { backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, overflow: 'hidden' },
   menuRow: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, borderBottomWidth: 1, borderBottomColor: colors.border },
   menuIconWrap: { width: 34, height: 34, borderRadius: 10, backgroundColor: 'rgba(243,112,33,0.1)', alignItems: 'center', justifyContent: 'center' },

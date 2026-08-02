@@ -107,6 +107,8 @@ export function AuthProvider({ children }) {
     profile,
     role: profile?.role || user?.role || 'user',
     isAdmin: !!profile?.isAdmin || profile?.role === 'admin',
+    isSupplier: !!profile?.isSupplier || !!profile?.Supplier,
+    isDelivery: !!profile?.isDelivery || !!profile?.DeliveryPerson,
     getToken,
     signIn,
     signUp,

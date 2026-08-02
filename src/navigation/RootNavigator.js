@@ -1,8 +1,12 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { colors } from '../theme/colors';
+import { useSpace } from '../context/SpaceContext';
 
 import TabNavigator from './TabNavigator';
+import SupplierNavigator from './SupplierNavigator';
+import DeliveryNavigator from './DeliveryNavigator';
+import AdminNavigator from './AdminNavigator';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
 import SearchScreen from '../screens/SearchScreen';
 import ProductsListScreen from '../screens/ProductsListScreen';
@@ -15,6 +19,8 @@ import AddressesScreen from '../screens/AddressesScreen';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import ResetPasswordScreen from '../screens/ResetPasswordScreen';
+import SupplierRegisterScreen from '../screens/supplier/SupplierRegisterScreen';
+import BecomeDeliveryScreen from '../screens/delivery/BecomeDeliveryScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,10 +31,21 @@ const headerOptions = {
   headerStyle: { backgroundColor: colors.surface },
 };
 
+// Racine affichée sous "Tabs" : dépend de l'espace actif (client / vendeur /
+// livreur / admin). Un compte qui cumule plusieurs rôles peut basculer via
+// le bouton SpaceSwitcherButton présent dans l'en-tête de chaque espace.
+function SpaceRoot() {
+  const { space } = useSpace();
+  if (space === 'supplier') return <SupplierNavigator />;
+  if (space === 'delivery') return <DeliveryNavigator />;
+  if (space === 'admin') return <AdminNavigator />;
+  return <TabNavigator />;
+}
+
 export default function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={headerOptions}>
-      <Stack.Screen name="Tabs" component={TabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="Tabs" component={SpaceRoot} options={{ headerShown: false }} />
       <Stack.Screen name="ProductDetail" component={ProductDetailScreen} options={{ title: '' }} />
       <Stack.Screen name="Search" component={SearchScreen} options={{ title: 'Recherche' }} />
       <Stack.Screen name="ProductsList" component={ProductsListScreen} options={{ title: 'Produits' }} />
@@ -41,6 +58,8 @@ export default function RootNavigator() {
       <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
       <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} options={{ title: 'Mot de passe oublié' }} />
+      <Stack.Screen name="SupplierRegister" component={SupplierRegisterScreen} options={{ title: 'Devenir vendeur' }} />
+      <Stack.Screen name="BecomeDelivery" component={BecomeDeliveryScreen} options={{ title: 'Candidature livreur' }} />
     </Stack.Navigator>
   );
 }
