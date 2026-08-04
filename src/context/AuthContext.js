@@ -36,9 +36,12 @@ export function AuthProvider({ children }) {
   }, []);
 
   // Retourne { ok: true } normalement, ou { ok: false, deactivated: true }
-  // si l'API applicative refuse l'accès (401) — ce qui signale un compte
-  // désactivé (voir authMiddleware.js : un profil avec deleted_at renseigné
-  // se voit refuser req.auth malgré une session Better Auth valide).
+  // UNIQUEMENT si le serveur signale explicitement code: 'ACCOUNT_DELETED'
+  // (voir authMiddleware.js : un profil avec deleted_at renseigné renvoie ce
+  // code précis). Un 401 "ordinaire" (session pas encore propagée, etc.) ne
+  // doit PAS être interprété comme un compte supprimé — sinon un simple
+  // souci d'authentification transitoire affiche à tort "Ce compte a été
+  // supprimé" à l'utilisateur.
   const fetchProfile = useCallback(async (token) => {
     try {
       const { data } = await api.get('/profiles/me', {
@@ -47,7 +50,8 @@ export function AuthProvider({ children }) {
       setProfile(data || { role: 'user' });
       return { ok: true };
     } catch (err) {
-      if (err?.response?.status === 401) return { ok: false, deactivated: true };
+      if (err?.response?.data?.code === 'ACCOUNT_DELETED') return { ok: false, deactivated: true };
+      if (err?.response?.status === 401) return { ok: false, deactivated: false };
       setProfile({ role: 'user' });
       return { ok: true };
     }
@@ -63,16 +67,26 @@ export function AuthProvider({ children }) {
     try {
       const { data } = await api.get('/auth/get-session');
       if (data?.session && data?.user) {
-        setAuthToken(data.session.id);
-        const profileResult = await fetchProfile(data.session.id);
+        // Better Auth distingue `session.id` (clé primaire de la ligne en
+        // base) de `session.token` (le jeton porteur réellement attendu par
+        // le plugin bearer() et par toutes les routes /auth/* natives).
+        // Utiliser `id` ici cassait silencieusement l'authentification sur
+        // tout appel ultérieur : /profiles/me pouvait parfois s'en sortir
+        // via un repli de compatibilité côté serveur, mais pas les routes
+        // natives Better Auth (sign-out, update-user, get-session suivants),
+        // ce qui provoquait des déconnexions et des faux messages "compte
+        // supprimé".
+        setAuthToken(data.session.token);
+        const profileResult = await fetchProfile(data.session.token);
         if (!profileResult.ok) {
           await signOut();
-          return { deactivated: !!profileResult.deactivated };
+          return { ok: false, deactivated: !!profileResult.deactivated };
         }
         setSession(data.session);
         setUser(data.user);
-        await tokenStorage.setItem(TOKEN_KEY, data.session.id);
+        await tokenStorage.setItem(TOKEN_KEY, data.session.token);
         await AsyncStorage.setItem(USER_CACHE_KEY, JSON.stringify(data.user));
+        return { ok: true };
       } else {
         setAuthToken(null);
         setSession(null);
@@ -89,7 +103,7 @@ export function AuthProvider({ children }) {
     } finally {
       setIsLoaded(true);
     }
-    return {};
+    return { ok: false };
   }, [fetchProfile, signOut]);
 
   useEffect(() => {
@@ -107,10 +121,22 @@ export function AuthProvider({ children }) {
   }, [refreshSession]);
 
   const DEACTIVATED_MESSAGE = 'Ce compte a été supprimé.';
-  const deactivatedError = () => {
-    const err = new Error(DEACTIVATED_MESSAGE);
+  const appError = (message) => {
+    const err = new Error(message);
     err.isAuthAppError = true;
     return err;
+  };
+  const deactivatedError = () => appError(DEACTIVATED_MESSAGE);
+
+  // Après sign-in/sign-up, refreshSession() doit réussir à établir une
+  // session applicative complète. `deactivated` couvre le cas explicite du
+  // compte supprimé ; tout autre échec (result.ok === false) doit quand même
+  // remonter une erreur claire plutôt que de laisser l'écran d'appel penser
+  // que la connexion a réussi alors que l'utilisateur a été silencieusement
+  // déconnecté.
+  const assertSessionEstablished = (result) => {
+    if (result.deactivated) throw deactivatedError();
+    if (!result.ok) throw appError('Connexion impossible. Vérifiez votre connexion et réessayez.');
   };
 
   const signIn = useCallback(async (email, password) => {
@@ -120,14 +146,14 @@ export function AuthProvider({ children }) {
     // /auth/get-session qui suit soit déjà authentifié via le Bearer.
     if (data?.token) setAuthToken(data.token);
     const result = await refreshSession();
-    if (result.deactivated) throw deactivatedError();
+    assertSessionEstablished(result);
   }, [refreshSession]);
 
   const signUp = useCallback(async (email, password, name) => {
     const { data } = await api.post('/auth/sign-up/email', { email, password, name });
     if (data?.token) setAuthToken(data.token);
     const result = await refreshSession();
-    if (result.deactivated) throw deactivatedError();
+    assertSessionEstablished(result);
   }, [refreshSession]);
 
   const requestPasswordReset = useCallback(async (email) => {
@@ -138,7 +164,7 @@ export function AuthProvider({ children }) {
     const { data } = await api.post('/auth/sign-in/social', { provider: 'google', idToken: { token: idToken } });
     if (data?.token) setAuthToken(data.token);
     const result = await refreshSession();
-    if (result.deactivated) throw deactivatedError();
+    assertSessionEstablished(result);
   }, [refreshSession]);
 
   const changePassword = useCallback(async (currentPassword, newPassword) => {
@@ -155,7 +181,7 @@ export function AuthProvider({ children }) {
     await signOut();
   }, [signOut]);
 
-  const getToken = useCallback(async () => session?.id || null, [session?.id]);
+  const getToken = useCallback(async () => session?.token || null, [session?.token]);
 
   const value = useMemo(() => ({
     isLoaded,
@@ -177,7 +203,7 @@ export function AuthProvider({ children }) {
     updateAuthUser,
     deleteAccount,
     refreshSession,
-    refreshProfile: () => session?.id && fetchProfile(session.id),
+    refreshProfile: () => session?.token && fetchProfile(session.token),
   }), [isLoaded, user, profile, session, getToken, signIn, signUp, signInWithGoogle, signOut, requestPasswordReset, changePassword, updateAuthUser, deleteAccount, refreshSession, fetchProfile]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -14,7 +14,7 @@ const baseURL = rawBaseUrl.replace(/\/+$/, '');
 // de better-auth le rejette avec 403 MISSING_OR_NULL_ORIGIN (voir
 // origin-check.mjs : la vérification d'origine ne se déclenche que si un
 // cookie est présent). L'app s'authentifie déjà via le jeton Bearer
-// (session.id, capturé dans AuthContext et persisté dans SecureStore).
+// (session.token, capturé dans AuthContext et persisté dans SecureStore).
 const api = axios.create({
   baseURL,
   withCredentials: false,
