@@ -33,7 +33,7 @@ function getAttributeKeys(variants) {
 
 function uniqueAttributeValues(variants, attr) {
   const s = new Set();
-  variants.forEach((v) => { if (v.combination?.[attr] != null) s.add(v.combination[attr]); });
+  variants.forEach((v) => { if (v.combination?.[attr] != null) s.add(String(v.combination[attr])); });
   return Array.from(s);
 }
 
@@ -79,7 +79,7 @@ export default function ProductDetailScreen({ route, navigation }) {
 
   const matchedVariant = useMemo(() => {
     if (!variants.length || !Object.keys(selectedAttributes).length) return null;
-    return variants.find((v) => Object.entries(selectedAttributes).every(([k, val]) => v.combination?.[k] === val)) || null;
+    return variants.find((v) => Object.entries(selectedAttributes).every(([k, val]) => String(v.combination?.[k]) === String(val))) || null;
   }, [variants, selectedAttributes]);
 
   const { currentPrice, basePrice, isSale, discountPercent } = useMemo(
