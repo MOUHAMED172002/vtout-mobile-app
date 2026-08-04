@@ -27,6 +27,7 @@ export default function SupplierDashboardScreen({ navigation }) {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [balance, setBalance] = useState(0);
+  const [selectedBoutiqueId, setSelectedBoutiqueId] = useState('all');
 
   const load = useCallback(async () => {
     try {
@@ -90,15 +91,33 @@ export default function SupplierDashboardScreen({ navigation }) {
     );
   }
 
-  const approvedCount = products.filter((p) => p.approval_status === 'approved').length;
-  const pendingCount = products.filter((p) => p.approval_status === 'En attente').length;
   const isActive = profile?.status === 'active';
+
+  const matchesBoutique = (boutiqueId, secondaryIds) => {
+    if (selectedBoutiqueId === 'all') return true;
+    if (String(boutiqueId) === String(selectedBoutiqueId)) return true;
+    const secondaries = Array.isArray(secondaryIds) ? secondaryIds : (typeof secondaryIds === 'string' ? JSON.parse(secondaryIds || '[]') : []);
+    return secondaries.some((id) => String(id) === String(selectedBoutiqueId));
+  };
+  const filteredProducts = products.filter((p) => matchesBoutique(p.boutique_id, p.secondary_boutique_ids));
+  const filteredOrders = orders.filter((o) => selectedBoutiqueId === 'all' || String(o.boutique_id) === String(selectedBoutiqueId));
+
+  const approvedCount = filteredProducts.filter((p) => p.approval_status === 'approved').length;
+  const pendingCount = filteredProducts.filter((p) => p.approval_status === 'En attente').length;
 
   const stats = [
     { label: 'Solde portefeuille', value: `${formatPrice(balance)} F`, icon: 'wallet-outline', color: colors.primary },
     { label: 'Produits en ligne', value: approvedCount, icon: 'checkmark-circle-outline', color: colors.success },
     { label: 'En attente', value: pendingCount, icon: 'time-outline', color: colors.warning },
-    { label: 'Commandes', value: orders.length, icon: 'bar-chart-outline', color: colors.secondary },
+    { label: 'Commandes', value: filteredOrders.length, icon: 'bar-chart-outline', color: colors.secondary },
+  ];
+
+  const quickLinks = [
+    { label: 'Mes boutiques', icon: 'storefront-outline', onPress: () => navigation.navigate('SupplierBoutiques') },
+    { label: 'Mes promotions', icon: 'sparkles-outline', onPress: () => navigation.navigate('SupplierPromotions') },
+    { label: 'Mes litiges', icon: 'alert-circle-outline', onPress: () => navigation.navigate('SupplierDisputes') },
+    { label: 'Statistiques', icon: 'stats-chart-outline', onPress: () => navigation.navigate('SupplierStats') },
+    { label: 'Conditions & politiques', icon: 'document-text-outline', onPress: () => navigation.navigate('SupplierPolicies') },
   ];
 
   return (
@@ -122,21 +141,25 @@ export default function SupplierDashboardScreen({ navigation }) {
           <Text style={styles.subGreeting}>Console de gestion marchand</Text>
         </View>
 
-        <View style={{ flexDirection: 'row', gap: 10 }}>
-          <Button
-            title="Ajouter un produit"
-            icon={<Ionicons name="add" size={18} color="#fff" />}
-            disabled={!isActive}
-            onPress={() => navigation.navigate('SupplierProductForm', {})}
-            style={{ flex: 1 }}
-          />
-          <Pressable style={styles.boutiquesBtn} onPress={() => navigation.navigate('SupplierPromotions')}>
-            <Ionicons name="sparkles-outline" size={20} color={colors.text} />
-          </Pressable>
-          <Pressable style={styles.boutiquesBtn} onPress={() => navigation.navigate('SupplierBoutiques')}>
-            <Ionicons name="storefront-outline" size={20} color={colors.text} />
-          </Pressable>
-        </View>
+        <Button
+          title="Ajouter un produit"
+          icon={<Ionicons name="add" size={18} color="#fff" />}
+          disabled={!isActive}
+          onPress={() => navigation.navigate('SupplierProductForm', {})}
+        />
+
+        {boutiques.length > 0 && (
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8 }}>
+            <Pressable style={[styles.boutiquePill, selectedBoutiqueId === 'all' && styles.boutiquePillActive]} onPress={() => setSelectedBoutiqueId('all')}>
+              <Text style={[styles.boutiquePillText, selectedBoutiqueId === 'all' && styles.boutiquePillTextActive]}>Toutes les boutiques</Text>
+            </Pressable>
+            {boutiques.map((b) => (
+              <Pressable key={b.id} style={[styles.boutiquePill, selectedBoutiqueId === b.id && styles.boutiquePillActive]} onPress={() => setSelectedBoutiqueId(b.id)}>
+                <Text style={[styles.boutiquePillText, selectedBoutiqueId === b.id && styles.boutiquePillTextActive]} numberOfLines={1}>{b.name}</Text>
+              </Pressable>
+            ))}
+          </ScrollView>
+        )}
 
         <View style={styles.statsGrid}>
           {stats.map((s) => (
@@ -157,10 +180,10 @@ export default function SupplierDashboardScreen({ navigation }) {
               <Text style={styles.link}>Voir tout</Text>
             </Pressable>
           </View>
-          {products.length === 0 ? (
+          {filteredProducts.length === 0 ? (
             <Text style={styles.emptyText}>Aucun produit pour le moment.</Text>
           ) : (
-            products.slice(0, 5).map((product) => (
+            filteredProducts.slice(0, 5).map((product) => (
               <Pressable key={product.id} style={styles.productRow} onPress={() => navigation.navigate('SupplierProducts')}>
                 {product.images?.[0]?.image_url ? (
                   <Image source={{ uri: getThumbnail(product.images[0].image_url) }} style={styles.productImage} />
@@ -188,10 +211,10 @@ export default function SupplierDashboardScreen({ navigation }) {
               <Text style={[styles.link, { color: colors.primary }]}>Voir tout</Text>
             </Pressable>
           </View>
-          {orders.length === 0 ? (
+          {filteredOrders.length === 0 ? (
             <Text style={styles.emptyTextDark}>Aucune commande pour le moment.</Text>
           ) : (
-            orders.slice(0, 3).map((order) => (
+            filteredOrders.slice(0, 3).map((order) => (
               <Pressable key={order.id} style={styles.orderRowDark} onPress={() => navigation.navigate('SupplierOrderDetail', { id: order.id })}>
                 <View style={{ flex: 1 }}>
                   <Text style={styles.orderIdDark}>Commande #{String(order.id).substring(0, 8)}</Text>
@@ -203,6 +226,21 @@ export default function SupplierDashboardScreen({ navigation }) {
               </Pressable>
             ))
           )}
+        </View>
+
+        <View style={styles.sectionCard}>
+          <Text style={styles.sectionTitle}>Accès rapide</Text>
+          <View style={{ gap: 8 }}>
+            {quickLinks.map((item) => (
+              <Pressable key={item.label} style={styles.quickLinkRow} onPress={item.onPress}>
+                <View style={styles.quickLinkIcon}>
+                  <Ionicons name={item.icon} size={18} color={colors.primary} />
+                </View>
+                <Text style={styles.quickLinkLabel}>{item.label}</Text>
+                <Ionicons name="chevron-forward" size={16} color={colors.textFaint} />
+              </Pressable>
+            ))}
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -223,10 +261,13 @@ const createStyles = (colors) => StyleSheet.create({
   noticeSubtitle: { fontSize: 11, color: colors.textMuted, fontWeight: '600', marginTop: 2 },
   greeting: { fontSize: 22, fontWeight: '900', color: colors.text },
   subGreeting: { fontSize: 11, color: colors.textMuted, fontWeight: '700', textTransform: 'uppercase', letterSpacing: 1, marginTop: 2 },
-  boutiquesBtn: {
-    width: 52, height: 52, borderRadius: radius.md, borderWidth: 2, borderColor: colors.border,
-    alignItems: 'center', justifyContent: 'center',
+  boutiquePill: {
+    paddingHorizontal: 14, paddingVertical: 9, borderRadius: radius.full,
+    backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border,
   },
+  boutiquePillActive: { backgroundColor: colors.text, borderColor: colors.text },
+  boutiquePillText: { fontSize: 10.5, fontWeight: '800', color: colors.textMuted, textTransform: 'uppercase' },
+  boutiquePillTextActive: { color: colors.surface },
   statsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   statCard: {
     flexBasis: '47%', flexGrow: 1, backgroundColor: colors.surface, borderRadius: radius.lg,
@@ -254,4 +295,13 @@ const createStyles = (colors) => StyleSheet.create({
   },
   orderIdDark: { fontSize: 13, fontWeight: '800', color: '#fff' },
   orderSubDark: { fontSize: 11, color: 'rgba(255,255,255,0.5)', fontWeight: '600', marginTop: 2 },
+  quickLinkRow: {
+    flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: colors.background,
+    borderRadius: radius.md, padding: 12,
+  },
+  quickLinkIcon: {
+    width: 34, height: 34, borderRadius: 12, backgroundColor: `${colors.primary}15`,
+    alignItems: 'center', justifyContent: 'center',
+  },
+  quickLinkLabel: { flex: 1, fontSize: 12.5, fontWeight: '700', color: colors.text },
 });

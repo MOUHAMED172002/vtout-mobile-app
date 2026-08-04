@@ -16,6 +16,9 @@ import SupplierWalletScreen from '../screens/supplier/SupplierWalletScreen';
 import SupplierBoutiquesScreen from '../screens/supplier/SupplierBoutiquesScreen';
 import SupplierRegisterScreen from '../screens/supplier/SupplierRegisterScreen';
 import SupplierPromotionsScreen from '../screens/supplier/SupplierPromotionsScreen';
+import SupplierDisputesScreen from '../screens/supplier/SupplierDisputesScreen';
+import SupplierStatsScreen from '../screens/supplier/SupplierStatsScreen';
+import SupplierPoliciesScreen from '../screens/supplier/SupplierPoliciesScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -77,6 +80,9 @@ export default function SupplierNavigator() {
       <Stack.Screen name="SupplierBoutiques" component={SupplierBoutiquesScreen} options={{ title: 'Mes boutiques' }} />
       <Stack.Screen name="SupplierRegister" component={SupplierRegisterScreen} options={{ title: 'Devenir vendeur' }} />
       <Stack.Screen name="SupplierPromotions" component={SupplierPromotionsScreen} options={{ title: 'Mes promotions' }} />
+      <Stack.Screen name="SupplierDisputes" component={SupplierDisputesScreen} options={{ title: 'Mes litiges' }} />
+      <Stack.Screen name="SupplierStats" component={SupplierStatsScreen} options={{ title: 'Statistiques' }} />
+      <Stack.Screen name="SupplierPolicies" component={SupplierPoliciesScreen} options={{ title: 'Conditions & politiques' }} />
     </Stack.Navigator>
   );
 }
