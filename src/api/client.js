@@ -8,9 +8,16 @@ const rawBaseUrl =
 
 const baseURL = rawBaseUrl.replace(/\/+$/, '');
 
+// withCredentials désactivé volontairement : React Native n'envoie jamais
+// d'en-tête Origin (concept propre aux navigateurs), donc s'il attache un
+// cookie de session (via withCredentials) sans Origin, le middleware CSRF
+// de better-auth le rejette avec 403 MISSING_OR_NULL_ORIGIN (voir
+// origin-check.mjs : la vérification d'origine ne se déclenche que si un
+// cookie est présent). L'app s'authentifie déjà via le jeton Bearer
+// (session.id, capturé dans AuthContext et persisté dans SecureStore).
 const api = axios.create({
   baseURL,
-  withCredentials: true,
+  withCredentials: false,
   headers: { Accept: 'application/json' },
 });
 

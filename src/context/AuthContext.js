@@ -70,12 +70,17 @@ export function AuthProvider({ children }) {
   }, [refreshSession]);
 
   const signIn = useCallback(async (email, password) => {
-    await api.post('/auth/sign-in/email', { email, password });
+    const { data } = await api.post('/auth/sign-in/email', { email, password });
+    // Sans withCredentials, aucun cookie n'est reçu/renvoyé : on récupère le
+    // jeton directement dans le corps de la réponse pour que l'appel
+    // /auth/get-session qui suit soit déjà authentifié via le Bearer.
+    if (data?.token) setAuthToken(data.token);
     await refreshSession();
   }, [refreshSession]);
 
   const signUp = useCallback(async (email, password, name) => {
-    await api.post('/auth/sign-up/email', { email, password, name });
+    const { data } = await api.post('/auth/sign-up/email', { email, password, name });
+    if (data?.token) setAuthToken(data.token);
     await refreshSession();
   }, [refreshSession]);
 
