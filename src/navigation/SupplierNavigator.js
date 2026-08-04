@@ -15,6 +15,7 @@ import SupplierProductFormScreen from '../screens/supplier/SupplierProductFormSc
 import SupplierWalletScreen from '../screens/supplier/SupplierWalletScreen';
 import SupplierBoutiquesScreen from '../screens/supplier/SupplierBoutiquesScreen';
 import SupplierRegisterScreen from '../screens/supplier/SupplierRegisterScreen';
+import SupplierPromotionsScreen from '../screens/supplier/SupplierPromotionsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -75,6 +76,7 @@ export default function SupplierNavigator() {
       <Stack.Screen name="SupplierProductForm" component={SupplierProductFormScreen} options={{ title: 'Produit' }} />
       <Stack.Screen name="SupplierBoutiques" component={SupplierBoutiquesScreen} options={{ title: 'Mes boutiques' }} />
       <Stack.Screen name="SupplierRegister" component={SupplierRegisterScreen} options={{ title: 'Devenir vendeur' }} />
+      <Stack.Screen name="SupplierPromotions" component={SupplierPromotionsScreen} options={{ title: 'Mes promotions' }} />
     </Stack.Navigator>
   );
 }

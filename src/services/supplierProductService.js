@@ -138,3 +138,19 @@ export const computePublicPrice = (supplierPrice, tiers) => {
   const fee = computeDeliveryFee(supplierPrice, tiers);
   return Math.round((parseFloat(supplierPrice) || 0) + fee);
 };
+
+// Retrouve le prix vendeur (gros) à partir d'un prix public déjà calculé,
+// en recherchant le palier dont (prix public - frais) retombe dans sa plage.
+export const reverseSupplierPrice = (publicPrice, tiers) => {
+  const pub = parseFloat(publicPrice) || 0;
+  if (pub === 0) return 0;
+  const currentTiers = tiers && tiers.length > 0 ? tiers : DEFAULT_TIERS;
+  for (const tier of currentTiers) {
+    const candidate = pub - tier.fee;
+    if (candidate >= tier.min && candidate < (tier.max || Infinity)) {
+      return Math.round(candidate);
+    }
+  }
+  const lastFee = currentTiers[currentTiers.length - 1]?.fee || 1000;
+  return Math.max(0, Math.round(pub - lastFee));
+};

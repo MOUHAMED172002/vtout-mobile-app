@@ -130,6 +130,9 @@ export default function SupplierDashboardScreen({ navigation }) {
             onPress={() => navigation.navigate('SupplierProductForm', {})}
             style={{ flex: 1 }}
           />
+          <Pressable style={styles.boutiquesBtn} onPress={() => navigation.navigate('SupplierPromotions')}>
+            <Ionicons name="sparkles-outline" size={20} color={colors.text} />
+          </Pressable>
           <Pressable style={styles.boutiquesBtn} onPress={() => navigation.navigate('SupplierBoutiques')}>
             <Ionicons name="storefront-outline" size={20} color={colors.text} />
           </Pressable>

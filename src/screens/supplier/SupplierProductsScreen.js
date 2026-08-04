@@ -96,7 +96,7 @@ export default function SupplierProductsScreen({ navigation }) {
       <FlatList
         data={filtered}
         keyExtractor={(item) => String(item.id)}
-        contentContainerStyle={{ padding: 16, paddingTop: 0, gap: 10 }}
+        contentContainerStyle={{ padding: 16, paddingTop: 0, gap: 10, paddingBottom: 90 }}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); load(); }} tintColor={colors.primary} />}
         ListEmptyComponent={<EmptyState icon="cube-outline" title="Aucun produit" subtitle="Ajoutez votre premier produit pour commencer à vendre." />}
         renderItem={({ item }) => {
@@ -147,6 +147,10 @@ export default function SupplierProductsScreen({ navigation }) {
           );
         }}
       />
+
+      <Pressable style={styles.fab} onPress={() => navigation.navigate('SupplierProductForm', {})}>
+        <Ionicons name="add" size={22} color="#fff" />
+      </Pressable>
     </SafeAreaView>
   );
 }
@@ -171,4 +175,9 @@ const createStyles = (colors) => StyleSheet.create({
   actionsRow: { flexDirection: 'row', gap: 16 },
   actionBtn: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   actionText: { fontSize: 11, fontWeight: '800', textTransform: 'uppercase' },
+  fab: {
+    position: 'absolute', right: 16, bottom: 16, width: 56, height: 56, borderRadius: 28,
+    backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center',
+    shadowColor: '#000', shadowOpacity: 0.25, shadowRadius: 10, shadowOffset: { width: 0, height: 6 }, elevation: 8,
+  },
 });
