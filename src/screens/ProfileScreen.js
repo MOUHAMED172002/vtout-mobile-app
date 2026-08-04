@@ -101,6 +101,38 @@ export default function ProfileScreen({ navigation }) {
           ))}
         </View>
 
+        {(!isSupplier || !isDelivery) && !isAdmin && (
+          <View>
+            <Text style={styles.sectionLabel}>Gagnez de l'argent avec Vtout</Text>
+            <View style={{ gap: 12 }}>
+              {!isSupplier && (
+                <Pressable style={styles.opportunityCard} onPress={() => navigation.navigate('SupplierRegister')}>
+                  <View style={[styles.opportunityIconWrap, { backgroundColor: colors.primary }]}>
+                    <Ionicons name="storefront" size={22} color="#fff" />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.opportunityTitle}>Devenir vendeur</Text>
+                    <Text style={styles.opportunitySubtitle}>Ouvrez votre boutique et vendez à des milliers de clients.</Text>
+                  </View>
+                  <Ionicons name="chevron-forward" size={20} color={colors.textFaint} />
+                </Pressable>
+              )}
+              {!isDelivery && (
+                <Pressable style={styles.opportunityCard} onPress={() => navigation.navigate('BecomeDelivery')}>
+                  <View style={[styles.opportunityIconWrap, { backgroundColor: colors.secondary }]}>
+                    <Ionicons name="bicycle" size={22} color="#fff" />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.opportunityTitle}>Devenir livreur</Text>
+                    <Text style={styles.opportunitySubtitle}>Livrez des commandes près de chez vous et soyez payé.</Text>
+                  </View>
+                  <Ionicons name="chevron-forward" size={20} color={colors.textFaint} />
+                </Pressable>
+              )}
+            </View>
+          </View>
+        )}
+
         <View>
           <View style={styles.sectionHeaderRow}>
             <Text style={styles.sectionLabel}>Mes commandes</Text>
@@ -163,30 +195,6 @@ export default function ProfileScreen({ navigation }) {
             </View>
           </View>
         )}
-
-        {(!isSupplier || !isDelivery) && !isAdmin && (
-          <View>
-            <Text style={styles.sectionLabel}>Vendre ou livrer sur Vtout</Text>
-            <View style={{ gap: 10 }}>
-              {!isSupplier && (
-                <Button
-                  title="Devenir vendeur"
-                  variant="outline"
-                  onPress={() => navigation.navigate('SupplierRegister')}
-                  icon={<Ionicons name="storefront-outline" size={16} color={colors.text} />}
-                />
-              )}
-              {!isDelivery && (
-                <Button
-                  title="Devenir livreur"
-                  variant="outline"
-                  onPress={() => navigation.navigate('BecomeDelivery')}
-                  icon={<Ionicons name="bicycle-outline" size={16} color={colors.text} />}
-                />
-              )}
-            </View>
-          </View>
-        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -201,6 +209,13 @@ const createStyles = (colors) => StyleSheet.create({
   },
   guestTitle: { fontSize: 19, fontWeight: '900', color: colors.text, textAlign: 'center' },
   guestSubtitle: { fontSize: 13, color: colors.textMuted, fontWeight: '600', textAlign: 'center', marginTop: 6 },
+  opportunityCard: {
+    flexDirection: 'row', alignItems: 'center', gap: 14, backgroundColor: colors.surface,
+    borderRadius: radius.lg, borderWidth: 1.5, borderColor: colors.border, padding: 14,
+  },
+  opportunityIconWrap: { width: 48, height: 48, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
+  opportunityTitle: { fontSize: 14.5, fontWeight: '900', color: colors.text },
+  opportunitySubtitle: { fontSize: 11.5, fontWeight: '600', color: colors.textMuted, marginTop: 2, lineHeight: 15 },
   profileHeader: { flexDirection: 'row', alignItems: 'center', gap: 14 },
   avatarPress: { position: 'relative' },
   avatar: { width: 60, height: 60, borderRadius: 30, backgroundColor: colors.secondary, alignItems: 'center', justifyContent: 'center' },

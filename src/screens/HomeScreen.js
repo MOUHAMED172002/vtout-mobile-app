@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { radius } from '../theme/colors';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 import { getProducts, getCategories } from '../services/productService';
 import ProductCard from '../components/ProductCard';
 import Loading from '../components/Loading';
@@ -15,6 +16,8 @@ import { resolveCategoryIcon } from '../utils/categoryIcon';
 export default function HomeScreen({ navigation }) {
   const { colors } = useTheme();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
+  const { isSignedIn, isSupplier, isDelivery, isAdmin } = useAuth();
+  const showOpportunities = isSignedIn && !isAdmin && (!isSupplier || !isDelivery);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [activeParentId, setActiveParentId] = useState(null);
@@ -168,6 +171,33 @@ export default function HomeScreen({ navigation }) {
         </View>
       )}
 
+      {showOpportunities && (
+        <View style={[styles.section, { paddingHorizontal: 16 }]}>
+          <View style={styles.opportunityRow}>
+            {!isSupplier && (
+              <Pressable
+                style={[styles.opportunityCard, { backgroundColor: colors.primary }]}
+                onPress={() => navigation.navigate('SupplierRegister')}
+              >
+                <Ionicons name="storefront" size={22} color="#fff" />
+                <Text style={styles.opportunityCardTitle}>Devenir vendeur</Text>
+                <Text style={styles.opportunityCardSubtitle}>Ouvrez votre boutique</Text>
+              </Pressable>
+            )}
+            {!isDelivery && (
+              <Pressable
+                style={[styles.opportunityCard, { backgroundColor: colors.secondary }]}
+                onPress={() => navigation.navigate('BecomeDelivery')}
+              >
+                <Ionicons name="bicycle" size={22} color="#fff" />
+                <Text style={styles.opportunityCardTitle}>Devenir livreur</Text>
+                <Text style={styles.opportunityCardSubtitle}>Livrez et soyez payé</Text>
+              </Pressable>
+            )}
+          </View>
+        </View>
+      )}
+
       <View style={[styles.section, { paddingHorizontal: 16 }]}>
         <View style={styles.eyebrowRow}>
           <Ionicons name="sparkles" size={12} color={colors.primary} />
@@ -236,6 +266,10 @@ const createStyles = (colors) => StyleSheet.create({
   },
   promoHeroImageBack: { right: 20, top: -10, opacity: 0.85 },
   section: { marginBottom: 24, gap: 4 },
+  opportunityRow: { flexDirection: 'row', gap: 10 },
+  opportunityCard: { flex: 1, borderRadius: radius.lg, padding: 14, gap: 4 },
+  opportunityCardTitle: { color: '#fff', fontSize: 13.5, fontWeight: '900', marginTop: 6 },
+  opportunityCardSubtitle: { color: 'rgba(255,255,255,0.85)', fontSize: 10.5, fontWeight: '700' },
   eyebrowRow: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, marginBottom: 6 },
   eyebrowText: { fontSize: 10.5, fontWeight: '800', color: colors.primary, textTransform: 'uppercase', letterSpacing: 1 },
   blockTitle: { fontSize: 26, fontWeight: '900', color: colors.wine, paddingHorizontal: 16, marginBottom: 14 },

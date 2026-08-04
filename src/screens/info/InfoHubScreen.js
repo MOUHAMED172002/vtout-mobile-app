@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { radius } from '../../theme/colors';
 import { useTheme } from '../../context/ThemeContext';
+import { useAuth } from '../../context/AuthContext';
 
 const SECTIONS = [
   {
@@ -14,6 +15,13 @@ const SECTIONS = [
       { label: 'Promotions', icon: 'flash-outline', route: 'Promotions' },
       { label: 'Blog', icon: 'newspaper-outline', route: 'BlogList' },
       { label: 'Témoignages', icon: 'chatbubbles-outline', route: 'Testimonials' },
+    ],
+  },
+  {
+    label: 'Vendre ou livrer',
+    items: [
+      { label: 'Devenir vendeur', icon: 'storefront-outline', route: 'SupplierRegister', requiresAuth: true },
+      { label: 'Devenir livreur', icon: 'bicycle-outline', route: 'BecomeDelivery', requiresAuth: true },
     ],
   },
   {
@@ -38,6 +46,16 @@ const SECTIONS = [
 export default function InfoHubScreen({ navigation }) {
   const { colors } = useTheme();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
+  const { isSignedIn } = useAuth();
+
+  const handlePress = (item) => {
+    if (item.requiresAuth && !isSignedIn) {
+      navigation.navigate('Login');
+      return;
+    }
+    navigation.navigate(item.route, item.params);
+  };
+
   return (
     <SafeAreaView style={styles.safe} edges={['bottom']}>
       <ScrollView contentContainerStyle={{ padding: 16, gap: 22 }}>
@@ -49,7 +67,7 @@ export default function InfoHubScreen({ navigation }) {
                 <Pressable
                   key={item.label}
                   style={[styles.row, idx === section.items.length - 1 && { borderBottomWidth: 0 }]}
-                  onPress={() => navigation.navigate(item.route, item.params)}
+                  onPress={() => handlePress(item)}
                 >
                   <View style={styles.iconWrap}>
                     <Ionicons name={item.icon} size={17} color={colors.primary} />
