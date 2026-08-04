@@ -1,13 +1,16 @@
-import React from 'react';
-import { View, Text, FlatList, Pressable, StyleSheet, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, Pressable, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { radius } from '../theme/colors';
 import { useTheme } from '../context/ThemeContext';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import { getProducts } from '../services/productService';
+import { getUserFavorites } from '../services/favoriteService';
 import { formatPrice, getThumbnail } from '../utils/format';
 import Button from '../components/Button';
+import ProductCard from '../components/ProductCard';
 import EmptyState from '../components/EmptyState';
 import Loading from '../components/Loading';
 
@@ -15,7 +18,53 @@ export default function CartScreen({ navigation }) {
   const { colors } = useTheme();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { cart, loading, updateQuantity, removeFromCart } = useCart();
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, getToken } = useAuth();
+
+  const [suggestions, setSuggestions] = useState([]);
+  const [suggestLoading, setSuggestLoading] = useState(false);
+
+  // Panier vide : on propose des produits des mêmes catégories que les
+  // favoris de l'utilisateur (à défaut, une sélection générique), pour ne
+  // jamais laisser la page complètement vide.
+  useEffect(() => {
+    if (cart.length > 0) return;
+    let cancelled = false;
+    (async () => {
+      setSuggestLoading(true);
+      try {
+        let picked = [];
+        if (isSignedIn) {
+          const token = await getToken();
+          const favorites = await getUserFavorites(token).catch(() => []);
+          const favProductIds = new Set(favorites.map((f) => f.product_id || f.product?.id));
+          const categoryIds = [...new Set(
+            favorites.map((f) => f.product?.category_id).filter(Boolean)
+          )].slice(0, 2);
+
+          if (categoryIds.length > 0) {
+            const results = await Promise.all(
+              categoryIds.map((category_id) => getProducts({ category_id, limit: 8 }).catch(() => []))
+            );
+            const merged = results.flatMap((r) => r.products || r || []);
+            const seen = new Set();
+            picked = merged.filter((p) => {
+              if (favProductIds.has(p.id) || seen.has(p.id)) return false;
+              seen.add(p.id);
+              return true;
+            });
+          }
+        }
+        if (picked.length === 0) {
+          const data = await getProducts({ limit: 10 }).catch(() => []);
+          picked = data.products || data || [];
+        }
+        if (!cancelled) setSuggestions(picked.slice(0, 10));
+      } finally {
+        if (!cancelled) setSuggestLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [cart.length, isSignedIn, getToken]);
 
   const total = cart.reduce((sum, item) => sum + Number(item.price_snapshot || item.price || 0) * (item.quantity || 1), 0);
 
@@ -45,13 +94,34 @@ export default function CartScreen({ navigation }) {
       <Text style={styles.header}>Mon panier</Text>
 
       {cart.length === 0 ? (
-        <EmptyState
-          icon="cart-outline"
-          title="Votre panier est vide"
-          subtitle="Ajoutez des produits pour commencer vos achats."
-          action={
-            <Button title="Découvrir la boutique" onPress={() => navigation.navigate('Tabs', { screen: 'Accueil' })} style={{ marginTop: 16, paddingHorizontal: 32 }} />
+        <FlatList
+          data={suggestions}
+          keyExtractor={(item) => String(item.id)}
+          numColumns={2}
+          columnWrapperStyle={{ gap: 12, paddingHorizontal: 16 }}
+          contentContainerStyle={{ gap: 12, paddingBottom: 24 }}
+          ListHeaderComponent={
+            <View>
+              <EmptyState
+                icon="cart-outline"
+                title="Votre panier est vide"
+                subtitle="Ajoutez des produits pour commencer vos achats."
+                action={
+                  <Button title="Découvrir la boutique" onPress={() => navigation.navigate('Tabs', { screen: 'Accueil' })} style={{ marginTop: 16, paddingHorizontal: 32 }} />
+                }
+              />
+              {suggestLoading ? (
+                <ActivityIndicator color={colors.primary} style={{ marginBottom: 16 }} />
+              ) : suggestions.length > 0 ? (
+                <Text style={styles.suggestTitle}>
+                  {isSignedIn ? 'Inspiré de vos favoris' : 'Ça pourrait vous plaire'}
+                </Text>
+              ) : null}
+            </View>
           }
+          renderItem={({ item }) => (
+            <ProductCard product={item} onPress={() => navigation.navigate('ProductDetail', { id: item.id })} />
+          )}
         />
       ) : (
         <>
@@ -111,6 +181,7 @@ export default function CartScreen({ navigation }) {
 const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   header: { fontSize: 24, fontWeight: '900', color: colors.text, paddingHorizontal: 16, paddingTop: 12 },
+  suggestTitle: { fontSize: 15, fontWeight: '900', color: colors.text, paddingHorizontal: 16, marginBottom: 12 },
   itemRow: {
     flexDirection: 'row', gap: 12, backgroundColor: colors.surface, padding: 12,
     borderRadius: radius.md, borderWidth: 1, borderColor: colors.border, alignItems: 'center',
