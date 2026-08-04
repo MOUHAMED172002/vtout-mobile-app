@@ -102,6 +102,7 @@ export default function AdminDashboardScreen({ navigation }) {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Accès rapide</Text>
           <View style={styles.quickActions}>
+            <QuickAction label="Analyses des ventes" icon="stats-chart-outline" onPress={() => navigation.navigate('AdminSalesAnalytics')} />
             <QuickAction label="Commandes" icon="receipt-outline" onPress={() => navigation.navigate('AdminOrders')} />
             <QuickAction label="Validations vendeurs & produits" icon="checkmark-done-outline" onPress={() => navigation.navigate('AdminApprovals')} />
             <QuickAction label="Utilisateurs" icon="people-outline" onPress={() => navigation.navigate('AdminUsers')} />

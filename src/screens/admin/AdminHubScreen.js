@@ -7,6 +7,12 @@ import { useTheme } from '../../context/ThemeContext';
 
 const SECTIONS = [
   {
+    label: 'Dashboard',
+    items: [
+      { label: 'Analyses des ventes', icon: 'stats-chart-outline', route: 'AdminSalesAnalytics' },
+    ],
+  },
+  {
     label: 'Produits',
     items: [
       { label: 'Tous les produits', icon: 'cube-outline', route: 'AdminProducts' },

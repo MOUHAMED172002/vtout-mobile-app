@@ -33,6 +33,7 @@ import AdminConfigScreen from '../screens/admin/AdminConfigScreen';
 import AdminGeographyScreen from '../screens/admin/AdminGeographyScreen';
 import AdminDeliveryFeeTiersScreen from '../screens/admin/AdminDeliveryFeeTiersScreen';
 import AdminDeliveryMultiplierScreen from '../screens/admin/AdminDeliveryMultiplierScreen';
+import AdminSalesAnalyticsScreen from '../screens/admin/AdminSalesAnalyticsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -113,6 +114,7 @@ export default function AdminNavigator() {
       <Stack.Screen name="AdminGeography" component={AdminGeographyScreen} options={{ title: 'Géographie' }} />
       <Stack.Screen name="AdminDeliveryFeeTiers" component={AdminDeliveryFeeTiersScreen} options={{ title: 'Frais de livraison' }} />
       <Stack.Screen name="AdminDeliveryMultiplier" component={AdminDeliveryMultiplierScreen} options={{ title: 'Coefficient livreur' }} />
+      <Stack.Screen name="AdminSalesAnalytics" component={AdminSalesAnalyticsScreen} options={{ title: 'Analyses des ventes' }} />
     </Stack.Navigator>
   );
 }
