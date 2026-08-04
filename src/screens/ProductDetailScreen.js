@@ -282,13 +282,11 @@ export default function ProductDetailScreen({ route, navigation }) {
           {related.length > 0 && (
             <View style={styles.relatedBlock}>
               <Text style={styles.sectionTitle}>Produits similaires</Text>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 12 }}>
+              <View style={styles.relatedGrid}>
                 {related.slice(0, 8).map((p) => (
-                  <View key={p.id} style={{ width: 160 }}>
-                    <ProductCard product={p} onPress={() => navigation.push('ProductDetail', { id: p.id })} />
-                  </View>
+                  <ProductCard key={p.id} product={p} onPress={() => navigation.push('ProductDetail', { id: p.id })} />
                 ))}
-              </ScrollView>
+              </View>
             </View>
           )}
         </View>
@@ -358,6 +356,7 @@ const createStyles = (colors) => StyleSheet.create({
   sectionTitle: { fontSize: 15, fontWeight: '900', color: colors.text },
   description: { fontSize: 13, color: colors.textMuted, lineHeight: 20 },
   relatedBlock: { gap: 10, marginTop: 12 },
+  relatedGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
   footer: {
     flexDirection: 'row', gap: 10, padding: 16, paddingBottom: 24,
     backgroundColor: colors.surface, borderTopWidth: 1, borderTopColor: colors.border,
