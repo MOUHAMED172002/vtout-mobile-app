@@ -10,6 +10,7 @@ const SECTIONS = [
     label: 'Dashboard',
     items: [
       { label: 'Analyses des ventes', icon: 'stats-chart-outline', route: 'AdminSalesAnalytics' },
+      { label: 'Mots-clés recherchés', icon: 'search-outline', route: 'AdminSearchAnalytics' },
     ],
   },
   {

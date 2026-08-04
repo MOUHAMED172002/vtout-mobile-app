@@ -9,3 +9,11 @@ export const getDashboardStats = async (token, period = '30J') => {
   });
   return data;
 };
+
+// Recherches sans résultat côté client (utile pour repérer des besoins produits non couverts).
+export const getFailedSearches = async (token) => {
+  const { data } = await api.get('/stats/search-analytics', {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return data;
+};
