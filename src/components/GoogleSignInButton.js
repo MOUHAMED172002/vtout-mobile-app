@@ -11,6 +11,14 @@ import { useAuth } from '../context/AuthContext';
 WebBrowser.maybeCompleteAuthSession();
 
 const extra = Constants.expoConfig?.extra || {};
+const isGoogleConfigured = !!extra.googleWebClientId;
+// expo-auth-session lève une exception synchrone pendant le rendu
+// (useMemo) si le client id résolu pour la plateforme courante est vide —
+// ce qui plantait tout l'écran de connexion/inscription quand la config
+// Google n'était pas (encore) chargée. On donne toujours une valeur de
+// repli non vide au hook pour qu'il ne puisse jamais crasher, et on
+// n'affiche/n'active le bouton que si la vraie configuration est présente.
+const SAFE_PLACEHOLDER_CLIENT_ID = 'not-configured.apps.googleusercontent.com';
 
 export default function GoogleSignInButton({ onSuccess }) {
   const { colors } = useTheme();
@@ -20,7 +28,8 @@ export default function GoogleSignInButton({ onSuccess }) {
 
   const [request, response, promptAsync] = Google.useAuthRequest(
     {
-      clientId: extra.googleWebClientId,
+      clientId: extra.googleWebClientId || SAFE_PLACEHOLDER_CLIENT_ID,
+      webClientId: extra.googleWebClientId || SAFE_PLACEHOLDER_CLIENT_ID,
       iosClientId: extra.googleIosClientId || undefined,
       androidClientId: extra.googleAndroidClientId || undefined,
       scopes: ['openid', 'profile', 'email'],
@@ -42,6 +51,8 @@ export default function GoogleSignInButton({ onSuccess }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);
+
+  if (!isGoogleConfigured) return null;
 
   return (
     <View style={styles.wrap}>
