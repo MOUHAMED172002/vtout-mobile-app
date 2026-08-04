@@ -40,7 +40,9 @@ export default function ReferralScreen() {
   useEffect(() => { load(); }, [load]);
 
   const shareMessage = info
-    ? `Rejoins-moi sur Vtout et profite d'un coupon de bienvenue de ${formatPrice(info.referredReward)} FCFA ! 🎁\n\nUtilise mon code de parrainage : ${info.code}\n\n${info.shareUrl}`
+    ? (info.referredReward > 0
+        ? `Rejoins-moi sur Vtout et profite d'un coupon de bienvenue de ${formatPrice(info.referredReward)} FCFA ! 🎁\n\nUtilise mon code de parrainage : ${info.code}\n\n${info.shareUrl}`
+        : `Rejoins-moi sur Vtout !\n\nUtilise mon code de parrainage : ${info.code}\n\n${info.shareUrl}`)
     : '';
 
   const handleShare = async () => {
@@ -79,7 +81,9 @@ export default function ReferralScreen() {
         </View>
         <Text style={styles.title}>Parrainez, gagnez</Text>
         <Text style={styles.subtitle}>
-          Offrez {formatPrice(info.referredReward)} FCFA à vos amis et recevez {formatPrice(info.referrerReward)} FCFA dès leur première commande.
+          {info.referredReward > 0 || info.referrerReward > 0
+            ? `Offrez ${formatPrice(info.referredReward)} FCFA à vos amis et recevez ${formatPrice(info.referrerReward)} FCFA dès leur première commande.`
+            : "Invitez vos amis sur Vtout avec votre code personnel."}
         </Text>
 
         <View style={styles.codeBox}>

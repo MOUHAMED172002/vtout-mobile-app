@@ -12,13 +12,14 @@ import Button from '../../components/Button';
 // Ordre d'affichage des groupes connus (voir server/seedConfigs.js). Le
 // groupe 'marketplace' (delivery_fee_tiers / delivery_fee_multiplier_tiers)
 // est volontairement exclu ici : ces clés ont leurs propres écrans dédiés.
-const GROUP_ORDER = ['branding', 'contact', 'social', 'features', 'supplier_landing', 'api', 'whatsapp', 'cloudinary'];
+const GROUP_ORDER = ['branding', 'contact', 'social', 'features', 'supplier_landing', 'referral', 'api', 'whatsapp', 'cloudinary'];
 const GROUP_LABELS = {
   branding: 'Image de marque',
   contact: 'Contact',
   social: 'Réseaux sociaux',
   features: 'Fonctionnalités',
   supplier_landing: 'Page vendeur',
+  referral: 'Parrainage',
   api: 'API & services',
   whatsapp: 'WhatsApp API',
   cloudinary: 'Cloudinary',
