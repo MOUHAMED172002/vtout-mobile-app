@@ -14,6 +14,7 @@ import { getOrderStatusLabel } from '../../utils/orderStatus';
 import Loading from '../../components/Loading';
 import Button from '../../components/Button';
 import EmptyState from '../../components/EmptyState';
+import { navigate as navigateGlobal } from '../../navigation/navigationRef';
 
 export default function SupplierDashboardScreen({ navigation }) {
   const { colors } = useTheme();
@@ -118,6 +119,7 @@ export default function SupplierDashboardScreen({ navigation }) {
     { label: 'Mes litiges', icon: 'alert-circle-outline', onPress: () => navigation.navigate('SupplierDisputes') },
     { label: 'Statistiques', icon: 'stats-chart-outline', onPress: () => navigation.navigate('SupplierStats') },
     { label: 'Conditions & politiques', icon: 'document-text-outline', onPress: () => navigation.navigate('SupplierPolicies') },
+    { label: 'Support Vtout', icon: 'chatbox-ellipses-outline', onPress: () => navigateGlobal('SupportChat') },
   ];
 
   return (

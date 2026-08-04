@@ -7,8 +7,10 @@ import { useAuth } from '../context/AuthContext';
 import { useSpace } from '../context/SpaceContext';
 import { navigate } from '../navigation/navigationRef';
 
-// Bulle flottante de support, visible dans l'espace client uniquement
-// (équivalent mobile du SupportChat du site web).
+// Bulle flottante de support, visible dans les espaces client et vendeur
+// (équivalent mobile du SupportChat du site web / supplier-portal).
+const SUPPORTED_SPACES = ['customer', 'supplier'];
+
 export default function SupportChatBubble() {
   const { colors } = useTheme();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
@@ -16,7 +18,7 @@ export default function SupportChatBubble() {
   const { space } = useSpace();
   const insets = useSafeAreaInsets();
 
-  if (space !== 'customer' || !isSignedIn) return null;
+  if (!SUPPORTED_SPACES.includes(space) || !isSignedIn) return null;
 
   return (
     <Pressable
