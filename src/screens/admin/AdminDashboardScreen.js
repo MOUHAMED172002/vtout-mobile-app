@@ -108,6 +108,7 @@ export default function AdminDashboardScreen({ navigation }) {
             <QuickAction label="Litiges" icon="alert-circle-outline" onPress={() => navigation.navigate('AdminDisputes')} />
             <QuickAction label="Support client" icon="chatbox-ellipses-outline" onPress={() => navigation.navigate('AdminSupport')} />
             <QuickAction label="Retraits partenaires" icon="cash-outline" onPress={() => navigation.navigate('AdminPayouts')} />
+            <QuickAction label="Toute l'administration" icon="apps-outline" onPress={() => navigation.navigate('AdminHub')} />
           </View>
         </View>
 

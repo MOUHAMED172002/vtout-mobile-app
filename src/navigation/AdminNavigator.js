@@ -15,6 +15,24 @@ import AdminDisputesScreen from '../screens/admin/AdminDisputesScreen';
 import AdminSupportScreen from '../screens/admin/AdminSupportScreen';
 import AdminSupportChatScreen from '../screens/admin/AdminSupportChatScreen';
 import AdminPayoutsScreen from '../screens/admin/AdminPayoutsScreen';
+import AdminHubScreen from '../screens/admin/AdminHubScreen';
+import AdminProductsScreen from '../screens/admin/AdminProductsScreen';
+import AdminProductFormScreen from '../screens/admin/AdminProductFormScreen';
+import AdminCategoriesScreen from '../screens/admin/AdminCategoriesScreen';
+import AdminAttributesScreen from '../screens/admin/AdminAttributesScreen';
+import AdminBoutiquesScreen from '../screens/admin/AdminBoutiquesScreen';
+import AdminKitsScreen from '../screens/admin/AdminKitsScreen';
+import AdminLivreursScreen from '../screens/admin/AdminLivreursScreen';
+import AdminControlTowerScreen from '../screens/admin/AdminControlTowerScreen';
+import AdminCashControlScreen from '../screens/admin/AdminCashControlScreen';
+import AdminBlogScreen from '../screens/admin/AdminBlogScreen';
+import AdminBlogFormScreen from '../screens/admin/AdminBlogFormScreen';
+import AdminFaqScreen from '../screens/admin/AdminFaqScreen';
+import AdminPolicyScreen from '../screens/admin/AdminPolicyScreen';
+import AdminConfigScreen from '../screens/admin/AdminConfigScreen';
+import AdminGeographyScreen from '../screens/admin/AdminGeographyScreen';
+import AdminDeliveryFeeTiersScreen from '../screens/admin/AdminDeliveryFeeTiersScreen';
+import AdminDeliveryMultiplierScreen from '../screens/admin/AdminDeliveryMultiplierScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,6 +43,7 @@ const ICONS = {
   AdminApprovals: 'checkmark-done',
   AdminUsers: 'people',
   AdminDisputes: 'alert-circle',
+  AdminHub: 'apps',
 };
 
 function AdminTabs() {
@@ -57,6 +76,7 @@ function AdminTabs() {
       <Tab.Screen name="AdminApprovals" component={AdminSupplierApprovalScreen} options={{ title: 'Validations' }} />
       <Tab.Screen name="AdminUsers" component={AdminUsersScreen} options={{ title: 'Utilisateurs' }} />
       <Tab.Screen name="AdminDisputes" component={AdminDisputesScreen} options={{ title: 'Litiges' }} />
+      <Tab.Screen name="AdminHub" component={AdminHubScreen} options={{ title: 'Plus' }} />
     </Tab.Navigator>
   );
 }
@@ -76,6 +96,23 @@ export default function AdminNavigator() {
       <Stack.Screen name="AdminSupport" component={AdminSupportScreen} options={{ title: 'Support client' }} />
       <Stack.Screen name="AdminSupportChat" component={AdminSupportChatScreen} options={{ title: 'Conversation' }} />
       <Stack.Screen name="AdminPayouts" component={AdminPayoutsScreen} options={{ title: 'Retraits partenaires' }} />
+      <Stack.Screen name="AdminProducts" component={AdminProductsScreen} options={{ title: 'Tous les produits' }} />
+      <Stack.Screen name="AdminProductForm" component={AdminProductFormScreen} options={{ title: 'Produit' }} />
+      <Stack.Screen name="AdminCategories" component={AdminCategoriesScreen} options={{ title: 'Catégories' }} />
+      <Stack.Screen name="AdminAttributes" component={AdminAttributesScreen} options={{ title: 'Variantes' }} />
+      <Stack.Screen name="AdminBoutiques" component={AdminBoutiquesScreen} options={{ title: 'Catalogue boutiques' }} />
+      <Stack.Screen name="AdminKits" component={AdminKitsScreen} options={{ title: 'Kits & packs' }} />
+      <Stack.Screen name="AdminLivreurs" component={AdminLivreursScreen} options={{ title: 'Validation livreurs' }} />
+      <Stack.Screen name="AdminControlTower" component={AdminControlTowerScreen} options={{ title: 'Tour de contrôle' }} />
+      <Stack.Screen name="AdminCashControl" component={AdminCashControlScreen} options={{ title: 'Contrôle cash' }} />
+      <Stack.Screen name="AdminBlog" component={AdminBlogScreen} options={{ title: 'Articles de blog' }} />
+      <Stack.Screen name="AdminBlogForm" component={AdminBlogFormScreen} options={{ title: 'Article' }} />
+      <Stack.Screen name="AdminFaq" component={AdminFaqScreen} options={{ title: 'Questions fréquentes' }} />
+      <Stack.Screen name="AdminPolicy" component={AdminPolicyScreen} options={{ title: 'Politiques légales' }} />
+      <Stack.Screen name="AdminConfig" component={AdminConfigScreen} options={{ title: 'Configuration' }} />
+      <Stack.Screen name="AdminGeography" component={AdminGeographyScreen} options={{ title: 'Géographie' }} />
+      <Stack.Screen name="AdminDeliveryFeeTiers" component={AdminDeliveryFeeTiersScreen} options={{ title: 'Frais de livraison' }} />
+      <Stack.Screen name="AdminDeliveryMultiplier" component={AdminDeliveryMultiplierScreen} options={{ title: 'Coefficient livreur' }} />
     </Stack.Navigator>
   );
 }
