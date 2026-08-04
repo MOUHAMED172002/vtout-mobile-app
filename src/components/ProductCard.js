@@ -75,19 +75,17 @@ export default function ProductCard({ product, onPress }) {
   }, [product]);
 
   const [imgIndex, setImgIndex] = useState(0);
-  const [focused, setFocused] = useState(false);
 
+  // Défile automatiquement entre les photos du produit dès qu'il y en a
+  // plusieurs — pas besoin de rester appuyé sur la carte (il n'y a pas de
+  // survol sur mobile).
   useEffect(() => {
-    if (!focused || images.length <= 1) return;
+    if (images.length <= 1) return;
     const interval = setInterval(() => {
       setImgIndex((i) => (i + 1) % images.length);
     }, CYCLE_INTERVAL);
     return () => clearInterval(interval);
-  }, [focused, images.length]);
-
-  useEffect(() => {
-    if (!focused) setImgIndex(0);
-  }, [focused]);
+  }, [images.length]);
 
   const salesCount = Number(product?.total_sold || 0);
   const isPopular = salesCount >= 100;
@@ -146,8 +144,6 @@ export default function ProductCard({ product, onPress }) {
       <Pressable
         style={({ pressed }) => [styles.card, pressed && styles.pressed]}
         onPress={goToDetail}
-        onPressIn={() => setFocused(true)}
-        onPressOut={() => setFocused(false)}
       >
         <View style={styles.imageWrap}>
           {images.length > 0 ? (
@@ -158,7 +154,7 @@ export default function ProductCard({ product, onPress }) {
             </View>
           )}
 
-          {focused && images.length > 1 && (
+          {images.length > 1 && (
             <View style={styles.dotsRow}>
               {images.map((_, idx) => (
                 <View key={idx} style={[styles.dot, idx === imgIndex && styles.dotActive]} />
