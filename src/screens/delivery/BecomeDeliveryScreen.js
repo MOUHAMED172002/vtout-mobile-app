@@ -68,11 +68,29 @@ export default function BecomeDeliveryScreen({ navigation }) {
     ? ALL_COMMUNES.filter((c) => c.toLowerCase().includes(zoneQuery.trim().toLowerCase()))
     : ALL_COMMUNES.slice(0, 20);
 
-  const canSubmit = fullname.trim().length > 1 && phone.trim().length >= 8 && !!idCardUri && !!selfieUri && zones.length > 0;
+  const canSubmit = fullname.trim().length > 1
+    && phone.trim().length >= 8
+    && vehicleModel.trim().length > 0
+    && licensePlate.trim().length > 0
+    && !!idCardUri
+    && !!selfieUri
+    && zones.length > 0;
+
+  const missingFieldLabels = () => {
+    const missing = [];
+    if (fullname.trim().length <= 1) missing.push('Nom complet');
+    if (phone.trim().length < 8) missing.push('Téléphone');
+    if (!vehicleModel.trim()) missing.push('Modèle du véhicule');
+    if (!licensePlate.trim()) missing.push('Plaque d\'immatriculation');
+    if (!idCardUri) missing.push('Pièce d\'identité');
+    if (!selfieUri) missing.push('Selfie');
+    if (zones.length === 0) missing.push('Zones de service');
+    return missing;
+  };
 
   const handleSubmit = async () => {
     if (!canSubmit) {
-      Alert.alert('Champs manquants', 'Merci de renseigner votre identité, votre pièce, votre selfie et au moins une zone de service.');
+      Alert.alert('Champs manquants', `Tous les champs sont obligatoires. Il manque : ${missingFieldLabels().join(', ')}.`);
       return;
     }
     setSubmitting(true);
@@ -114,7 +132,7 @@ export default function BecomeDeliveryScreen({ navigation }) {
     <SafeAreaView style={styles.safe} edges={['bottom']}>
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>Devenez livreur Vtout</Text>
-        <Text style={styles.subtitle}>Complétez votre dossier pour rejoindre notre flotte de livreurs partenaires.</Text>
+        <Text style={styles.subtitle}>Complétez votre dossier pour rejoindre notre flotte de livreurs partenaires. Tous les champs ci-dessous sont obligatoires.</Text>
 
         <View style={styles.form}>
           <TextInput
@@ -149,15 +167,16 @@ export default function BecomeDeliveryScreen({ navigation }) {
 
           <TextInput
             style={styles.input}
-            placeholder="Modèle du véhicule (optionnel)"
+            placeholder="Modèle du véhicule"
             placeholderTextColor={colors.textFaint}
             value={vehicleModel}
             onChangeText={setVehicleModel}
           />
           <TextInput
             style={styles.input}
-            placeholder="Plaque d'immatriculation (optionnel)"
+            placeholder="Plaque d'immatriculation"
             placeholderTextColor={colors.textFaint}
+            autoCapitalize="characters"
             value={licensePlate}
             onChangeText={setLicensePlate}
           />
