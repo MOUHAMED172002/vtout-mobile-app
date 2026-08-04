@@ -42,11 +42,29 @@ export default function DeliveryDetailScreen({ route, navigation }) {
 
   const statusColor = getOrderStatusColor(order.status);
   const address = order.address || {};
+  const supplier = order.supplier || {};
   const customerPhone = address.phone || order.guest_phone;
 
-  const handleCall = () => {
-    if (customerPhone) Linking.openURL(`tel:${customerPhone}`);
+  const handleCall = (phone) => {
+    if (phone) Linking.openURL(`tel:${phone}`);
   };
+
+  const hasSupplierCoords = !!(supplier.lat && supplier.lng);
+  const hasClientCoords = !!(address.lat && address.lng);
+  const supplierAddressText = supplier.address_line || supplier.commune_label;
+  const clientAddressText = address.quartier_label ? `${address.quartier_label}, ${address.commune_label}` : (address.commune_label || address.city);
+
+  const supplierMapUrl = hasSupplierCoords
+    ? `https://www.google.com/maps?q=${supplier.lat},${supplier.lng}`
+    : supplierAddressText ? `https://www.google.com/maps/search/${encodeURIComponent(`${supplierAddressText}, Bénin`)}` : null;
+  const clientMapUrl = hasClientCoords
+    ? `https://www.google.com/maps?q=${address.lat},${address.lng}`
+    : clientAddressText ? `https://www.google.com/maps/search/${encodeURIComponent(`${clientAddressText}, Bénin`)}` : null;
+  const routeUrl = hasSupplierCoords && hasClientCoords
+    ? `https://www.google.com/maps/dir/${supplier.lat},${supplier.lng}/${address.lat},${address.lng}`
+    : (hasClientCoords && supplierAddressText)
+      ? `https://www.google.com/maps/dir/${encodeURIComponent(`${supplierAddressText}, Bénin`)}/${address.lat},${address.lng}`
+      : clientMapUrl;
 
   const handleAssign = async () => {
     setBusy(true);
@@ -142,7 +160,30 @@ export default function DeliveryDetailScreen({ route, navigation }) {
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Client</Text>
+          <View style={styles.milestoneHeader}>
+            <View style={styles.milestoneBadge}><Text style={styles.milestoneBadgeText}>1</Text></View>
+            <Text style={styles.cardTitle}>Point de collecte</Text>
+          </View>
+          <Text style={styles.supplierName}>{supplier.name || 'Boutique vendeur'}</Text>
+          {(supplier.address_line || supplier.commune_label) ? (
+            <View style={styles.row}>
+              <Ionicons name="location-outline" size={16} color={colors.textMuted} />
+              <Text style={styles.rowText}>{supplier.address_line || `${supplier.quartier_label ? supplier.quartier_label + ', ' : ''}${supplier.commune_label}`}</Text>
+            </View>
+          ) : null}
+          {supplier.phone ? (
+            <Pressable style={styles.row} onPress={() => handleCall(supplier.phone)}>
+              <Ionicons name="call-outline" size={16} color={colors.primary} />
+              <Text style={[styles.rowText, { color: colors.primary, fontWeight: '800' }]}>Appeler : {supplier.phone}</Text>
+            </Pressable>
+          ) : null}
+        </View>
+
+        <View style={styles.card}>
+          <View style={styles.milestoneHeader}>
+            <View style={[styles.milestoneBadge, { backgroundColor: colors.secondary }]}><Text style={styles.milestoneBadgeText}>2</Text></View>
+            <Text style={styles.cardTitle}>Lieu de livraison</Text>
+          </View>
           <View style={styles.row}>
             <Ionicons name="location-outline" size={16} color={colors.textMuted} />
             <Text style={styles.rowText}>
@@ -156,12 +197,42 @@ export default function DeliveryDetailScreen({ route, navigation }) {
             </View>
           ) : null}
           {customerPhone ? (
-            <Pressable style={styles.row} onPress={handleCall}>
+            <Pressable style={styles.row} onPress={() => handleCall(customerPhone)}>
               <Ionicons name="call-outline" size={16} color={colors.primary} />
-              <Text style={[styles.rowText, { color: colors.primary, fontWeight: '800' }]}>{customerPhone}</Text>
+              <Text style={[styles.rowText, { color: colors.primary, fontWeight: '800' }]}>Appeler : {customerPhone}</Text>
             </Pressable>
           ) : null}
         </View>
+
+        {(routeUrl || supplierMapUrl || clientMapUrl) && (
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>Itinéraire GPS</Text>
+            {routeUrl && (
+              <Pressable style={styles.routeBtn} onPress={() => Linking.openURL(routeUrl)}>
+                <Ionicons name="navigate" size={18} color="#fff" />
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.routeBtnLabel}>Itinéraire complet</Text>
+                  <Text style={styles.routeBtnSub}>Voir le trajet sur Google Maps</Text>
+                </View>
+                <Ionicons name="open-outline" size={16} color="rgba(255,255,255,0.7)" />
+              </Pressable>
+            )}
+            <View style={{ flexDirection: 'row', gap: 8 }}>
+              {supplierMapUrl && (
+                <Pressable style={styles.mapChip} onPress={() => Linking.openURL(supplierMapUrl)}>
+                  <Ionicons name="pin" size={14} color={colors.warning} />
+                  <Text style={styles.mapChipText}>Fournisseur</Text>
+                </Pressable>
+              )}
+              {clientMapUrl && (
+                <Pressable style={styles.mapChip} onPress={() => Linking.openURL(clientMapUrl)}>
+                  <Ionicons name="pin" size={14} color={colors.success} />
+                  <Text style={styles.mapChipText}>Client</Text>
+                </Pressable>
+              )}
+            </View>
+          </View>
+        )}
 
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Articles ({order.items?.length || 0})</Text>
@@ -231,6 +302,21 @@ const createStyles = (colors) => StyleSheet.create({
   fee: { fontSize: 22, fontWeight: '900', color: colors.primary },
   feeLabel: { fontSize: 11, color: colors.textMuted, fontWeight: '600' },
   cardTitle: { fontSize: 14, fontWeight: '900', color: colors.text },
+  milestoneHeader: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  milestoneBadge: { width: 20, height: 20, borderRadius: 6, backgroundColor: colors.warning, alignItems: 'center', justifyContent: 'center' },
+  milestoneBadgeText: { fontSize: 10, fontWeight: '900', color: '#fff' },
+  supplierName: { fontSize: 13, fontWeight: '800', color: colors.text },
+  routeBtn: {
+    flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: colors.primary,
+    borderRadius: radius.md, padding: 14,
+  },
+  routeBtnLabel: { fontSize: 9.5, fontWeight: '800', color: 'rgba(255,255,255,0.75)', textTransform: 'uppercase' },
+  routeBtnSub: { fontSize: 12.5, fontWeight: '800', color: '#fff', marginTop: 1 },
+  mapChip: {
+    flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6,
+    backgroundColor: colors.background, borderRadius: radius.md, paddingVertical: 10,
+  },
+  mapChipText: { fontSize: 11, fontWeight: '700', color: colors.text },
   row: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   rowText: { fontSize: 13, color: colors.text, fontWeight: '600', flexShrink: 1 },
   itemRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 4 },

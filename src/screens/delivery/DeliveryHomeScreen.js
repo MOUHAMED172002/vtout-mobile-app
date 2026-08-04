@@ -187,13 +187,14 @@ export default function DeliveryHomeScreen({ navigation }) {
         </View>
 
         {unremitted.length > 0 && (
-          <View style={styles.debtBanner}>
+          <Pressable style={styles.debtBanner} onPress={() => navigation.navigate('MyDeliveries')}>
             <Ionicons name="alert-circle" size={20} color="#fff" />
             <View style={{ flex: 1 }}>
               <Text style={styles.debtTitle}>Caisse non versée : {formatPrice(unremittedAmount)} F</Text>
               <Text style={styles.debtSubtitle}>Réglez ce montant avec l'administration pour continuer à accepter des courses.</Text>
             </View>
-          </View>
+            <Ionicons name="chevron-forward" size={18} color="#fff" />
+          </Pressable>
         )}
 
         <View style={styles.statsGrid}>
@@ -221,6 +222,18 @@ export default function DeliveryHomeScreen({ navigation }) {
             title="Historique"
             subtitle="Courses terminées"
             onPress={() => navigation.navigate('DeliveryHistory')}
+          />
+          <NavCard
+            icon="wallet-outline"
+            title="Portefeuille"
+            subtitle={`Solde : ${formatPrice(balance)} F`}
+            onPress={() => navigation.navigate('DeliveryWallet')}
+          />
+          <NavCard
+            icon="settings-outline"
+            title="Zones & véhicule"
+            subtitle="Infos de profil livreur"
+            onPress={() => navigation.navigate('DeliveryProfile')}
           />
         </View>
       </ScrollView>

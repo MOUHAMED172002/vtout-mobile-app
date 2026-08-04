@@ -148,6 +148,14 @@ export const getMyFinancials = async (token) => {
   return data;
 };
 
+// Demande de retrait des gains. payoutData: { amount, payment_method, payment_details, save_details }
+export const requestPayout = async (payoutData, token) => {
+  const { data } = await api.post('/financials/request-payout', payoutData, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return data;
+};
+
 // ---------------------------------------------------------------------------
 // Helpers partagés entre les écrans livreur
 // ---------------------------------------------------------------------------

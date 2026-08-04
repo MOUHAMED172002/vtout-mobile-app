@@ -13,6 +13,8 @@ import MyDeliveriesScreen from '../screens/delivery/MyDeliveriesScreen';
 import DeliveryDetailScreen from '../screens/delivery/DeliveryDetailScreen';
 import DeliveryHistoryScreen from '../screens/delivery/DeliveryHistoryScreen';
 import BecomeDeliveryScreen from '../screens/delivery/BecomeDeliveryScreen';
+import DeliveryWalletScreen from '../screens/delivery/DeliveryWalletScreen';
+import DeliveryProfileScreen from '../screens/delivery/DeliveryProfileScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -70,6 +72,8 @@ export default function DeliveryNavigator() {
       <Stack.Screen name="DeliveryDetail" component={DeliveryDetailScreen} options={{ title: 'Livraison' }} />
       <Stack.Screen name="DeliveryHistory" component={DeliveryHistoryScreen} options={{ title: 'Historique' }} />
       <Stack.Screen name="BecomeDelivery" component={BecomeDeliveryScreen} options={{ title: 'Candidature livreur' }} />
+      <Stack.Screen name="DeliveryWallet" component={DeliveryWalletScreen} options={{ title: 'Portefeuille' }} />
+      <Stack.Screen name="DeliveryProfile" component={DeliveryProfileScreen} options={{ title: 'Zones & véhicule' }} />
     </Stack.Navigator>
   );
 }

@@ -10,10 +10,11 @@ import { registerLivreur, uploadKycImage } from '../../services/deliveryOrderSer
 import { getAllCommunes } from '../../utils/communes';
 import Button from '../../components/Button';
 
+// Valeurs alignées sur server/models/DeliveryPerson.js (vehicle_type: 'moto', 'car', 'bicycle')
 const VEHICLE_TYPES = [
   { key: 'moto', label: 'Moto', icon: 'bicycle' },
-  { key: 'velo', label: 'Vélo', icon: 'bicycle-outline' },
-  { key: 'voiture', label: 'Voiture', icon: 'car-outline' },
+  { key: 'bicycle', label: 'Vélo', icon: 'bicycle-outline' },
+  { key: 'car', label: 'Voiture', icon: 'car-outline' },
 ];
 
 const ALL_COMMUNES = getAllCommunes();
@@ -28,6 +29,7 @@ export default function BecomeDeliveryScreen({ navigation }) {
   const [vehicleModel, setVehicleModel] = useState('');
   const [licensePlate, setLicensePlate] = useState('');
   const [idCardUri, setIdCardUri] = useState(null);
+  const [selfieUri, setSelfieUri] = useState(null);
   const [zones, setZones] = useState([]);
   const [zoneQuery, setZoneQuery] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -45,6 +47,19 @@ export default function BecomeDeliveryScreen({ navigation }) {
     if (!result.canceled && result.assets?.[0]) setIdCardUri(result.assets[0].uri);
   };
 
+  const pickSelfie = async () => {
+    const perm = await ImagePicker.requestCameraPermissionsAsync();
+    const libPerm = perm.granted ? perm : await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!libPerm.granted) {
+      Alert.alert('Permission requise', "Autorisez l'accès à votre caméra ou vos photos pour ajouter un selfie.");
+      return;
+    }
+    const result = perm.granted
+      ? await ImagePicker.launchCameraAsync({ mediaTypes: ImagePicker.MediaTypeOptions.Images, quality: 0.8 })
+      : await ImagePicker.launchImageLibraryAsync({ mediaTypes: ImagePicker.MediaTypeOptions.Images, quality: 0.8 });
+    if (!result.canceled && result.assets?.[0]) setSelfieUri(result.assets[0].uri);
+  };
+
   const toggleZone = (commune) => {
     setZones((prev) => (prev.includes(commune) ? prev.filter((z) => z !== commune) : [...prev, commune]));
   };
@@ -53,11 +68,11 @@ export default function BecomeDeliveryScreen({ navigation }) {
     ? ALL_COMMUNES.filter((c) => c.toLowerCase().includes(zoneQuery.trim().toLowerCase()))
     : ALL_COMMUNES.slice(0, 20);
 
-  const canSubmit = fullname.trim().length > 1 && phone.trim().length >= 8 && !!idCardUri && zones.length > 0;
+  const canSubmit = fullname.trim().length > 1 && phone.trim().length >= 8 && !!idCardUri && !!selfieUri && zones.length > 0;
 
   const handleSubmit = async () => {
     if (!canSubmit) {
-      Alert.alert('Champs manquants', 'Merci de renseigner votre identité, votre pièce et au moins une zone de service.');
+      Alert.alert('Champs manquants', 'Merci de renseigner votre identité, votre pièce, votre selfie et au moins une zone de service.');
       return;
     }
     setSubmitting(true);
@@ -68,6 +83,11 @@ export default function BecomeDeliveryScreen({ navigation }) {
         name: 'id-card.jpg',
         type: 'image/jpeg',
       }, token);
+      const selfieUrl = await uploadKycImage({
+        uri: selfieUri,
+        name: 'selfie.jpg',
+        type: 'image/jpeg',
+      }, token);
 
       await registerLivreur({
         fullname: fullname.trim(),
@@ -76,6 +96,7 @@ export default function BecomeDeliveryScreen({ navigation }) {
         vehicle_model: vehicleModel,
         license_plate: licensePlate,
         id_card_url: idCardUrl,
+        selfie_url: selfieUrl,
         service_zones: zones,
       }, token);
 
@@ -141,7 +162,7 @@ export default function BecomeDeliveryScreen({ navigation }) {
             onChangeText={setLicensePlate}
           />
 
-          <Text style={styles.label}>Pièce d'identité (CNI, permis...)</Text>
+          <Text style={styles.label}>1. Pièce d'identité (CNI, permis...)</Text>
           <Pressable style={styles.uploadBox} onPress={pickIdCard}>
             {idCardUri ? (
               <Image source={{ uri: idCardUri }} style={styles.uploadPreview} resizeMode="cover" />
@@ -149,6 +170,19 @@ export default function BecomeDeliveryScreen({ navigation }) {
               <>
                 <Ionicons name="camera-outline" size={24} color={colors.textFaint} />
                 <Text style={styles.uploadText}>Ajouter une photo</Text>
+              </>
+            )}
+          </Pressable>
+
+          <Text style={styles.label}>2. Selfie tenant votre pièce d'identité</Text>
+          <Text style={styles.helperText}>Prenez une photo de vous en tenant votre pièce d'identité bien visible face à la caméra.</Text>
+          <Pressable style={styles.uploadBox} onPress={pickSelfie}>
+            {selfieUri ? (
+              <Image source={{ uri: selfieUri }} style={styles.uploadPreview} resizeMode="cover" />
+            ) : (
+              <>
+                <Ionicons name="person-circle-outline" size={24} color={colors.textFaint} />
+                <Text style={styles.uploadText}>Prendre un selfie</Text>
               </>
             )}
           </Pressable>
@@ -186,6 +220,7 @@ const createStyles = (colors) => StyleSheet.create({
   subtitle: { fontSize: 13, color: colors.textMuted, fontWeight: '600', marginTop: 6, marginBottom: 20 },
   form: { gap: 12 },
   label: { fontSize: 11, fontWeight: '800', color: colors.textMuted, textTransform: 'uppercase', marginTop: 6 },
+  helperText: { fontSize: 11, color: colors.textFaint, fontWeight: '600', marginTop: -6 },
   input: {
     height: 50, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border,
     borderRadius: radius.md, paddingHorizontal: 16, fontSize: 14, fontWeight: '600', color: colors.text,
