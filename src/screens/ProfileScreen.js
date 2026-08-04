@@ -34,6 +34,7 @@ const ACCOUNT_ITEMS = [
   { label: 'Notifications', icon: 'notifications-outline', route: 'Notifications' },
   { label: 'Mon portefeuille', icon: 'wallet-outline', route: 'Wallet' },
   { label: 'Mes adresses', icon: 'location-outline', route: 'Addresses' },
+  { label: 'Parrainage', icon: 'gift-outline', route: 'Referral' },
   { label: 'Aide & À propos', icon: 'help-circle-outline', route: 'InfoHub' },
 ];
 

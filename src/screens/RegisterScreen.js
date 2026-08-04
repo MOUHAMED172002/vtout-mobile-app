@@ -6,16 +6,18 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { radius } from '../theme/colors';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { applyReferralCode } from '../services/referralService';
 import Button from '../components/Button';
 import GoogleSignInButton from '../components/GoogleSignInButton';
 
-export default function RegisterScreen({ navigation }) {
+export default function RegisterScreen({ route, navigation }) {
   const { colors } = useTheme();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
-  const { signUp } = useAuth();
+  const { signUp, getToken } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [referralCode, setReferralCode] = useState(route.params?.referralCode || '');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -27,6 +29,15 @@ export default function RegisterScreen({ navigation }) {
     setLoading(true);
     try {
       await signUp(email.trim(), password, name.trim());
+      if (referralCode.trim()) {
+        try {
+          const token = await getToken();
+          await applyReferralCode(referralCode.trim(), token);
+        } catch (refErr) {
+          // Code invalide ou déjà utilisé — le compte est bien créé, on ne
+          // bloque pas l'inscription pour autant.
+        }
+      }
       navigation.goBack();
     } catch (err) {
       Alert.alert('Inscription impossible', err.isAuthAppError ? err.message : (err.response?.data?.message || 'Cet email est peut-être déjà utilisé.'));
@@ -84,6 +95,15 @@ export default function RegisterScreen({ navigation }) {
                 <Ionicons name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={18} color={colors.textFaint} />
               </Pressable>
             </View>
+
+            <TextInput
+              style={styles.input}
+              placeholder="Code de parrainage (optionnel)"
+              placeholderTextColor={colors.textFaint}
+              autoCapitalize="characters"
+              value={referralCode}
+              onChangeText={setReferralCode}
+            />
 
             <Button title="Créer mon compte" onPress={handleSubmit} loading={loading} style={{ marginTop: 8 }} />
           </View>
