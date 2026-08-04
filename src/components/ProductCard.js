@@ -7,7 +7,7 @@ import { radius } from '../theme/colors';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { checkFavorite, addFavorite, removeFavorite } from '../services/favoriteService';
-import { formatPrice, getThumbnail, getProductDisplayPrice, isProductOutOfStock } from '../utils/format';
+import { formatPrice, getOptimizedImage, getProductDisplayPrice, isProductOutOfStock } from '../utils/format';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = (width - 16 * 2 - 12) / 2;
@@ -65,27 +65,34 @@ export default function ProductCard({ product, onPress }) {
   );
   const outOfStock = isProductOutOfStock(product);
 
+  // Web utilise des images 600px pour les cartes (ProductsCard.jsx) — même
+  // résolution ici pour un rendu identique.
   const images = useMemo(() => {
-    const list = (product?.images || []).map((img) => getThumbnail(img.image_url)).filter(Boolean);
+    const list = (product?.images || []).map((img) => getOptimizedImage(img.image_url, 600)).filter(Boolean);
     if (list.length === 0) {
-      const fallback = getThumbnail(product?.image_url);
+      const fallback = getOptimizedImage(product?.image_url, 600);
       return fallback ? [fallback] : [];
     }
     return list;
   }, [product]);
 
   const [imgIndex, setImgIndex] = useState(0);
+  // Comme sur le web (survol souris, ou appui maintenu sur tactile via
+  // onTouchStart/onTouchEnd) : le défilement des photos ne tourne que
+  // pendant que la carte est pressée, pas en continu.
+  const [focused, setFocused] = useState(false);
 
-  // Défile automatiquement entre les photos du produit dès qu'il y en a
-  // plusieurs — pas besoin de rester appuyé sur la carte (il n'y a pas de
-  // survol sur mobile).
   useEffect(() => {
-    if (images.length <= 1) return;
+    if (!focused || images.length <= 1) return;
     const interval = setInterval(() => {
       setImgIndex((i) => (i + 1) % images.length);
     }, CYCLE_INTERVAL);
     return () => clearInterval(interval);
-  }, [images.length]);
+  }, [focused, images.length]);
+
+  useEffect(() => {
+    if (!focused) setImgIndex(0);
+  }, [focused]);
 
   const salesCount = Number(product?.total_sold || 0);
   const isPopular = salesCount >= 100;
@@ -144,10 +151,23 @@ export default function ProductCard({ product, onPress }) {
       <Pressable
         style={({ pressed }) => [styles.card, pressed && styles.pressed]}
         onPress={goToDetail}
+        onPressIn={() => setFocused(true)}
+        onPressOut={() => setFocused(false)}
       >
         <View style={styles.imageWrap}>
           {images.length > 0 ? (
-            <Image source={{ uri: images[imgIndex] }} style={styles.image} contentFit="contain" transition={200} />
+            <>
+              {/* Fond flouté : comble les bords blancs autour de l'image
+                  "contain", comme le fond flouté du web. */}
+              <Image
+                source={{ uri: images[imgIndex] }}
+                style={StyleSheet.absoluteFill}
+                contentFit="cover"
+                blurRadius={25}
+              />
+              <View style={styles.blurDarken} />
+              <Image source={{ uri: images[imgIndex] }} style={styles.image} contentFit="contain" transition={200} />
+            </>
           ) : (
             <View style={[styles.image, styles.imagePlaceholder]}>
               <Ionicons name="image-outline" size={28} color={colors.textFaint} />
@@ -162,32 +182,23 @@ export default function ProductCard({ product, onPress }) {
             </View>
           )}
 
-          {isSale && (
-            <View style={styles.discountBadge}>
-              <Text style={styles.discountText}>-{discountPercent}%</Text>
-            </View>
-          )}
-          {outOfStock && (
-            <View style={styles.outOfStockOverlay}>
-              <Text style={styles.outOfStockText}>Rupture de stock</Text>
-            </View>
-          )}
+          <View style={styles.topBadges}>
+            {isSale && (
+              <View style={styles.discountBadge}>
+                <Text style={styles.discountText}>-{discountPercent}%</Text>
+              </View>
+            )}
+            {product?.supplier?.is_certified && (
+              <View style={styles.certifiedBadge}>
+                <Ionicons name="shield-checkmark" size={11} color="#fff" />
+                <Text style={styles.certifiedText}>Certifié</Text>
+              </View>
+            )}
+          </View>
 
           <Pressable style={styles.favBtn} onPress={toggleFavorite}>
             <Ionicons name={isFav ? 'heart' : 'heart-outline'} size={15} color={isFav ? colors.danger : colors.text} />
           </Pressable>
-
-          <View style={styles.bottomActions}>
-            <Pressable style={styles.eyeBtn} onPress={goToDetail}>
-              <Ionicons name="eye-outline" size={14} color={colors.text} />
-            </Pressable>
-            {!outOfStock && (
-              <Pressable style={styles.buyPill} onPress={handleBuyNow}>
-                <Ionicons name="flash" size={12} color="#fff" />
-                <Text style={styles.buyPillText}>Acheter</Text>
-              </Pressable>
-            )}
-          </View>
         </View>
 
         <View style={styles.info}>
@@ -195,6 +206,8 @@ export default function ProductCard({ product, onPress }) {
             <View style={styles.ratingRow}>
               <Ionicons name="star" size={10} color={colors.primary} />
               <Text style={styles.ratingText}>{Number(product.average_rating).toFixed(1)}</Text>
+              <Text style={styles.ratingDot}>•</Text>
+              <Text style={styles.ratingCertified}>Certifié</Text>
             </View>
           )}
           <Text style={styles.name} numberOfLines={2}>{product?.name}</Text>
@@ -202,7 +215,7 @@ export default function ProductCard({ product, onPress }) {
             <View style={styles.deliveryRow}>
               <Ionicons name="location" size={9} color={colors.success} />
               <Text style={styles.deliveryText} numberOfLines={1}>
-                Livraison gratuite{product?.boutique?.commune_label ? ` · ${product.boutique.commune_label}` : ''}
+                Livraison gratuite · {product.free_delivery_communes.join(' · ')}
               </Text>
             </View>
           )}
@@ -212,14 +225,25 @@ export default function ProductCard({ product, onPress }) {
           </View>
 
           <View style={styles.salesRow}>
-            <View style={styles.salesTextRow}>
-              <Ionicons name="flash" size={9} color={colors.primary} />
-              <Text style={styles.salesText}>{salesCount} vendu{salesCount > 1 ? 's' : ''}</Text>
-              {isPopular && <Text style={styles.popularText}>· Populaire</Text>}
+            <View style={{ flex: 1 }}>
+              <View style={styles.salesTextRow}>
+                <Ionicons name="flash" size={9} color={colors.primary} />
+                <Text style={styles.salesText}>{salesCount} vendu{salesCount > 1 ? 's' : ''}</Text>
+                {isPopular && <Text style={styles.popularText}>Populaire</Text>}
+              </View>
+              <View style={styles.salesBarTrack}>
+                {isPopular && <View style={[styles.salesBarFill, { width: `${Math.min((salesCount / 100) * 100, 100)}%` }]} />}
+              </View>
             </View>
-            <View style={styles.salesBarTrack}>
-              {isPopular && <View style={[styles.salesBarFill, { width: `${Math.min((salesCount / 100) * 100, 100)}%` }]} />}
-            </View>
+
+            {/* Bouton d'achat rapide — comme la version mobile du web
+                (petite icône éclair à côté de la barre de ventes), pas de
+                bouton "Œil" (inatteignable au tactile sur le web aussi). */}
+            {!outOfStock && (
+              <Pressable style={styles.quickBuyBtn} onPress={handleBuyNow}>
+                <Ionicons name="flash" size={14} color={colors.primary} />
+              </Pressable>
+            )}
           </View>
         </View>
       </Pressable>
@@ -299,47 +323,41 @@ const createStyles = (colors) => StyleSheet.create({
     aspectRatio: 1,
     backgroundColor: '#f1f5f9',
     position: 'relative',
+    overflow: 'hidden',
   },
   image: { width: '100%', height: '100%' },
+  blurDarken: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.15)' },
   imagePlaceholder: { alignItems: 'center', justifyContent: 'center' },
   dotsRow: { position: 'absolute', bottom: 4, left: 0, right: 0, flexDirection: 'row', justifyContent: 'center', gap: 3 },
   dot: { width: 4, height: 4, borderRadius: 2, backgroundColor: 'rgba(255,255,255,0.6)' },
   dotActive: { width: 12, backgroundColor: '#fff' },
+  topBadges: { position: 'absolute', top: 8, left: 8, gap: 4 },
   discountBadge: {
-    position: 'absolute',
-    top: 8,
-    left: 8,
     backgroundColor: 'rgba(234,88,12,0.92)',
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: radius.sm,
+    alignSelf: 'flex-start',
   },
   discountText: { color: '#fff', fontSize: 10, fontWeight: '800' },
-  outOfStockOverlay: {
-    position: 'absolute',
-    inset: 0,
-    backgroundColor: 'rgba(15,23,42,0.5)',
-    alignItems: 'center',
-    justifyContent: 'center',
+  certifiedBadge: {
+    flexDirection: 'row', alignItems: 'center', gap: 3, alignSelf: 'flex-start',
+    backgroundColor: 'rgba(37,99,235,0.92)', paddingHorizontal: 7, paddingVertical: 3, borderRadius: radius.sm,
   },
-  outOfStockText: { color: '#fff', fontSize: 11, fontWeight: '800', textTransform: 'uppercase' },
+  certifiedText: { color: '#fff', fontSize: 9, fontWeight: '800' },
   favBtn: {
     position: 'absolute', top: 8, right: 8, width: 28, height: 28, borderRadius: 14,
     backgroundColor: 'rgba(255,255,255,0.92)', alignItems: 'center', justifyContent: 'center',
   },
-  bottomActions: { position: 'absolute', bottom: 16, left: 8, flexDirection: 'row', alignItems: 'center', gap: 6 },
-  eyeBtn: {
-    width: 26, height: 26, borderRadius: 13, backgroundColor: 'rgba(255,255,255,0.92)',
-    alignItems: 'center', justifyContent: 'center',
+  quickBuyBtn: {
+    width: 30, height: 30, borderRadius: 10, backgroundColor: `${colors.primary}18`,
+    alignItems: 'center', justifyContent: 'center', marginLeft: 8,
   },
-  buyPill: {
-    flexDirection: 'row', alignItems: 'center', gap: 4, height: 26, borderRadius: 13,
-    paddingHorizontal: 10, backgroundColor: colors.primary,
-  },
-  buyPillText: { color: '#fff', fontSize: 10, fontWeight: '800' },
   info: { padding: 10, gap: 4 },
   ratingRow: { flexDirection: 'row', alignItems: 'center', gap: 3 },
   ratingText: { fontSize: 10, fontWeight: '800', color: colors.primary },
+  ratingDot: { fontSize: 10, color: colors.textFaint },
+  ratingCertified: { fontSize: 10, fontWeight: '700', color: colors.textMuted },
   name: { fontSize: 13, fontWeight: '700', color: colors.text, lineHeight: 17, minHeight: 34 },
   deliveryRow: { flexDirection: 'row', alignItems: 'center', gap: 3 },
   deliveryText: { fontSize: 9, fontWeight: '800', color: colors.success, textTransform: 'uppercase' },
@@ -347,11 +365,11 @@ const createStyles = (colors) => StyleSheet.create({
   price: { fontSize: 16, fontWeight: '900', color: colors.text },
   priceCurrency: { fontSize: 10, color: colors.primary, fontWeight: '900' },
   oldPrice: { fontSize: 10, color: colors.textFaint, textDecorationLine: 'line-through', fontWeight: '700' },
-  salesRow: { marginTop: 4, gap: 3 },
+  salesRow: { marginTop: 4, flexDirection: 'row', alignItems: 'center' },
   salesTextRow: { flexDirection: 'row', alignItems: 'center', gap: 3 },
   salesText: { fontSize: 9, fontWeight: '800', color: colors.primary, textTransform: 'uppercase' },
   popularText: { fontSize: 9, fontWeight: '800', color: colors.secondary, textTransform: 'uppercase' },
-  salesBarTrack: { height: 3, borderRadius: 2, backgroundColor: colors.border, overflow: 'hidden' },
+  salesBarTrack: { height: 3, borderRadius: 2, backgroundColor: colors.border, overflow: 'hidden', marginTop: 3 },
   salesBarFill: { height: '100%', backgroundColor: colors.primary, borderRadius: 2 },
 
   modalBackdrop: { flex: 1, backgroundColor: 'rgba(15,23,42,0.5)', justifyContent: 'flex-end' },
