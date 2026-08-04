@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { View, Text, FlatList, Pressable, StyleSheet, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -11,13 +11,23 @@ import { getOrderStatusLabel, getOrderStatusColor } from '../utils/orderStatus';
 import Loading from '../components/Loading';
 import EmptyState from '../components/EmptyState';
 
-export default function OrdersScreen({ navigation }) {
+const STATUS_FILTERS = [
+  { key: 'all', label: 'Toutes', statuses: null },
+  { key: 'pending', label: 'En attente', statuses: ['en_attente', 'pending_payment'] },
+  { key: 'confirmed', label: 'Confirmées', statuses: ['confirmée', 'confirmee'] },
+  { key: 'shipped', label: 'Expédiées', statuses: ['expédiée', 'expediee'] },
+  { key: 'delivered', label: 'Livrées', statuses: ['livrée', 'livree'] },
+  { key: 'cancelled', label: 'Annulées', statuses: ['annulée', 'annulee'] },
+];
+
+export default function OrdersScreen({ route, navigation }) {
   const { colors } = useTheme();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken } = useAuth();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [activeFilter, setActiveFilter] = useState(route.params?.initialStatus || 'all');
 
   const load = useCallback(async () => {
     try {
@@ -34,17 +44,44 @@ export default function OrdersScreen({ navigation }) {
 
   useEffect(() => { load(); }, [load]);
 
+  const filteredOrders = useMemo(() => {
+    const filter = STATUS_FILTERS.find((f) => f.key === activeFilter);
+    if (!filter?.statuses) return orders;
+    return orders.filter((o) => filter.statuses.includes(o.status));
+  }, [orders, activeFilter]);
+
   if (loading) return <Loading />;
 
   return (
     <SafeAreaView style={styles.safe} edges={['bottom']}>
-      {orders.length === 0 ? (
+      <View style={styles.filterRow}>
+        <FlatList
+          data={STATUS_FILTERS}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item) => item.key}
+          contentContainerStyle={{ gap: 8, paddingHorizontal: 16, paddingVertical: 12 }}
+          renderItem={({ item }) => {
+            const active = activeFilter === item.key;
+            return (
+              <Pressable
+                style={[styles.filterChip, active && styles.filterChipActive]}
+                onPress={() => setActiveFilter(item.key)}
+              >
+                <Text style={[styles.filterChipText, active && styles.filterChipTextActive]}>{item.label}</Text>
+              </Pressable>
+            );
+          }}
+        />
+      </View>
+
+      {filteredOrders.length === 0 ? (
         <EmptyState icon="receipt-outline" title="Aucune commande" subtitle="Vos commandes apparaîtront ici." />
       ) : (
         <FlatList
-          data={orders}
+          data={filteredOrders}
           keyExtractor={(item) => String(item.id)}
-          contentContainerStyle={{ padding: 16, gap: 10 }}
+          contentContainerStyle={{ padding: 16, paddingTop: 4, gap: 10 }}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); load(); }} tintColor={colors.primary} />}
           renderItem={({ item }) => (
             <Pressable style={styles.row} onPress={() => navigation.navigate('OrderDetail', { id: item.id })}>
@@ -69,6 +106,14 @@ export default function OrdersScreen({ navigation }) {
 
 const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
+  filterRow: { borderBottomWidth: 1, borderBottomColor: colors.border },
+  filterChip: {
+    height: 34, paddingHorizontal: 14, borderRadius: radius.full, backgroundColor: colors.surface,
+    borderWidth: 1, borderColor: colors.border, alignItems: 'center', justifyContent: 'center',
+  },
+  filterChipActive: { backgroundColor: colors.text, borderColor: colors.text },
+  filterChipText: { fontSize: 12, fontWeight: '700', color: colors.textMuted },
+  filterChipTextActive: { color: colors.surface },
   row: {
     flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: colors.surface,
     padding: 14, borderRadius: radius.md, borderWidth: 1, borderColor: colors.border,

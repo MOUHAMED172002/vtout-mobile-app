@@ -88,6 +88,15 @@ export function AuthProvider({ children }) {
     await api.post('/auth/forget-password', { email, redirectTo: 'vtout://reset-password' });
   }, []);
 
+  const changePassword = useCallback(async (currentPassword, newPassword) => {
+    await api.post('/auth/change-password', { currentPassword, newPassword, revokeOtherSessions: false });
+  }, []);
+
+  const updateAuthUser = useCallback(async (fields) => {
+    await api.post('/auth/update-user', fields);
+    await refreshSession();
+  }, [refreshSession]);
+
   const signOut = useCallback(async () => {
     try {
       // Retire les jetons de push AVANT de couper la session (le Bearer
@@ -126,8 +135,11 @@ export function AuthProvider({ children }) {
     signUp,
     signOut,
     requestPasswordReset,
+    changePassword,
+    updateAuthUser,
+    refreshSession,
     refreshProfile: () => session?.id && fetchProfile(session.id),
-  }), [isLoaded, user, profile, session, getToken, signIn, signUp, signOut, requestPasswordReset, fetchProfile]);
+  }), [isLoaded, user, profile, session, getToken, signIn, signUp, signOut, requestPasswordReset, changePassword, updateAuthUser, refreshSession, fetchProfile]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -39,6 +39,50 @@ export const darkColors = {
   wineMuted: '#8a6070',
 };
 
+// Thème "Rétro" (inspiré du thème daisyUI "retro" du site web) : tons crème
+// et terracotta vintage.
+export const retroColors = {
+  primary: '#c9714f',
+  primaryDark: '#a85a3c',
+  secondary: '#6b9080',
+  secondaryDark: '#527063',
+  navy: '#3b2f1e',
+  background: '#f2e9d0',
+  surface: '#fbf6e9',
+  border: '#e0d3ab',
+  text: '#3b2f1e',
+  textMuted: '#7a6a4f',
+  textFaint: '#a89873',
+  success: '#6b9080',
+  danger: '#c1533f',
+  warning: '#c98a2c',
+  blush: '#f3ded1',
+  wine: '#7a3b2e',
+  wineMuted: '#c79684',
+};
+
+// Thème "Saint-Valentin" (inspiré du thème daisyUI "valentine" du site web) :
+// tons roses et violets doux.
+export const valentineColors = {
+  primary: '#e05a72',
+  primaryDark: '#c43f59',
+  secondary: '#8b6fd6',
+  secondaryDark: '#6f52bf',
+  navy: '#4a2540',
+  background: '#fdf1f7',
+  surface: '#ffffff',
+  border: '#f5d3e3',
+  text: '#4a2540',
+  textMuted: '#8a5d78',
+  textFaint: '#c48fae',
+  success: '#3fb28a',
+  danger: '#e0397a',
+  warning: '#e0a13f',
+  blush: '#fde3ef',
+  wine: '#8a2f5c',
+  wineMuted: '#d98cb4',
+};
+
 // Conservé pour compatibilité : équivaut à la palette claire.
 export const colors = lightColors;
 
