@@ -32,8 +32,7 @@ export default function BoutiquesScreen({ navigation }) {
   }, [search]);
 
   return (
-    <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
-      <Text style={styles.header}>Boutiques</Text>
+    <SafeAreaView style={styles.safe} edges={['bottom']}>
       <View style={styles.searchBar}>
         <Ionicons name="search" size={18} color={colors.textFaint} />
         <TextInput

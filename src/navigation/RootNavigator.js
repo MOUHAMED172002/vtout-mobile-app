@@ -26,6 +26,7 @@ import ProductReviewsScreen from '../screens/ProductReviewsScreen';
 import WriteReviewScreen from '../screens/WriteReviewScreen';
 import MyReviewsScreen from '../screens/MyReviewsScreen';
 import BoutiqueStoreScreen from '../screens/BoutiqueStoreScreen';
+import BoutiquesScreen from '../screens/BoutiquesScreen';
 import WalletScreen from '../screens/WalletScreen';
 import InfoHubScreen from '../screens/info/InfoHubScreen';
 import AboutScreen from '../screens/info/AboutScreen';
@@ -82,6 +83,7 @@ export default function RootNavigator() {
       <Stack.Screen name="WriteReview" component={WriteReviewScreen} options={{ title: 'Laisser un avis' }} />
       <Stack.Screen name="MyReviews" component={MyReviewsScreen} options={{ title: 'Mes avis' }} />
       <Stack.Screen name="BoutiqueStore" component={BoutiqueStoreScreen} options={{ title: 'Boutique' }} />
+      <Stack.Screen name="BoutiquesListe" component={BoutiquesScreen} options={{ title: 'Boutiques' }} />
       <Stack.Screen name="Wallet" component={WalletScreen} options={{ title: 'Mon portefeuille' }} />
       <Stack.Screen name="InfoHub" component={InfoHubScreen} options={{ title: 'Aide & À propos' }} />
       <Stack.Screen name="About" component={AboutScreen} options={{ title: 'À propos de Vtout' }} />
