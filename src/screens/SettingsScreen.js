@@ -23,13 +23,44 @@ const ACCOUNT_ITEMS = [
 export default function SettingsScreen({ navigation }) {
   const { colors, preference, themeKey, setThemePreference } = useTheme();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
-  const { signOut } = useAuth();
+  const { signOut, deleteAccount } = useAuth();
 
   const handleSignOut = () => {
     Alert.alert('Déconnexion', 'Voulez-vous vraiment vous déconnecter ?', [
       { text: 'Annuler', style: 'cancel' },
       { text: 'Se déconnecter', style: 'destructive', onPress: signOut },
     ]);
+  };
+
+  const handleDeleteAccount = () => {
+    Alert.alert(
+      'Supprimer mon compte',
+      "Votre compte sera désactivé et vous serez déconnecté de tous vos appareils. Vos commandes passées restent visibles par nos services pour la comptabilité, mais votre profil ne sera plus accessible ni identifiable. Cette action ne peut être annulée que par le support Vtout.",
+      [
+        { text: 'Annuler', style: 'cancel' },
+        {
+          text: 'Supprimer définitivement',
+          style: 'destructive',
+          onPress: () => {
+            Alert.alert('Confirmer la suppression', 'Êtes-vous vraiment certain(e) ? Cette action est immédiate.', [
+              { text: 'Annuler', style: 'cancel' },
+              {
+                text: 'Oui, supprimer mon compte',
+                style: 'destructive',
+                onPress: async () => {
+                  try {
+                    await deleteAccount();
+                    navigation.navigate('Tabs');
+                  } catch (err) {
+                    Alert.alert('Erreur', "La suppression du compte a échoué. Merci de réessayer.");
+                  }
+                },
+              },
+            ]);
+          },
+        },
+      ]
+    );
   };
 
   return (
@@ -96,6 +127,14 @@ export default function SettingsScreen({ navigation }) {
           <Ionicons name="log-out-outline" size={18} color={colors.danger} />
           <Text style={styles.signOutText}>Se déconnecter</Text>
         </Pressable>
+
+        <View>
+          <Text style={styles.sectionLabel}>Zone dangereuse</Text>
+          <Pressable style={styles.deleteAccountBtn} onPress={handleDeleteAccount}>
+            <Ionicons name="trash-outline" size={17} color={colors.danger} />
+            <Text style={styles.deleteAccountText}>Supprimer mon compte</Text>
+          </Pressable>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -130,4 +169,9 @@ const createStyles = (colors) => StyleSheet.create({
     borderRadius: radius.md, borderWidth: 1.5, borderColor: colors.danger, marginTop: 4,
   },
   signOutText: { fontSize: 14, fontWeight: '800', color: colors.danger },
+  deleteAccountBtn: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, height: 46,
+    borderRadius: radius.md, backgroundColor: `${colors.danger}12`,
+  },
+  deleteAccountText: { fontSize: 13, fontWeight: '800', color: colors.danger },
 });

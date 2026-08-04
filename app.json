@@ -38,7 +38,10 @@
       ]
     ],
     "extra": {
-      "apiUrl": "https://api.vtout.com/api"
+      "apiUrl": "https://api.vtout.com/api",
+      "googleWebClientId": "848866935575-avgfnj9g10jt7qbrkm7k1sj33lcsl646.apps.googleusercontent.com",
+      "googleIosClientId": "",
+      "googleAndroidClientId": ""
     }
   }
 }

@@ -7,6 +7,7 @@ import { radius } from '../theme/colors';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/Button';
+import GoogleSignInButton from '../components/GoogleSignInButton';
 
 export default function RegisterScreen({ navigation }) {
   const { colors } = useTheme();
@@ -28,7 +29,7 @@ export default function RegisterScreen({ navigation }) {
       await signUp(email.trim(), password, name.trim());
       navigation.goBack();
     } catch (err) {
-      Alert.alert('Inscription impossible', err.response?.data?.message || 'Cet email est peut-être déjà utilisé.');
+      Alert.alert('Inscription impossible', err.isAuthAppError ? err.message : (err.response?.data?.message || 'Cet email est peut-être déjà utilisé.'));
     } finally {
       setLoading(false);
     }
@@ -85,6 +86,10 @@ export default function RegisterScreen({ navigation }) {
             </View>
 
             <Button title="Créer mon compte" onPress={handleSubmit} loading={loading} style={{ marginTop: 8 }} />
+          </View>
+
+          <View style={{ marginTop: 24 }}>
+            <GoogleSignInButton onSuccess={() => navigation.goBack()} />
           </View>
 
           <View style={styles.footerRow}>

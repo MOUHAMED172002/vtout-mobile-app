@@ -7,6 +7,7 @@ import { radius } from '../theme/colors';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/Button';
+import GoogleSignInButton from '../components/GoogleSignInButton';
 
 export default function LoginScreen({ navigation }) {
   const { colors } = useTheme();
@@ -27,7 +28,7 @@ export default function LoginScreen({ navigation }) {
       await signIn(email.trim(), password);
       navigation.goBack();
     } catch (err) {
-      Alert.alert('Connexion impossible', err.response?.data?.message || 'Email ou mot de passe incorrect.');
+      Alert.alert('Connexion impossible', err.isAuthAppError ? err.message : (err.response?.data?.message || 'Email ou mot de passe incorrect.'));
     } finally {
       setLoading(false);
     }
@@ -81,6 +82,10 @@ export default function LoginScreen({ navigation }) {
             </Pressable>
 
             <Button title="Se connecter" onPress={handleSubmit} loading={loading} style={{ marginTop: 8 }} />
+          </View>
+
+          <View style={{ marginTop: 24 }}>
+            <GoogleSignInButton onSuccess={() => navigation.goBack()} />
           </View>
 
           <View style={styles.footerRow}>
