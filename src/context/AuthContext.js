@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
-import * as SecureStore from 'expo-secure-store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api, { setAuthToken } from '../api/client';
+import { tokenStorage } from '../utils/tokenStorage';
 
 const TOKEN_KEY = 'vtout_session_token';
 const USER_CACHE_KEY = 'vtout_user_cache';
@@ -31,7 +31,7 @@ export function AuthProvider({ children }) {
     setSession(null);
     setUser(null);
     setProfile(null);
-    await SecureStore.deleteItemAsync(TOKEN_KEY);
+    await tokenStorage.deleteItem(TOKEN_KEY);
     await AsyncStorage.removeItem(USER_CACHE_KEY);
   }, []);
 
@@ -71,14 +71,14 @@ export function AuthProvider({ children }) {
         }
         setSession(data.session);
         setUser(data.user);
-        await SecureStore.setItemAsync(TOKEN_KEY, data.session.id);
+        await tokenStorage.setItem(TOKEN_KEY, data.session.id);
         await AsyncStorage.setItem(USER_CACHE_KEY, JSON.stringify(data.user));
       } else {
         setAuthToken(null);
         setSession(null);
         setUser(null);
         setProfile(null);
-        await SecureStore.deleteItemAsync(TOKEN_KEY);
+        await tokenStorage.deleteItem(TOKEN_KEY);
         await AsyncStorage.removeItem(USER_CACHE_KEY);
       }
     } catch (err) {
@@ -95,7 +95,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     (async () => {
       try {
-        const storedToken = await SecureStore.getItemAsync(TOKEN_KEY);
+        const storedToken = await tokenStorage.getItem(TOKEN_KEY);
         if (storedToken) setAuthToken(storedToken);
         const cachedUser = await AsyncStorage.getItem(USER_CACHE_KEY);
         if (cachedUser) setUser(JSON.parse(cachedUser));
