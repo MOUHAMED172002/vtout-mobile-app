@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, Pressable, RefreshControl, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -10,12 +10,14 @@ import ProductCard from '../components/ProductCard';
 import Loading from '../components/Loading';
 import NotificationBell from '../components/NotificationBell';
 import { getThumbnail } from '../utils/format';
+import { resolveCategoryIcon } from '../utils/categoryIcon';
 
 export default function HomeScreen({ navigation }) {
   const { colors } = useTheme();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [activeParentId, setActiveParentId] = useState(null);
   const [promoProducts, setPromoProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -28,7 +30,10 @@ export default function HomeScreen({ navigation }) {
         getProducts({ isAnyPromo: 'true', limit: 2 }).catch(() => []),
       ]);
       setProducts(productsRes.products || productsRes || []);
-      setCategories((categoriesRes || []).slice(0, 10));
+      const cats = categoriesRes || [];
+      setCategories(cats);
+      const firstParent = cats.find((c) => !c.parent_id);
+      if (firstParent) setActiveParentId(firstParent.id);
       setPromoProducts(promoRes.products || promoRes || []);
     } catch (err) {
       console.error('HomeScreen load error', err);
@@ -41,6 +46,16 @@ export default function HomeScreen({ navigation }) {
   useEffect(() => { load(); }, [load]);
 
   const onRefresh = () => { setRefreshing(true); load(); };
+
+  const parentCategories = useMemo(() => categories.filter((c) => !c.parent_id), [categories]);
+  const activeParent = useMemo(
+    () => parentCategories.find((c) => c.id === activeParentId) || parentCategories[0] || null,
+    [parentCategories, activeParentId]
+  );
+  const activeChildren = useMemo(
+    () => (activeParent ? categories.filter((c) => c.parent_id === activeParent.id) : []),
+    [categories, activeParent]
+  );
 
   const ListHeader = (
     <View>
@@ -81,7 +96,7 @@ export default function HomeScreen({ navigation }) {
         </LinearGradient>
       </Pressable>
 
-      {categories.length > 0 && (
+      {parentCategories.length > 0 && (
         <View style={styles.section}>
           <View style={styles.sectionHeaderRow}>
             <Text style={styles.sectionTitle}>Catégories</Text>
@@ -89,28 +104,67 @@ export default function HomeScreen({ navigation }) {
               <Text style={styles.sectionLink}>Voir tout</Text>
             </Pressable>
           </View>
+
           <FlatList
-            data={categories}
+            data={parentCategories}
             horizontal
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item) => String(item.id)}
-            contentContainerStyle={{ gap: 12, paddingHorizontal: 16 }}
-            renderItem={({ item }) => (
-              <Pressable
-                style={styles.categoryChip}
-                onPress={() => navigation.navigate('ProductsList', { categoryId: item.id, title: item.name })}
-              >
-                {item.image_url ? (
-                  <Image source={{ uri: getThumbnail(item.image_url) }} style={styles.categoryImage} />
-                ) : (
-                  <View style={[styles.categoryImage, styles.categoryImagePlaceholder]}>
-                    <Ionicons name="pricetag-outline" size={20} color={colors.primary} />
-                  </View>
-                )}
-                <Text style={styles.categoryLabel} numberOfLines={1}>{item.name}</Text>
-              </Pressable>
-            )}
+            contentContainerStyle={{ gap: 10, paddingHorizontal: 16 }}
+            renderItem={({ item }) => {
+              const isActive = activeParent?.id === item.id;
+              const { isEmoji, emoji, IconComponent } = resolveCategoryIcon(item.icon, 'LayoutPanelTop');
+              return (
+                <Pressable
+                  style={[styles.parentChip, isActive && styles.parentChipActive]}
+                  onPress={() => setActiveParentId(item.id)}
+                >
+                  {isEmoji ? (
+                    <Text style={styles.parentChipEmoji}>{emoji}</Text>
+                  ) : (
+                    <IconComponent size={24} color={isActive ? '#fff' : colors.primary} strokeWidth={2} />
+                  )}
+                  <Text style={[styles.parentChipLabel, isActive && styles.parentChipLabelActive]} numberOfLines={1}>{item.name}</Text>
+                </Pressable>
+              );
+            }}
           />
+
+          {activeChildren.length > 0 ? (
+            <FlatList
+              data={activeChildren}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item) => String(item.id)}
+              contentContainerStyle={{ gap: 10, paddingHorizontal: 16, paddingTop: 12 }}
+              renderItem={({ item }) => {
+                const { isEmoji, emoji, IconComponent } = resolveCategoryIcon(item.icon, 'ArrowRightCircle');
+                return (
+                  <Pressable
+                    style={styles.childCard}
+                    onPress={() => navigation.navigate('ProductsList', { categoryId: item.id, title: item.name })}
+                  >
+                    <View style={styles.childCardIcon}>
+                      {isEmoji ? (
+                        <Text style={styles.childCardEmoji}>{emoji}</Text>
+                      ) : (
+                        <IconComponent size={16} color={colors.primary} strokeWidth={2} />
+                      )}
+                    </View>
+                    <Text style={styles.childCardLabel} numberOfLines={1}>{item.name}</Text>
+                  </Pressable>
+                );
+              }}
+            />
+          ) : activeParent && (
+            <Pressable
+              style={styles.exploreParentBtn}
+              onPress={() => navigation.navigate('ProductsList', { categoryId: activeParent.id, title: activeParent.name })}
+            >
+              <Text style={styles.exploreParentBtnText} numberOfLines={1}>Explorer tout dans {activeParent.name}</Text>
+              <Ionicons name="arrow-forward" size={14} color="#fff" />
+            </Pressable>
+          )}
         </View>
       )}
 
@@ -191,10 +245,31 @@ const createStyles = (colors) => StyleSheet.create({
   },
   sectionTitle: { fontSize: 17, fontWeight: '900', color: colors.text },
   sectionLink: { fontSize: 12, fontWeight: '700', color: colors.primary },
-  categoryChip: { alignItems: 'center', width: 72, gap: 6 },
-  categoryImage: { width: 60, height: 60, borderRadius: 30, backgroundColor: '#f1f5f9' },
-  categoryImagePlaceholder: { alignItems: 'center', justifyContent: 'center' },
-  categoryLabel: { fontSize: 11, fontWeight: '700', color: colors.text, textAlign: 'center' },
+  parentChip: {
+    width: 78, minHeight: 84, borderRadius: radius.lg, backgroundColor: colors.surface,
+    borderWidth: 1.5, borderColor: colors.border, alignItems: 'center', justifyContent: 'center',
+    paddingVertical: 12, paddingHorizontal: 8, gap: 8,
+  },
+  parentChipActive: { backgroundColor: colors.primary, borderColor: colors.primary },
+  parentChipEmoji: { fontSize: 24 },
+  parentChipLabel: { fontSize: 10.5, fontWeight: '800', color: colors.text, textAlign: 'center' },
+  parentChipLabelActive: { color: '#fff' },
+  childCard: {
+    flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: colors.surface,
+    borderRadius: radius.md, borderWidth: 1, borderColor: colors.border,
+    paddingVertical: 10, paddingHorizontal: 12, minWidth: 150,
+  },
+  childCardIcon: {
+    width: 32, height: 32, borderRadius: 10, backgroundColor: `${colors.primary}15`,
+    alignItems: 'center', justifyContent: 'center',
+  },
+  childCardEmoji: { fontSize: 16 },
+  childCardLabel: { fontSize: 12, fontWeight: '700', color: colors.text, flexShrink: 1 },
+  exploreParentBtn: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, height: 46,
+    borderRadius: radius.full, backgroundColor: colors.primary, marginHorizontal: 16, marginTop: 12,
+  },
+  exploreParentBtnText: { fontSize: 12.5, fontWeight: '800', color: '#fff' },
   catalogBtn: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, height: 46,
     borderRadius: radius.full, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, marginTop: 4,
