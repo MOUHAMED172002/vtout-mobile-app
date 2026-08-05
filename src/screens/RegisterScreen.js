@@ -109,7 +109,23 @@ export default function RegisterScreen({ route, navigation }) {
           </View>
 
           <View style={{ marginTop: 24 }}>
-            <GoogleSignInButton onSuccess={() => navigation.goBack()} />
+            <GoogleSignInButton
+              onSuccess={async () => {
+                // Le champ "Code de parrainage" au-dessus n'était appliqué
+                // que sur l'inscription par email — un compte créé via
+                // Google ignorait silencieusement le code saisi.
+                if (referralCode.trim()) {
+                  try {
+                    const token = await getToken();
+                    await applyReferralCode(referralCode.trim(), token);
+                  } catch (refErr) {
+                    // Code invalide, déjà utilisé, ou compte déjà existant
+                    // (connexion plutôt qu'inscription) — non bloquant.
+                  }
+                }
+                navigation.goBack();
+              }}
+            />
           </View>
 
           <View style={styles.footerRow}>
