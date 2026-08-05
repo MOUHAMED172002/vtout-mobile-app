@@ -33,6 +33,7 @@ export default function CheckoutScreen({ route, navigation }) {
   const [couponCode, setCouponCode] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [discount, setDiscount] = useState(0);
+  const [freeShipping, setFreeShipping] = useState(false);
   const [validatingCoupon, setValidatingCoupon] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [feesConfig, setFeesConfig] = useState({ intra: 500, inter: 1000, crossing: {} });
@@ -108,7 +109,8 @@ export default function CheckoutScreen({ route, navigation }) {
   }, [location, items, feesConfig]);
 
   const isZoneMismatch = deliveryFee > 0;
-  const finalTotal = Math.max(0, subtotal - discount + deliveryFee);
+  const effectiveDeliveryFee = freeShipping ? 0 : deliveryFee;
+  const finalTotal = Math.max(0, subtotal - discount + effectiveDeliveryFee);
 
   useEffect(() => {
     if (isZoneMismatch && paymentMethod === 'delivery') setPaymentMethod('fedapay');
@@ -118,13 +120,22 @@ export default function CheckoutScreen({ route, navigation }) {
     if (!couponCode.trim()) return;
     setValidatingCoupon(true);
     try {
-      const res = await validateCoupon(couponCode, subtotal);
+      // Pour les codes restreints à une catégorie, le serveur a besoin du
+      // détail du panier par catégorie pour calculer la bonne base de
+      // réduction (voir server/controllers/couponController.js).
+      const couponItems = items.map((it) => ({
+        category_id: it.category_id || it.category?.id || null,
+        subtotal: (Number(it.price_snapshot || it.price) || 0) * (Number(it.quantity) || 1),
+      }));
+      const res = await validateCoupon(couponCode, subtotal, couponItems);
       setAppliedCoupon(res);
       setDiscount(res.discount || 0);
+      setFreeShipping(!!res.freeShipping);
     } catch (err) {
       Alert.alert('Code promo invalide', err.response?.data?.error || 'Ce code promo n\'est pas valide.');
       setAppliedCoupon(null);
       setDiscount(0);
+      setFreeShipping(false);
     } finally {
       setValidatingCoupon(false);
     }
@@ -259,6 +270,7 @@ export default function CheckoutScreen({ route, navigation }) {
             </Pressable>
           </View>
           {discount > 0 && <Text style={styles.couponActive}>Réduction appliquée : -{formatPrice(discount)} F</Text>}
+          {freeShipping && <Text style={styles.couponActive}>Livraison offerte appliquée</Text>}
         </View>
 
         <View style={styles.card}>
@@ -341,7 +353,14 @@ export default function CheckoutScreen({ route, navigation }) {
           )}
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>Livraison</Text>
-            <Text style={styles.summaryValue}>{deliveryFee === 0 ? 'Gratuite' : `${formatPrice(deliveryFee)} F`}</Text>
+            {freeShipping && deliveryFee > 0 ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                <Text style={styles.strikethroughValue}>{formatPrice(deliveryFee)} F</Text>
+                <Text style={[styles.summaryValue, { color: colors.success }]}>Offerte</Text>
+              </View>
+            ) : (
+              <Text style={styles.summaryValue}>{effectiveDeliveryFee === 0 ? 'Gratuite' : `${formatPrice(effectiveDeliveryFee)} F`}</Text>
+            )}
           </View>
           <View style={styles.divider} />
           <View style={styles.summaryRow}>
@@ -388,6 +407,7 @@ const createStyles = (colors) => StyleSheet.create({
   summaryRow: { flexDirection: 'row', justifyContent: 'space-between' },
   summaryLabel: { fontSize: 13, color: colors.textMuted, fontWeight: '600' },
   summaryValue: { fontSize: 13, color: colors.text, fontWeight: '800' },
+  strikethroughValue: { fontSize: 11, color: colors.textFaint, fontWeight: '700', textDecorationLine: 'line-through' },
   divider: { height: 1, backgroundColor: colors.border, marginVertical: 4 },
   totalLabel: { fontSize: 13, fontWeight: '900', color: colors.primary, textTransform: 'uppercase' },
   totalValue: { fontSize: 20, fontWeight: '900', color: colors.text },

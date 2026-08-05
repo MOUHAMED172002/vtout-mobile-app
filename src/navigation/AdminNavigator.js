@@ -23,6 +23,7 @@ import AdminCategoriesScreen from '../screens/admin/AdminCategoriesScreen';
 import AdminAttributesScreen from '../screens/admin/AdminAttributesScreen';
 import AdminBoutiquesScreen from '../screens/admin/AdminBoutiquesScreen';
 import AdminBadgeManagerScreen from '../screens/admin/AdminBadgeManagerScreen';
+import AdminCouponsScreen from '../screens/admin/AdminCouponsScreen';
 import AdminKitsScreen from '../screens/admin/AdminKitsScreen';
 import AdminLivreursScreen from '../screens/admin/AdminLivreursScreen';
 import AdminControlTowerScreen from '../screens/admin/AdminControlTowerScreen';
@@ -107,6 +108,7 @@ export default function AdminNavigator() {
       <Stack.Screen name="AdminAttributes" component={AdminAttributesScreen} options={{ title: 'Variantes' }} />
       <Stack.Screen name="AdminBoutiques" component={AdminBoutiquesScreen} options={{ title: 'Catalogue boutiques' }} />
       <Stack.Screen name="AdminBadgeManager" component={AdminBadgeManagerScreen} options={{ title: 'Badge Certifié' }} />
+      <Stack.Screen name="AdminCoupons" component={AdminCouponsScreen} options={{ title: 'Codes promo' }} />
       <Stack.Screen name="AdminKits" component={AdminKitsScreen} options={{ title: 'Kits & packs' }} />
       <Stack.Screen name="AdminLivreurs" component={AdminLivreursScreen} options={{ title: 'Validation livreurs' }} />
       <Stack.Screen name="AdminControlTower" component={AdminControlTowerScreen} options={{ title: 'Tour de contrôle' }} />

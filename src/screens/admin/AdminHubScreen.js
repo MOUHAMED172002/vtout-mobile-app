@@ -63,6 +63,7 @@ const SECTIONS = [
     label: 'Promotions',
     items: [
       { label: 'Kits & packs', icon: 'gift-outline', route: 'AdminKits' },
+      { label: 'Codes promo', icon: 'pricetag-outline', route: 'AdminCoupons' },
     ],
   },
   {

@@ -82,6 +82,10 @@ export default function CartScreen({ navigation }) {
         boutique_id: it.product?.boutique_id || it.boutique_id,
         boutique: it.product?.boutique || it.boutique,
         free_delivery_communes: it.product?.free_delivery_communes || it.free_delivery_communes,
+        // Nécessaire pour les coupons restreints à une catégorie (voir
+        // couponController.js:validateCoupon) — sans ça, le serveur croit
+        // que le panier ne contient aucun article de la catégorie visée.
+        category_id: it.product?.category_id || it.category_id || null,
       })),
       total,
     });
