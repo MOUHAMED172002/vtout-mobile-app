@@ -2,6 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
 import SpaceSwitcherButton from '../components/SpaceSwitcherButton';
@@ -51,6 +52,7 @@ const ICONS = {
 
 function AdminTabs() {
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -66,7 +68,7 @@ function AdminTabs() {
         ),
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textFaint,
-        tabBarStyle: { height: 60, paddingBottom: 8, paddingTop: 6, borderTopColor: colors.border },
+        tabBarStyle: { height: 60 + insets.bottom, paddingBottom: Math.max(8, insets.bottom), paddingTop: 6, borderTopColor: colors.border },
         tabBarLabelStyle: { fontSize: 10, fontWeight: '700' },
         tabBarIcon: ({ color, size, focused }) => {
           const name = ICONS[route.name] || 'ellipse';

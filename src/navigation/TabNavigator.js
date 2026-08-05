@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
 import { useCart } from '../context/CartContext';
@@ -38,13 +39,25 @@ function CartIcon({ color, size, focused }) {
 
 export default function TabNavigator() {
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textFaint,
-        tabBarStyle: { height: 60, paddingBottom: 8, paddingTop: 6, backgroundColor: colors.surface, borderTopColor: colors.border },
+        // La hauteur/le padding intègrent l'inset bas (indicateur d'accueil
+        // iOS, barre de gestes/boutons Android) — sans ça, un tabBarStyle
+        // personnalisé écrase le comportement par défaut de react-navigation
+        // qui gère cet espace automatiquement, et la barre chevauche les
+        // boutons du système.
+        tabBarStyle: {
+          height: 60 + insets.bottom,
+          paddingBottom: Math.max(8, insets.bottom),
+          paddingTop: 6,
+          backgroundColor: colors.surface,
+          borderTopColor: colors.border,
+        },
         tabBarLabelStyle: { fontSize: 11, fontWeight: '700' },
         tabBarIcon: ({ color, size, focused }) => {
           if (route.name === 'Panier') return <CartIcon color={color} size={size} focused={focused} />;
