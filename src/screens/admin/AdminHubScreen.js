@@ -27,6 +27,7 @@ const SECTIONS = [
     items: [
       { label: 'Validation vendeurs & produits', icon: 'checkmark-done-outline', tabRoute: 'AdminApprovals' },
       { label: 'Catalogue boutiques', icon: 'storefront-outline', route: 'AdminBoutiques' },
+      { label: 'Badge Certifié', icon: 'shield-checkmark-outline', route: 'AdminBadgeManager' },
     ],
   },
   {

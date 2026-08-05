@@ -215,6 +215,21 @@ const ProductFilterButton = React.forwardRef(function ProductFilterButton({ filt
                     })}
                   </View>
 
+                  <Text style={styles.sectionLabel}>Vendeur</Text>
+                  <Pressable
+                    style={[styles.optionRow, draft.isCertified === 'true' && styles.optionRowActive]}
+                    onPress={() => setDraft((d) => ({ ...d, isCertified: d.isCertified === 'true' ? '' : 'true' }))}
+                  >
+                    <Ionicons
+                      name="shield-checkmark-outline"
+                      size={16}
+                      color={draft.isCertified === 'true' ? '#fff' : colors.textMuted}
+                      style={{ marginRight: 4 }}
+                    />
+                    <Text style={[styles.optionRowText, draft.isCertified === 'true' && styles.optionRowTextActive]}>Vendeur certifié uniquement</Text>
+                    {draft.isCertified === 'true' && <Ionicons name="checkmark" size={16} color="#fff" />}
+                  </Pressable>
+
                   <Text style={styles.sectionLabel}>Trier par</Text>
                   <View style={styles.chipsRow}>
                     {SORT_OPTIONS.map((opt) => (

@@ -85,7 +85,15 @@ export default function BoutiqueStoreScreen({ route, navigation }) {
           columnWrapperStyle={{ gap: 12, paddingHorizontal: 16 }}
           contentContainerStyle={{ gap: 12, paddingBottom: 32 }}
           ListHeaderComponent={
-            <Text style={styles.count}>{products.length} produit{products.length > 1 ? 's' : ''}</Text>
+            <View style={styles.countRow}>
+              <Text style={styles.count}>{products.length} produit{products.length > 1 ? 's' : ''}</Text>
+              {products[0]?.supplier?.is_certified && (
+                <View style={styles.certifiedPill}>
+                  <Ionicons name="shield-checkmark" size={11} color={colors.secondary} />
+                  <Text style={styles.certifiedPillText}>Vendeur certifié</Text>
+                </View>
+              )}
+            </View>
           }
           renderItem={({ item }) => (
             <ProductCard product={item} onPress={() => navigation.push('ProductDetail', { id: item.id })} />
@@ -115,5 +123,8 @@ const createStyles = (colors) => StyleSheet.create({
     backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 4,
   },
   filterBadgeText: { fontSize: 9.5, fontWeight: '900', color: '#fff' },
-  count: { fontSize: 11, fontWeight: '800', color: colors.textMuted, textTransform: 'uppercase', paddingHorizontal: 16, marginBottom: 4 },
+  countRow: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, marginBottom: 4 },
+  count: { fontSize: 11, fontWeight: '800', color: colors.textMuted, textTransform: 'uppercase' },
+  certifiedPill: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: `${colors.secondary}1a`, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999 },
+  certifiedPillText: { fontSize: 9, fontWeight: '900', color: colors.secondary, textTransform: 'uppercase', letterSpacing: 0.3 },
 });

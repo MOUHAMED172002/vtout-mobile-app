@@ -266,6 +266,13 @@ export default function ProductDetailScreen({ route, navigation }) {
           {product.category?.name && <Text style={styles.category}>{product.category.name}</Text>}
           <Text style={styles.name}>{product.name}</Text>
 
+          {product.supplier?.is_certified && (
+            <View style={styles.certifiedSellerBadge}>
+              <Ionicons name="shield-checkmark" size={14} color={colors.secondary} />
+              <Text style={styles.certifiedSellerText}>Vendeur certifié</Text>
+            </View>
+          )}
+
           {product.review_count > 0 && (
             <Pressable style={styles.ratingRow} onPress={() => navigation.navigate('ProductReviews', { productId: product.id })}>
               <Ionicons name="star" size={13} color={colors.primary} />
@@ -462,6 +469,11 @@ const createStyles = (colors) => StyleSheet.create({
   content: { paddingHorizontal: 16, gap: 12 },
   category: { fontSize: 11, fontWeight: '800', color: colors.primary, textTransform: 'uppercase', letterSpacing: 1 },
   name: { fontSize: 20, fontWeight: '900', color: colors.text, lineHeight: 26 },
+  certifiedSellerBadge: {
+    flexDirection: 'row', alignItems: 'center', gap: 5, alignSelf: 'flex-start',
+    backgroundColor: `${colors.secondary}1a`, paddingHorizontal: 10, paddingVertical: 6, borderRadius: radius.sm,
+  },
+  certifiedSellerText: { fontSize: 11, fontWeight: '900', color: colors.secondary, textTransform: 'uppercase', letterSpacing: 0.3 },
   ratingRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   ratingText: { fontSize: 12, fontWeight: '700', color: colors.textMuted },
   priceRow: { flexDirection: 'row', alignItems: 'baseline', gap: 10 },

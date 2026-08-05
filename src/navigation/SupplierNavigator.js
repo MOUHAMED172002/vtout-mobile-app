@@ -14,6 +14,7 @@ import SupplierProductsScreen from '../screens/supplier/SupplierProductsScreen';
 import SupplierProductFormScreen from '../screens/supplier/SupplierProductFormScreen';
 import SupplierWalletScreen from '../screens/supplier/SupplierWalletScreen';
 import SupplierBoutiquesScreen from '../screens/supplier/SupplierBoutiquesScreen';
+import SupplierBadgeScreen from '../screens/supplier/SupplierBadgeScreen';
 import SupplierRegisterScreen from '../screens/supplier/SupplierRegisterScreen';
 import SupplierPromotionsScreen from '../screens/supplier/SupplierPromotionsScreen';
 import SupplierDisputesScreen from '../screens/supplier/SupplierDisputesScreen';
@@ -78,6 +79,7 @@ export default function SupplierNavigator() {
       <Stack.Screen name="SupplierOrderDetail" component={SupplierOrderDetailScreen} options={{ title: 'Commande' }} />
       <Stack.Screen name="SupplierProductForm" component={SupplierProductFormScreen} options={{ title: 'Produit' }} />
       <Stack.Screen name="SupplierBoutiques" component={SupplierBoutiquesScreen} options={{ title: 'Mes boutiques' }} />
+      <Stack.Screen name="SupplierBadge" component={SupplierBadgeScreen} options={{ title: 'Badge Certifié' }} />
       <Stack.Screen name="SupplierRegister" component={SupplierRegisterScreen} options={{ title: 'Devenir vendeur' }} />
       <Stack.Screen name="SupplierPromotions" component={SupplierPromotionsScreen} options={{ title: 'Mes promotions' }} />
       <Stack.Screen name="SupplierDisputes" component={SupplierDisputesScreen} options={{ title: 'Mes litiges' }} />

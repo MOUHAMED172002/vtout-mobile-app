@@ -115,6 +115,7 @@ export default function SupplierDashboardScreen({ navigation }) {
 
   const quickLinks = [
     { label: 'Mes boutiques', icon: 'storefront-outline', onPress: () => navigation.navigate('SupplierBoutiques') },
+    { label: 'Badge Certifié', icon: 'shield-checkmark-outline', onPress: () => navigation.navigate('SupplierBadge') },
     { label: 'Mes promotions', icon: 'sparkles-outline', onPress: () => navigation.navigate('SupplierPromotions') },
     { label: 'Mes litiges', icon: 'alert-circle-outline', onPress: () => navigation.navigate('SupplierDisputes') },
     { label: 'Statistiques', icon: 'stats-chart-outline', onPress: () => navigation.navigate('SupplierStats') },
