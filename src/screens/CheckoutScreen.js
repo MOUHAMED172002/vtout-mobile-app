@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, ScrollView, TextInput, StyleSheet, Pressable, Alert } from 'react-native';
+import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
@@ -9,7 +10,7 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import LocationPicker from '../components/LocationPicker';
 import Button from '../components/Button';
-import { formatPrice } from '../utils/format';
+import { formatPrice, getThumbnail } from '../utils/format';
 import { createAddress } from '../services/addressService';
 import { createOrder } from '../services/orderService';
 import { validateCoupon } from '../services/couponService';
@@ -303,6 +304,30 @@ export default function CheckoutScreen({ route, navigation }) {
         </View>
 
         <View style={styles.card}>
+          <Text style={styles.cardTitle}>Articles ({items.length})</Text>
+          {items.map((it, idx) => {
+            const freeCommunes = it.free_delivery_communes || [];
+            const shippedFrom = [it.boutique?.commune_label, ...freeCommunes].filter((v, i, a) => v && a.indexOf(v) === i);
+            return (
+              <View key={idx} style={styles.itemRow}>
+                <Image source={{ uri: getThumbnail(it.image_url) }} style={styles.itemImage} contentFit="contain" />
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.itemName} numberOfLines={1}>{it.name}</Text>
+                  <Text style={styles.itemQty}>{it.quantity} x {formatPrice(it.price_snapshot || it.price)} F</Text>
+                  {shippedFrom.length > 0 && (
+                    <Text style={styles.itemShipped} numberOfLines={1}>Expédié depuis : {shippedFrom.join(', ')}</Text>
+                  )}
+                  {freeCommunes.length > 0 && (
+                    <Text style={styles.itemFreeDelivery} numberOfLines={1}>Livraison offerte dans : {freeCommunes.join(', ')}</Text>
+                  )}
+                </View>
+                <Text style={styles.itemTotal}>{formatPrice((it.price_snapshot || it.price) * it.quantity)} F</Text>
+              </View>
+            );
+          })}
+        </View>
+
+        <View style={styles.card}>
           <Text style={styles.cardTitle}>Résumé</Text>
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>Sous-total</Text>
@@ -338,6 +363,13 @@ const createStyles = (colors) => StyleSheet.create({
   content: { padding: 16, gap: 14, paddingBottom: 24 },
   card: { backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: 16, gap: 10 },
   cardTitle: { fontSize: 15, fontWeight: '900', color: colors.text, marginBottom: 2 },
+  itemRow: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingVertical: 6 },
+  itemImage: { width: 44, height: 44, borderRadius: radius.sm, backgroundColor: colors.background },
+  itemName: { fontSize: 12, fontWeight: '800', color: colors.text },
+  itemQty: { fontSize: 10, fontWeight: '700', color: colors.textMuted, marginTop: 1 },
+  itemShipped: { fontSize: 9, fontWeight: '700', color: colors.textFaint, marginTop: 2 },
+  itemFreeDelivery: { fontSize: 9, fontWeight: '800', color: colors.success, marginTop: 1, textTransform: 'uppercase' },
+  itemTotal: { fontSize: 12, fontWeight: '900', color: colors.text },
   input: {
     height: 48, backgroundColor: colors.background, borderWidth: 1, borderColor: colors.border,
     borderRadius: radius.md, paddingHorizontal: 14, fontSize: 13, fontWeight: '600', color: colors.text, marginBottom: 4,
