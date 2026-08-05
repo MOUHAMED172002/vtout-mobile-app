@@ -234,23 +234,39 @@ export default function CheckoutScreen({ route, navigation }) {
           <Text style={styles.cardTitle}>Où livrer ?</Text>
           <LocationPicker value={location} onChange={setLocation} />
           {location && (
-            <>
-              <TextInput
-                style={styles.input}
-                placeholder="Détails (rue, repère...) — optionnel"
-                placeholderTextColor={colors.textFaint}
-                value={addressLine}
-                onChangeText={setAddressLine}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Téléphone (ex: 61000000)"
-                placeholderTextColor={colors.textFaint}
-                keyboardType="phone-pad"
-                value={phone}
-                onChangeText={setPhone}
-              />
-            </>
+            <View style={styles.addressDetailsBox}>
+              <View>
+                <Text style={styles.fieldLabel}>Détails (rue, maison, repère) — optionnel</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Ex : portail noir, près de la pharmacie…"
+                  placeholderTextColor={colors.textFaint}
+                  value={addressLine}
+                  onChangeText={setAddressLine}
+                />
+              </View>
+              <View>
+                <View style={styles.fieldLabelRow}>
+                  <Ionicons name="call-outline" size={13} color={colors.primary} />
+                  <Text style={styles.fieldLabel}>Numéro de téléphone *</Text>
+                </View>
+                <View style={styles.phoneInputWrap}>
+                  {!phone.startsWith('+') && <Text style={styles.phonePrefix}>+229</Text>}
+                  <TextInput
+                    style={[styles.input, styles.phoneInput, !phone.startsWith('+') && styles.phoneInputWithPrefix, { marginBottom: 0 }]}
+                    placeholder="Ex : 61000000"
+                    placeholderTextColor={colors.textFaint}
+                    keyboardType="phone-pad"
+                    value={phone}
+                    onChangeText={setPhone}
+                  />
+                  {phone.replace(/[^0-9]/g, '').length >= 8 && (
+                    <Ionicons name="checkmark-circle" size={18} color={colors.success} style={{ marginLeft: 8 }} />
+                  )}
+                </View>
+                <Text style={styles.fieldHelper}>Ce numéro pourra être utilisé pour vous contacter lors de la livraison.</Text>
+              </View>
+            </View>
           )}
         </View>
 
@@ -389,6 +405,14 @@ const createStyles = (colors) => StyleSheet.create({
   itemShipped: { fontSize: 9, fontWeight: '700', color: colors.textFaint, marginTop: 2 },
   itemFreeDelivery: { fontSize: 9, fontWeight: '800', color: colors.success, marginTop: 1, textTransform: 'uppercase' },
   itemTotal: { fontSize: 12, fontWeight: '900', color: colors.text },
+  addressDetailsBox: { backgroundColor: colors.background, borderRadius: radius.md, borderWidth: 1, borderColor: colors.border, padding: 14, gap: 14, marginTop: 4 },
+  fieldLabel: { fontSize: 10, fontWeight: '800', color: colors.textMuted, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 },
+  fieldLabelRow: { flexDirection: 'row', alignItems: 'center', gap: 5, marginBottom: 6 },
+  fieldHelper: { fontSize: 10, fontWeight: '600', color: colors.textFaint, fontStyle: 'italic', marginTop: 4 },
+  phoneInputWrap: { flexDirection: 'row', alignItems: 'center' },
+  phonePrefix: { position: 'absolute', left: 14, fontSize: 13, fontWeight: '700', color: colors.textFaint, zIndex: 1 },
+  phoneInput: { flex: 1 },
+  phoneInputWithPrefix: { paddingLeft: 56 },
   input: {
     height: 48, backgroundColor: colors.background, borderWidth: 1, borderColor: colors.border,
     borderRadius: radius.md, paddingHorizontal: 14, fontSize: 13, fontWeight: '600', color: colors.text, marginBottom: 4,
