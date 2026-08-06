@@ -281,7 +281,12 @@ export default function CheckoutScreen({ route, navigation }) {
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Coupon de réduction</Text>
+          <View style={styles.couponHeaderRow}>
+            <Text style={styles.cardTitle}>Coupon de réduction</Text>
+            <Pressable onPress={() => navigation.navigate('HowItWorks', { tab: 'coupons' })}>
+              <Text style={styles.helpLink}>Comment ça marche ?</Text>
+            </Pressable>
+          </View>
           <View style={styles.couponRow}>
             <TextInput
               style={[styles.input, { flex: 1, marginBottom: 0 }]}
@@ -408,6 +413,8 @@ const createStyles = (colors) => StyleSheet.create({
   content: { padding: 16, gap: 14, paddingBottom: 24 },
   card: { backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: 16, gap: 10 },
   cardTitle: { fontSize: 15, fontWeight: '900', color: colors.text, marginBottom: 2 },
+  couponHeaderRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 2 },
+  helpLink: { fontSize: 11.5, fontWeight: '800', color: colors.primary },
   itemRow: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingVertical: 6 },
   itemImage: { width: 44, height: 44, borderRadius: radius.sm, backgroundColor: colors.background },
   itemName: { fontSize: 12, fontWeight: '800', color: colors.text },

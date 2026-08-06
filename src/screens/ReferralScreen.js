@@ -17,7 +17,7 @@ const STEPS = [
   { icon: 'gift-outline', text: "Vous recevez votre coupon dès leur 1ère commande confirmée" },
 ];
 
-export default function ReferralScreen() {
+export default function ReferralScreen({ navigation }) {
   const { colors } = useTheme();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken } = useAuth();
@@ -123,6 +123,10 @@ export default function ReferralScreen() {
               <Text style={styles.stepText}>{step.text}</Text>
             </View>
           ))}
+          <Pressable style={styles.detailLink} onPress={() => navigation.navigate('HowItWorks', { tab: 'parrainage' })}>
+            <Text style={styles.detailLinkText}>Voir le détail des étapes du parrainage</Text>
+            <Ionicons name="chevron-forward" size={14} color={colors.primary} />
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>
@@ -163,4 +167,6 @@ const createStyles = (colors) => StyleSheet.create({
     alignItems: 'center', justifyContent: 'center',
   },
   stepText: { flex: 1, fontSize: 12.5, fontWeight: '700', color: colors.text, lineHeight: 17 },
+  detailLink: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4, marginTop: 4 },
+  detailLinkText: { fontSize: 12, fontWeight: '800', color: colors.primary },
 });
