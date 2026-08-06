@@ -16,6 +16,15 @@ export const updateSupplierStatus = async (id, status, token) => {
   return data;
 };
 
+// Crée un vrai compte vendeur (email + mot de passe) depuis l'admin — actif
+// immédiatement, mêmes privilèges qu'un vendeur inscrit normalement.
+export const createSupplier = async (supplierData, token) => {
+  const { data } = await api.post('/suppliers', supplierData, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+  return data;
+};
+
 // Produits en attente d'approbation (catalogue fournisseurs), même filtre que le back-office web.
 export const getPendingProducts = async (token) => {
   const { data } = await api.get('/products', {

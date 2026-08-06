@@ -136,7 +136,7 @@ export default function AvailableOrdersScreen({ navigation }) {
                   </View>
                   <View style={{ flex: 1 }}>
                     <Text style={styles.ref}>RÉF. #{getOrderRef(item)}</Text>
-                    <Text style={styles.supplier} numberOfLines={1}>Collecte : {item.supplier?.name || 'Plateforme Centrale'}</Text>
+                    <Text style={styles.supplier} numberOfLines={1}>Collecte : {item.boutique?.name || item.supplier?.name || 'Plateforme Centrale'}</Text>
                   </View>
                   <Text style={styles.fee}>{formatPrice(getDelivererFee(item))} F</Text>
                 </View>

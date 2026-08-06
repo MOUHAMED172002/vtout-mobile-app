@@ -11,10 +11,9 @@ import { useAuth } from '../../context/AuthContext';
 import {
   createProduct, updateProduct, uploadProductImage,
   getCategories, flattenCategories, getDeliveryFeeTiers, getCommissionRate,
-  computeDeliveryFee, computePublicPrice, reverseSupplierPrice,
+  computeDeliveryFee, computePublicPrice, reverseSupplierPrice, getMyProductById,
 } from '../../services/supplierProductService';
-import { getMyBoutiques } from '../../services/supplierService';
-import { getProductById } from '../../services/productService';
+import { getMyBoutiques, getMySupplierProfile } from '../../services/supplierService';
 import { getAllAttributes, createAttribute, addAttributeValue } from '../../services/adminAttributeService';
 import { formatPrice, getThumbnail } from '../../utils/format';
 import Loading from '../../components/Loading';
@@ -56,6 +55,11 @@ export default function SupplierProductFormScreen({ route, navigation }) {
   const [stock, setStock] = useState('');
   const [supplierNote, setSupplierNote] = useState('');
   const [images, setImages] = useState([]); // {uri or existingUrl, isMain}
+  // Mémo privé "prix d'achat" — réservé aux fiches vendeur dont le PROFIL a le
+  // rôle admin (double casquette admin+vendeur, même login). Jamais visible du
+  // client ni des vendeurs inscrits eux-mêmes.
+  const [isAdminOwner, setIsAdminOwner] = useState(false);
+  const [costPrice, setCostPrice] = useState('');
 
   const [selectedAttributes, setSelectedAttributes] = useState([]);
   const [selectedValuesMap, setSelectedValuesMap] = useState({});
@@ -73,21 +77,26 @@ export default function SupplierProductFormScreen({ route, navigation }) {
   const load = useCallback(async () => {
     try {
       const token = await getToken();
-      const [catData, boutData, tiersData, rate, attrData] = await Promise.all([
+      const [catData, boutData, tiersData, rate, attrData, myProfile] = await Promise.all([
         getCategories().catch(() => []),
         getMyBoutiques(token).catch(() => []),
         getDeliveryFeeTiers(),
         getCommissionRate(),
         getAllAttributes(token).catch(() => []),
+        getMySupplierProfile(token).catch(() => null),
       ]);
       setCategories(flattenCategories(catData));
       setBoutiques(boutData || []);
       setDeliveryTiers(tiersData || []);
       setCommissionRate(rate);
       setAvailableAttributes(attrData || []);
+      setIsAdminOwner(!!myProfile?.is_admin_owner);
 
       if (editingId) {
-        const found = await getProductById(editingId).catch(() => null);
+        // getMyProductById (au lieu de l'endpoint public getProductById) inclut
+        // cost_price — mémo réservé au vendeur propriétaire, filtré partout
+        // ailleurs (voir server/controllers/productController.js).
+        const found = await getMyProductById(editingId, token).catch(() => null);
         if (found) {
           setName(found.name || '');
           setDescription(found.description || '');
@@ -96,6 +105,7 @@ export default function SupplierProductFormScreen({ route, navigation }) {
           const secondary = Array.isArray(found.secondary_boutique_ids) ? found.secondary_boutique_ids : [];
           setSelectedBoutiqueIds([...primaryBoutique, ...secondary].filter(Boolean));
           setSupplierPrice(found.supplier_price ? String(found.supplier_price) : '');
+          setCostPrice(found.cost_price ? String(found.cost_price) : '');
           setStock(String(found.stock ?? 0));
           setSupplierNote(found.supplier_note || '');
           setImages((found.images || []).map((img, idx) => ({ existingUrl: img.image_url, isMain: img.is_main || idx === 0 })));
@@ -393,6 +403,9 @@ export default function SupplierProductFormScreen({ route, navigation }) {
         category_id: parseInt(category.id, 10),
         images: uploadedImages,
         supplier_note: supplierNote.trim(),
+        // Ignoré côté serveur si ce compte n'a pas la double casquette admin+vendeur
+        // (garde-fou appliqué dans productController.js, pas seulement ici).
+        cost_price: isAdminOwner && costPrice ? parseFloat(costPrice) : null,
         price: finalPublicPrice,
         old_price: 0,
         supplier_price: finalSupplierPrice,
@@ -520,6 +533,32 @@ export default function SupplierProductFormScreen({ route, navigation }) {
                   placeholderTextColor={colors.textFaint}
                 />
               </View>
+
+              {isAdminOwner && (
+                <View style={styles.costPriceCard}>
+                  <View style={styles.costPriceHeader}>
+                    <Text style={styles.costPriceLabel}>Prix d'achat (mémo privé)</Text>
+                    <View style={styles.costPriceBadge}>
+                      <Text style={styles.costPriceBadgeText}>Visible par vous seul</Text>
+                    </View>
+                  </View>
+                  <TextInput
+                    style={styles.input}
+                    value={costPrice}
+                    onChangeText={(t) => setCostPrice(t.replace(/[^0-9]/g, ''))}
+                    placeholder="Ex : 8000"
+                    placeholderTextColor={colors.textFaint}
+                    keyboardType="number-pad"
+                  />
+                  <Text style={styles.helperNote}>Ce que vous avez payé pour vous procurer ce produit — n'apparaît nulle part ailleurs sur Vtout.</Text>
+                  {!!costPrice && numericSupplierPrice > 0 && (
+                    <View style={styles.marginRow}>
+                      <Text style={styles.marginLabel}>Votre marge réelle (gain net − achat) :</Text>
+                      <Text style={styles.marginValue}>{formatPrice(Math.round(netGain - parseFloat(costPrice || 0)))} F</Text>
+                    </View>
+                  )}
+                </View>
+              )}
             </>
           )}
 
@@ -856,6 +895,14 @@ const createStyles = (colors) => StyleSheet.create({
   communeBadge: { backgroundColor: colors.background, borderWidth: 1, borderColor: colors.border, borderRadius: radius.full, paddingHorizontal: 8, paddingVertical: 3 },
   communeBadgeText: { fontSize: 9, fontWeight: '800', color: colors.textMuted, textTransform: 'uppercase' },
   helperNote: { fontSize: 11, color: colors.textFaint, fontWeight: '600', fontStyle: 'italic' },
+  costPriceCard: { backgroundColor: colors.background, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: 16, gap: 10 },
+  costPriceHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' },
+  costPriceLabel: { fontSize: 10, fontWeight: '900', color: colors.textMuted, textTransform: 'uppercase', letterSpacing: 0.5 },
+  costPriceBadge: { backgroundColor: colors.border, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999 },
+  costPriceBadgeText: { fontSize: 8, fontWeight: '900', color: colors.textMuted, textTransform: 'uppercase' },
+  marginRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: `${colors.secondary}1a`, borderRadius: radius.md, padding: 12 },
+  marginLabel: { fontSize: 9, fontWeight: '900', color: colors.secondary, textTransform: 'uppercase', flexShrink: 1, marginRight: 8 },
+  marginValue: { fontSize: 13, fontWeight: '900', color: colors.secondary },
   darkCard: { backgroundColor: colors.navy, borderRadius: radius.lg, padding: 16, gap: 14 },
   darkCardTitle: { fontSize: 16, fontWeight: '900', color: '#fff' },
   darkCardSubtitle: { fontSize: 11, color: 'rgba(255,255,255,0.55)', fontWeight: '600', marginTop: -8 },

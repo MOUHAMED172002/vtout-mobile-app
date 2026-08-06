@@ -42,7 +42,11 @@ export default function DeliveryDetailScreen({ route, navigation }) {
 
   const statusColor = getOrderStatusColor(order.status);
   const address = order.address || {};
-  const supplier = order.supplier || {};
+  // La boutique effectivement retenue pour CETTE commande (un vendeur peut en
+  // avoir plusieurs, à des adresses différentes) prime sur l'adresse générale
+  // du compte fournisseur — voir server/controllers/deliveryController.js.
+  const supplier = order.boutique || order.supplier || {};
+  const supplierPhone = order.boutique?.phone || order.boutique?.whatsapp || order.supplier?.phone;
   const customerPhone = address.phone || order.guest_phone;
 
   const handleCall = (phone) => {
@@ -171,10 +175,10 @@ export default function DeliveryDetailScreen({ route, navigation }) {
               <Text style={styles.rowText}>{supplier.address_line || `${supplier.quartier_label ? supplier.quartier_label + ', ' : ''}${supplier.commune_label}`}</Text>
             </View>
           ) : null}
-          {supplier.phone ? (
-            <Pressable style={styles.row} onPress={() => handleCall(supplier.phone)}>
+          {supplierPhone ? (
+            <Pressable style={styles.row} onPress={() => handleCall(supplierPhone)}>
               <Ionicons name="call-outline" size={16} color={colors.primary} />
-              <Text style={[styles.rowText, { color: colors.primary, fontWeight: '800' }]}>Appeler : {supplier.phone}</Text>
+              <Text style={[styles.rowText, { color: colors.primary, fontWeight: '800' }]}>Appeler : {supplierPhone}</Text>
             </Pressable>
           ) : null}
         </View>

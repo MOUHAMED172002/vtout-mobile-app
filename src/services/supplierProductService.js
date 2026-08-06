@@ -14,6 +14,16 @@ export const getMySupplierProducts = async (token) => {
   return data;
 };
 
+// Un seul produit pour le formulaire d'édition — contrairement à l'endpoint
+// public (getProductById), inclut cost_price (mémo privé du prix d'achat,
+// réservé au vendeur propriétaire du produit).
+export const getMyProductById = async (id, token) => {
+  const { data } = await api.get(`/suppliers/me/products/${id}`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+  return data;
+};
+
 export const createProduct = async (productData, token) => {
   const { data } = await api.post('/products', productData, {
     headers: { Authorization: `Bearer ${token}` },

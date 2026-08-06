@@ -41,7 +41,7 @@ function TabSwitch({ tab, setTab, pendingSuppliers, pendingProducts }) {
   );
 }
 
-export default function AdminSupplierApprovalScreen() {
+export default function AdminSupplierApprovalScreen({ navigation }) {
   const { colors } = useTheme();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken } = useAuth();
@@ -124,7 +124,16 @@ export default function AdminSupplierApprovalScreen() {
 
   return (
     <SafeAreaView style={styles.safe} edges={['bottom']}>
-      <TabSwitch tab={tab} setTab={setTab} pendingSuppliers={pendingSuppliers.length} pendingProducts={products.length} />
+      <View style={styles.headerRow}>
+        <View style={{ flex: 1 }}>
+          <TabSwitch tab={tab} setTab={setTab} pendingSuppliers={pendingSuppliers.length} pendingProducts={products.length} />
+        </View>
+        {tab === 'suppliers' && (
+          <Pressable style={styles.addBtn} onPress={() => navigation.navigate('AdminCreateSupplier')}>
+            <Ionicons name="add" size={20} color="#fff" />
+          </Pressable>
+        )}
+      </View>
 
       {tab === 'suppliers' ? (
         sortedSuppliers.length === 0 ? (
@@ -249,6 +258,8 @@ export default function AdminSupplierApprovalScreen() {
 
 const createStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
+  headerRow: { flexDirection: 'row', alignItems: 'center' },
+  addBtn: { width: 36, height: 36, borderRadius: radius.md, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', marginTop: 16, marginRight: 16 },
   tabSwitch: { flexDirection: 'row', gap: 8, padding: 16, paddingBottom: 4 },
   tabBtn: { flex: 1, paddingVertical: 10, borderRadius: radius.md, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, alignItems: 'center' },
   tabBtnActive: { backgroundColor: colors.primary, borderColor: colors.primary },

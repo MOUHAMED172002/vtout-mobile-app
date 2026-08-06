@@ -74,8 +74,13 @@ export default function CheckoutScreen({ route, navigation }) {
       .catch(() => {});
   }, []);
 
-  const deliveryFee = useMemo(() => {
-    if (!location) return 0;
+  // Communes entre lesquelles les frais de livraison inter-commune/d\u00e9partement
+  // s'appliquent toujours, mais o\u00f9 le paiement \u00e0 la livraison n'est plus
+  // bloqu\u00e9 (proximit\u00e9 r\u00e9elle et trafic important entre les deux villes).
+  const COD_EXCEPTION_COMMUNES = ['cotonou', 'abomeycalavi'];
+
+  const { deliveryFee, isZoneMismatch } = useMemo(() => {
+    if (!location) return { deliveryFee: 0, isZoneMismatch: false };
 
     const boutiques = {};
     items.forEach((it) => {
@@ -85,30 +90,35 @@ export default function CheckoutScreen({ route, navigation }) {
 
     const normalize = (s) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '').trim();
     let total = 0;
+    let blockingMismatch = false;
 
     Object.entries(boutiques).forEach(([bId, boutique]) => {
       const boutiqueItems = items.filter((it) => String(it.boutique_id || it.boutique?.id || 'default') === String(bId));
       const freeCommunes = new Set();
       boutiqueItems.forEach((it) => (it.free_delivery_communes || []).forEach((c) => freeCommunes.add(normalize(c))));
 
-      const isFreeZone = freeCommunes.has(normalize(location.commune_label)) || String(boutique.commune_id) === String(location.commune_id);
+      const boutiqueCommuneNormalized = normalize(boutique.commune_label);
+      const targetCommuneNormalized = normalize(location.commune_label);
+      const isFreeZone = freeCommunes.has(targetCommuneNormalized) || String(boutique.commune_id) === String(location.commune_id);
+      const isCotonouCalavyException = COD_EXCEPTION_COMMUNES.includes(boutiqueCommuneNormalized) && COD_EXCEPTION_COMMUNES.includes(targetCommuneNormalized);
 
       if (isFreeZone) return;
       if (String(boutique.departement_id) === String(location.departement_id)) {
         total += feesConfig.intra;
+        if (!isCotonouCalavyException) blockingMismatch = true;
       } else {
         const key = `${boutique.departement_id}-${location.departement_id}`;
         const reverseKey = `${location.departement_id}-${boutique.departement_id}`;
         if (feesConfig.crossing[key] !== undefined) total += parseFloat(feesConfig.crossing[key]);
         else if (feesConfig.crossing[reverseKey] !== undefined) total += parseFloat(feesConfig.crossing[reverseKey]);
         else total += feesConfig.inter;
+        if (!isCotonouCalavyException) blockingMismatch = true;
       }
     });
 
-    return total;
+    return { deliveryFee: total, isZoneMismatch: blockingMismatch };
   }, [location, items, feesConfig]);
 
-  const isZoneMismatch = deliveryFee > 0;
   const effectiveDeliveryFee = freeShipping ? 0 : deliveryFee;
   const finalTotal = Math.max(0, subtotal - discount + effectiveDeliveryFee);
 
