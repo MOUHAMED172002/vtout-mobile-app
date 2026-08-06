@@ -35,6 +35,13 @@
         {
           "color": "#f37021"
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Vtout a besoin d'accéder à vos photos pour choisir une image (produit, avatar, pièce d'identité...).",
+          "cameraPermission": "Vtout a besoin de la caméra pour prendre une photo (pièce d'identité, produit, avatar...)."
+        }
       ]
     ],
     "extra": {
