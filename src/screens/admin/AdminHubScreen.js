@@ -65,6 +65,7 @@ const SECTIONS = [
       { label: 'Kits & packs', icon: 'gift-outline', route: 'AdminKits' },
       { label: 'Codes promo', icon: 'pricetag-outline', route: 'AdminCoupons' },
       { label: 'Parrainage', icon: 'share-social-outline', route: 'AdminReferral' },
+      { label: 'Distribution WhatsApp', icon: 'megaphone-outline', route: 'AdminAdDistribution' },
     ],
   },
   {

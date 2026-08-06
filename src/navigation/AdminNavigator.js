@@ -26,6 +26,7 @@ import AdminBoutiquesScreen from '../screens/admin/AdminBoutiquesScreen';
 import AdminBadgeManagerScreen from '../screens/admin/AdminBadgeManagerScreen';
 import AdminCouponsScreen from '../screens/admin/AdminCouponsScreen';
 import AdminReferralScreen from '../screens/admin/AdminReferralScreen';
+import AdminAdDistributionScreen from '../screens/admin/AdminAdDistributionScreen';
 import AdminKitsScreen from '../screens/admin/AdminKitsScreen';
 import AdminLivreursScreen from '../screens/admin/AdminLivreursScreen';
 import AdminControlTowerScreen from '../screens/admin/AdminControlTowerScreen';
@@ -112,6 +113,7 @@ export default function AdminNavigator() {
       <Stack.Screen name="AdminBadgeManager" component={AdminBadgeManagerScreen} options={{ title: 'Badge Certifié' }} />
       <Stack.Screen name="AdminCoupons" component={AdminCouponsScreen} options={{ title: 'Codes promo' }} />
       <Stack.Screen name="AdminReferral" component={AdminReferralScreen} options={{ title: 'Parrainage' }} />
+      <Stack.Screen name="AdminAdDistribution" component={AdminAdDistributionScreen} options={{ title: 'Distribution WhatsApp' }} />
       <Stack.Screen name="AdminCreateSupplier" component={AdminCreateSupplierScreen} options={{ title: 'Nouveau marchand' }} />
       <Stack.Screen name="AdminKits" component={AdminKitsScreen} options={{ title: 'Kits & packs' }} />
       <Stack.Screen name="AdminLivreurs" component={AdminLivreursScreen} options={{ title: 'Validation livreurs' }} />

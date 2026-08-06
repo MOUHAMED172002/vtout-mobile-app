@@ -41,6 +41,7 @@ import PromotionsScreen from '../screens/info/PromotionsScreen';
 import SupportChatScreen from '../screens/info/SupportChatScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import ReferralScreen from '../screens/ReferralScreen';
+import DistributionScreen from '../screens/DistributionScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 
@@ -85,6 +86,7 @@ export default function RootNavigator() {
       <Stack.Screen name="Notifications" component={NotificationsScreen} options={{ title: 'Notifications' }} />
       <Stack.Screen name="Settings" component={SettingsScreen} options={{ title: 'Paramètres' }} />
       <Stack.Screen name="Referral" component={ReferralScreen} options={{ title: 'Parrainage' }} />
+      <Stack.Screen name="Distribution" component={DistributionScreen} options={{ title: 'Distribution WhatsApp' }} />
       <Stack.Screen name="EditProfile" component={EditProfileScreen} options={{ title: 'Modifier mon profil' }} />
       <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} options={{ title: 'Mot de passe' }} />
       <Stack.Screen name="ProductReviews" component={ProductReviewsScreen} options={{ title: 'Avis clients' }} />
