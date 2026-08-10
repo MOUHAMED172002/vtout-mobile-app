@@ -101,11 +101,22 @@ export default function ProductCard({ product, onPress }) {
   const [showAttrModal, setShowAttrModal] = useState(false);
   const [selectedAttributes, setSelectedAttributes] = useState({});
 
+  // Toutes les options de variante (couleur, taille, ...) doivent être
+  // choisies avant qu'on considère qu'une variante précise est
+  // "sélectionnée" — une sélection partielle ne doit jamais matcher
+  // silencieusement la première variante trouvée pour l'attribut déjà choisi.
+  const variantAttributeKeys = useMemo(() => getAttributeKeys(variants), [variants]);
+  const allVariantAttributesSelected = useMemo(
+    () => variantAttributeKeys.length > 0 && variantAttributeKeys.every((k) => selectedAttributes[k] != null),
+    [variantAttributeKeys, selectedAttributes]
+  );
+
   const matchedVariant = useMemo(() => {
-    if (!variants.length || !Object.keys(selectedAttributes).length) return null;
-    return variants.find((v) => Object.entries(selectedAttributes).every(([k, val]) => String(v.combination?.[k]) === String(val))) || null;
-  }, [variants, selectedAttributes]);
-  const matchedVariantOutOfStock = matchedVariant != null && (matchedVariant.priceRows?.[0]?.stock ?? 0) <= 0;
+    if (!variants.length || !allVariantAttributesSelected) return null;
+    return variants.find((v) => variantAttributeKeys.every((k) => String(v.combination?.[k]) === String(selectedAttributes[k]))) || null;
+  }, [variants, selectedAttributes, allVariantAttributesSelected, variantAttributeKeys]);
+  const matchedVariantStock = matchedVariant?.priceRows?.[0]?.available_stock ?? matchedVariant?.priceRows?.[0]?.stock;
+  const matchedVariantOutOfStock = matchedVariant != null && (matchedVariantStock ?? 0) <= 0;
 
   const goToDetail = () => (onPress ? onPress() : navigation.navigate('ProductDetail', { id: product.id }));
 
@@ -289,7 +300,12 @@ export default function ProductCard({ product, onPress }) {
             {matchedVariant && matchedVariantOutOfStock && (
               <Text style={styles.modalWarning}>Cette variante est en rupture de stock</Text>
             )}
-            {!matchedVariant && Object.keys(selectedAttributes).length > 0 && (
+            {!allVariantAttributesSelected && Object.keys(selectedAttributes).length > 0 && (
+              <Text style={styles.modalWarning}>
+                Choisissez {variantAttributeKeys.filter((k) => selectedAttributes[k] == null).join(' et ')} pour continuer
+              </Text>
+            )}
+            {allVariantAttributesSelected && !matchedVariant && (
               <Text style={styles.modalWarning}>Cette combinaison n'est pas disponible</Text>
             )}
 

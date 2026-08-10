@@ -86,10 +86,22 @@ export default function ProductDetailScreen({ route, navigation }) {
     return base;
   }, [product]);
 
+  // Toutes les options de variante (couleur, taille, ...) doivent être
+  // choisies avant qu'on considère qu'une variante précise est
+  // "sélectionnée" — une sélection partielle (ex : couleur choisie mais pas
+  // la taille) ne doit jamais matcher silencieusement la première variante
+  // trouvée pour cette couleur (donc une taille jamais choisie par le
+  // client).
+  const variantAttributeKeys = useMemo(() => getAttributeKeys(variants), [variants]);
+  const allVariantAttributesSelected = useMemo(
+    () => variantAttributeKeys.length > 0 && variantAttributeKeys.every((k) => selectedAttributes[k] != null),
+    [variantAttributeKeys, selectedAttributes]
+  );
+
   const matchedVariant = useMemo(() => {
-    if (!variants.length || !Object.keys(selectedAttributes).length) return null;
-    return variants.find((v) => Object.entries(selectedAttributes).every(([k, val]) => String(v.combination?.[k]) === String(val))) || null;
-  }, [variants, selectedAttributes]);
+    if (!variants.length || !allVariantAttributesSelected) return null;
+    return variants.find((v) => variantAttributeKeys.every((k) => String(v.combination?.[k]) === String(selectedAttributes[k]))) || null;
+  }, [variants, selectedAttributes, allVariantAttributesSelected, variantAttributeKeys]);
 
   const { currentPrice, basePrice, isSale, discountPercent } = useMemo(
     () => getProductDisplayPrice(product),
@@ -97,8 +109,10 @@ export default function ProductDetailScreen({ route, navigation }) {
   );
 
   const displayPrice = matchedVariant?.priceRows?.[0]?.price ?? currentPrice;
+  // available_stock (stock - reserved_stock) est préféré au stock brut, voir
+  // le commentaire équivalent dans utils/format.js#isProductOutOfStock.
   const outOfStock = variants.length > 0
-    ? (matchedVariant ? (matchedVariant.priceRows?.[0]?.stock || 0) <= 0 : false)
+    ? (matchedVariant ? (matchedVariant.priceRows?.[0]?.available_stock ?? matchedVariant.priceRows?.[0]?.stock ?? 0) <= 0 : false)
     : isProductOutOfStock(product);
 
   const toggleFavorite = async () => {
@@ -127,11 +141,7 @@ export default function ProductDetailScreen({ route, navigation }) {
     if (idx !== activeImage && images[idx] !== undefined) setActiveImage(idx);
   };
 
-  const requireVariantChoice = () => {
-    if (variants.length === 0) return false;
-    const keys = getAttributeKeys(variants);
-    return keys.some((k) => !selectedAttributes[k]);
-  };
+  const requireVariantChoice = () => variants.length > 0 && !allVariantAttributesSelected;
 
   const executeAddToCart = useCallback(async () => {
     setAddingToCart(true);
@@ -428,7 +438,12 @@ export default function ProductDetailScreen({ route, navigation }) {
             {matchedVariant && outOfStock && (
               <Text style={styles.modalWarning}>Cette variante est en rupture de stock</Text>
             )}
-            {!matchedVariant && Object.keys(selectedAttributes).length > 0 && (
+            {!allVariantAttributesSelected && Object.keys(selectedAttributes).length > 0 && (
+              <Text style={styles.modalWarning}>
+                Choisissez {variantAttributeKeys.filter((k) => selectedAttributes[k] == null).join(' et ')} pour continuer
+              </Text>
+            )}
+            {allVariantAttributesSelected && !matchedVariant && (
               <Text style={styles.modalWarning}>Cette combinaison n'est pas disponible</Text>
             )}
 

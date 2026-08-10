@@ -196,9 +196,15 @@ export default function CheckoutScreen({ route, navigation }) {
       }, token);
 
       if (paymentMethod === 'fedapay' && response.payment_url) {
-        await refreshCart();
+        // Flux différé (voir server/controllers/orderController.js
+        // materializePendingCheckout) : aucune commande n'existe encore à ce
+        // stade, seulement un PendingCheckout — le panier n'est donc PAS
+        // vidé ici (il ne le sera qu'à la confirmation réelle du paiement).
         await WebBrowser.openBrowserAsync(response.payment_url);
-        navigation.replace('OrderConfirmation', { orderId: response.order?.id, pendingPayment: true });
+        navigation.replace('OrderConfirmation', {
+          pendingCheckoutId: response.pending_checkout_id,
+          transactionId: response.transaction_id,
+        });
         return;
       }
 

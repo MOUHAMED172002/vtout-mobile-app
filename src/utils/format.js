@@ -58,11 +58,16 @@ export const getProductDisplayPrice = (product) => {
   };
 };
 
+// available_stock (= stock - reserved_stock, calculé côté backend dans
+// processProductsForCommunes / getProductById) reflète ce qui est vraiment
+// achetable maintenant, en tenant compte des commandes en cours non encore
+// livrées — préféré au `stock` brut. Fallback sur `stock` si le backend ne
+// l'envoie pas (compat).
 export const isProductOutOfStock = (product) => {
   if (!product) return true;
   if (product.total_stock !== undefined) return Number(product.total_stock) <= 0;
   if (product.variants && product.variants.length > 0) {
-    return !product.variants.some((v) => (v.priceRows?.[0]?.stock || 0) > 0);
+    return !product.variants.some((v) => (v.priceRows?.[0]?.available_stock ?? v.priceRows?.[0]?.stock ?? 0) > 0);
   }
-  return (product.stock || 0) <= 0;
+  return (product.available_stock ?? product.stock ?? 0) <= 0;
 };

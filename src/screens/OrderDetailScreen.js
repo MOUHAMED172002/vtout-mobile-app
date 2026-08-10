@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, Image, Pressable, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Image, Pressable, StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import * as WebBrowser from 'expo-web-browser';
 import { radius } from '../theme/colors';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
-import { getOrderById } from '../services/orderService';
+import { getOrderById, retryOrderPayment } from '../services/orderService';
 import { formatPrice, getThumbnail } from '../utils/format';
 import { getOrderStatusLabel, getOrderStatusColor } from '../utils/orderStatus';
 import Loading from '../components/Loading';
+import Button from '../components/Button';
 
 const isDelivered = (status) => ['livrée', 'livree'].includes((status || '').toLowerCase());
+const normalizeStatus = (status) => (status || '')
+  .normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
+const ONLINE_PAYMENT_METHODS = ['fedapay', 'mobile_money', 'card'];
 
 export default function OrderDetailScreen({ route, navigation }) {
   const { colors } = useTheme();
@@ -19,14 +24,18 @@ export default function OrderDetailScreen({ route, navigation }) {
   const { getToken } = useAuth();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [retrying, setRetrying] = useState(false);
 
-  useEffect(() => {
-    getToken()
+  const reload = React.useCallback(() => {
+    return getToken()
       .then((token) => getOrderById(id, token))
       .then(setOrder)
-      .catch(() => setOrder(null))
-      .finally(() => setLoading(false));
+      .catch(() => setOrder(null));
   }, [id, getToken]);
+
+  useEffect(() => {
+    reload().finally(() => setLoading(false));
+  }, [reload]);
 
   if (loading) return <Loading />;
   if (!order) {
@@ -38,6 +47,39 @@ export default function OrderDetailScreen({ route, navigation }) {
   }
 
   const statusColor = getOrderStatusColor(order.status);
+  const canRetryPayment = ONLINE_PAYMENT_METHODS.includes(order.payment_method)
+    && order.payment_status !== 'payé'
+    && !['annulee', 'livree', 'retournee'].includes(normalizeStatus(order.status));
+
+  const handleRetryPayment = async () => {
+    setRetrying(true);
+    try {
+      const token = await getToken();
+      const res = await retryOrderPayment(order.id, token);
+      if (!res.payment_url) {
+        Alert.alert('Erreur', "Impossible de générer le lien de paiement.");
+        return;
+      }
+      await WebBrowser.openBrowserAsync(res.payment_url);
+      if (res.pending_checkout_id) {
+        // Flux différé : aucune commande n'existe encore pour ce nouveau
+        // paiement, même logique de confirmation que CheckoutScreen.js.
+        navigation.replace('OrderConfirmation', {
+          pendingCheckoutId: res.pending_checkout_id,
+          transactionId: res.transaction_id,
+        });
+      } else {
+        // Flux legacy (commande déjà créée) : le webhook FedaPay mettra à
+        // jour payment_status de façon asynchrone — on recharge simplement.
+        Alert.alert('Vérification en cours', 'Actualisation du statut du paiement…');
+        reload();
+      }
+    } catch (err) {
+      Alert.alert('Erreur', err.response?.data?.error || 'Erreur lors de la génération du lien de paiement.');
+    } finally {
+      setRetrying(false);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.safe} edges={['bottom']}>
@@ -108,8 +150,20 @@ export default function OrderDetailScreen({ route, navigation }) {
           </View>
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>Paiement</Text>
-            <Text style={styles.summaryValueMuted}>{order.payment_method === 'delivery' ? 'À la livraison' : 'En ligne'}</Text>
+            <Text style={styles.summaryValueMuted}>
+              {order.payment_method === 'delivery' ? 'À la livraison' : 'En ligne'}
+              {order.payment_method !== 'delivery' ? (order.payment_status === 'payé' ? ' · Payé' : ' · En attente') : ''}
+            </Text>
           </View>
+          {canRetryPayment && (
+            <Button
+              title="Réessayer le paiement"
+              onPress={handleRetryPayment}
+              loading={retrying}
+              icon={<Ionicons name="card-outline" size={16} color="#fff" />}
+              style={{ marginTop: 10 }}
+            />
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
