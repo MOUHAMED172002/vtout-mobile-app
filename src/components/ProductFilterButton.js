@@ -3,7 +3,7 @@ import { View, Text, Pressable, TextInput, Modal, StyleSheet, FlatList, ScrollVi
 import { Ionicons } from '@expo/vector-icons';
 import { radius } from '../theme/colors';
 import { useTheme } from '../context/ThemeContext';
-import { getCategories } from '../services/productService';
+import { getCategories, getAttributes } from '../services/productService';
 import { getHierarchy } from '../services/locationService';
 
 const SORT_OPTIONS = [
@@ -89,6 +89,15 @@ const ProductFilterButton = React.forwardRef(function ProductFilterButton({ filt
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [categorySearch, setCategorySearch] = useState('');
 
+  // Filtres par propriété de variante (couleur, taille...) — voir
+  // frontend/src/component/Products/FiltersPanel.jsx#useAttributes.
+  // `draft.attributes` est indexé par ID d'attribut (pratique pour l'UI),
+  // converti en { nomAttribut: [valeurs] } (JSON) uniquement au moment
+  // d'appliquer, seul format que le serveur comprend (voir apply() plus bas).
+  const [attributesList, setAttributesList] = useState([]);
+  const [attributesLoaded, setAttributesLoaded] = useState(false);
+  const [selectedAttrId, setSelectedAttrId] = useState('');
+
   const [locations, setLocations] = useState([]);
   const [locationsLoading, setLocationsLoading] = useState(false);
   const [locationsLoaded, setLocationsLoaded] = useState(false);
@@ -97,16 +106,53 @@ const ProductFilterButton = React.forwardRef(function ProductFilterButton({ filt
   const [selectedZoneLabel, setSelectedZoneLabel] = useState(filters?.freeDeliveryCommune || '');
 
   const open = () => {
-    setDraft(filters || {});
+    // draft.attributes doit rester indexé par ID (voir commentaire plus haut) —
+    // si `filters` vient d'un apply() précédent, il contient déjà la version
+    // JSON par nom, pas exploitable pour re-cocher les puces ; on repart d'un
+    // état d'attributs vierge à chaque ouverture, comme les autres champs
+    // qui ne sont pas non plus réhydratés (recherche catégorie, zone...).
+    const { attributes: _appliedAttrs, ...rest } = filters || {};
+    setDraft({ ...rest, attributes: {} });
     setSelectedZoneLabel(filters?.freeDeliveryCommune || '');
+    setSelectedAttrId('');
     setVisible(true);
     if (!categoriesLoaded) {
       getCategories().then((data) => { setCategories(data || []); setCategoriesLoaded(true); }).catch(() => setCategoriesLoaded(true));
     }
+    if (!attributesLoaded) {
+      getAttributes().then((data) => { setAttributesList(data || []); setAttributesLoaded(true); }).catch(() => setAttributesLoaded(true));
+    }
   };
   const close = () => setVisible(false);
-  const apply = () => { onApply(draft); close(); };
-  const reset = () => { setDraft({}); setSelectedZoneLabel(''); onApply({}); close(); };
+  const toggleAttributeValue = (attrId, value) => {
+    setDraft((d) => {
+      const current = new Set((d.attributes || {})[attrId] || []);
+      if (current.has(value)) current.delete(value); else current.add(value);
+      const nextAttrs = { ...(d.attributes || {}) };
+      if (current.size > 0) nextAttrs[attrId] = Array.from(current);
+      else delete nextAttrs[attrId];
+      return { ...d, attributes: nextAttrs };
+    });
+  };
+  const apply = () => {
+    // Le state interne est indexé par ID d'attribut ; le serveur attend un
+    // JSON { nomAttribut: [valeurs] } (voir server/controllers/
+    // productController.js applyAttributeFilter) — même conversion que
+    // FiltersPanel.jsx côté web.
+    const attributesByName = {};
+    Object.entries(draft.attributes || {}).forEach(([attrId, vals]) => {
+      if (!Array.isArray(vals) || vals.length === 0) return;
+      const attr = attributesList.find((a) => String(a.id) === String(attrId));
+      if (attr) attributesByName[attr.name] = vals;
+    });
+    const payload = { ...draft };
+    if (Object.keys(attributesByName).length > 0) payload.attributes = JSON.stringify(attributesByName);
+    else delete payload.attributes;
+    onApply(payload);
+    close();
+  };
+  const reset = () => { setDraft({ attributes: {} }); setSelectedZoneLabel(''); setSelectedAttrId(''); onApply({}); close(); };
+  const draftAttrCount = Object.keys(draft.attributes || {}).length;
 
   useImperativeHandle(ref, () => ({ open, close }));
 
@@ -251,6 +297,55 @@ const ProductFilterButton = React.forwardRef(function ProductFilterButton({ filt
                     </Text>
                     <Ionicons name="chevron-forward" size={16} color={colors.textFaint} />
                   </Pressable>
+
+                  <Text style={styles.sectionLabel}>Propriétés{draftAttrCount > 0 ? ` (${draftAttrCount})` : ''}</Text>
+                  <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8, paddingRight: 4 }}>
+                    {attributesList.map((a) => (
+                      <Pressable
+                        key={a.id}
+                        style={[styles.chip, String(selectedAttrId) === String(a.id) && styles.chipActive]}
+                        onPress={() => setSelectedAttrId(String(selectedAttrId) === String(a.id) ? '' : String(a.id))}
+                      >
+                        <Text style={[styles.chipText, String(selectedAttrId) === String(a.id) && styles.chipTextActive]}>{a.name}</Text>
+                      </Pressable>
+                    ))}
+                  </ScrollView>
+
+                  {selectedAttrId ? (
+                    <View style={styles.chipsRow}>
+                      {(attributesList.find((a) => String(a.id) === selectedAttrId)?.values || []).map((v) => {
+                        const isSelected = ((draft.attributes || {})[selectedAttrId] || []).includes(v.value);
+                        return (
+                          <Pressable
+                            key={v.id}
+                            style={[styles.presetChip, isSelected && styles.chipActive]}
+                            onPress={() => toggleAttributeValue(selectedAttrId, v.value)}
+                          >
+                            <Text style={[styles.presetChipText, isSelected && styles.chipTextActive]}>{v.value}</Text>
+                          </Pressable>
+                        );
+                      })}
+                    </View>
+                  ) : null}
+
+                  {draftAttrCount > 0 && (
+                    <View style={{ gap: 6 }}>
+                      {Object.entries(draft.attributes || {}).map(([attrId, vals]) => {
+                        const attrName = attributesList.find((a) => String(a.id) === String(attrId))?.name || 'Attribut';
+                        return (
+                          <View key={attrId} style={styles.appliedAttrRow}>
+                            <View style={{ flex: 1 }}>
+                              <Text style={styles.appliedAttrLabel}>{attrName}</Text>
+                              <Text style={styles.appliedAttrValues} numberOfLines={1}>{vals.join(', ')}</Text>
+                            </View>
+                            <Pressable onPress={() => setDraft((d) => { const next = { ...(d.attributes || {}) }; delete next[attrId]; return { ...d, attributes: next }; })}>
+                              <Ionicons name="close-circle" size={18} color={colors.textFaint} />
+                            </Pressable>
+                          </View>
+                        );
+                      })}
+                    </View>
+                  )}
 
                   <Text style={styles.sectionLabel}>Prix (FCFA)</Text>
                   <View style={styles.chipsRow}>
@@ -437,6 +532,12 @@ const createStyles = (colors) => StyleSheet.create({
     backgroundColor: `${colors.success}12`, borderWidth: 1, borderColor: `${colors.success}40`, paddingHorizontal: 14,
   },
   zoneSelectedText: { flex: 1, fontSize: 12.5, fontWeight: '700', color: colors.text },
+  appliedAttrRow: {
+    flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: colors.background,
+    borderWidth: 1, borderColor: colors.border, borderRadius: radius.md, padding: 10,
+  },
+  appliedAttrLabel: { fontSize: 9.5, fontWeight: '800', color: colors.textFaint, textTransform: 'uppercase', letterSpacing: 0.3 },
+  appliedAttrValues: { fontSize: 12, fontWeight: '700', color: colors.text, marginTop: 1 },
   optionRow: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 14,
     paddingVertical: 12, borderRadius: radius.md, backgroundColor: colors.background,
