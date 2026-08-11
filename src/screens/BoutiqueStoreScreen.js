@@ -9,6 +9,7 @@ import ProductCard from '../components/ProductCard';
 import ProductFilterButton from '../components/ProductFilterButton';
 import Loading from '../components/Loading';
 import EmptyState from '../components/EmptyState';
+import VerifiedSellerBadge from '../components/VerifiedSellerBadge';
 
 const activeFilterCount = (f) => Object.entries(f || {}).filter(([k, v]) => v !== undefined && v !== '' && v !== null && k !== 'sort').length;
 
@@ -85,14 +86,17 @@ export default function BoutiqueStoreScreen({ route, navigation }) {
           columnWrapperStyle={{ gap: 12, paddingHorizontal: 16 }}
           contentContainerStyle={{ gap: 12, paddingBottom: 32 }}
           ListHeaderComponent={
-            <View style={styles.countRow}>
-              <Text style={styles.count}>{products.length} produit{products.length > 1 ? 's' : ''}</Text>
-              {products[0]?.supplier?.is_certified && (
-                <View style={styles.certifiedPill}>
-                  <Ionicons name="shield-checkmark" size={11} color={colors.secondary} />
-                  <Text style={styles.certifiedPillText}>Vendeur certifié</Text>
+            <View style={styles.boutiqueHeader}>
+              <View style={styles.boutiqueIconWrap}>
+                <Ionicons name="storefront" size={16} color={colors.primary} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <View style={styles.boutiqueNameRow}>
+                  <Text style={styles.boutiqueName} numberOfLines={1}>{name || 'Boutique'}</Text>
+                  {products[0]?.supplier?.is_certified && <VerifiedSellerBadge variant="icon" size={14} />}
                 </View>
-              )}
+                <Text style={styles.count}>{products.length} produit{products.length > 1 ? 's' : ''}</Text>
+              </View>
             </View>
           }
           renderItem={({ item }) => (
@@ -123,8 +127,9 @@ const createStyles = (colors) => StyleSheet.create({
     backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 4,
   },
   filterBadgeText: { fontSize: 9.5, fontWeight: '900', color: '#fff' },
-  countRow: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, marginBottom: 4 },
-  count: { fontSize: 11, fontWeight: '800', color: colors.textMuted, textTransform: 'uppercase' },
-  certifiedPill: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: `${colors.secondary}1a`, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999 },
-  certifiedPillText: { fontSize: 9, fontWeight: '900', color: colors.secondary, textTransform: 'uppercase', letterSpacing: 0.3 },
+  boutiqueHeader: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 16, marginBottom: 12 },
+  boutiqueIconWrap: { width: 32, height: 32, borderRadius: 10, backgroundColor: `${colors.primary}18`, alignItems: 'center', justifyContent: 'center' },
+  boutiqueNameRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  boutiqueName: { fontSize: 14, fontWeight: '900', color: colors.text, flexShrink: 1 },
+  count: { fontSize: 11, fontWeight: '800', color: colors.textMuted, textTransform: 'uppercase', marginTop: 1 },
 });

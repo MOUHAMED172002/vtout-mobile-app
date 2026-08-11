@@ -8,6 +8,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { checkFavorite, addFavorite, removeFavorite } from '../services/favoriteService';
 import { formatPrice, getOptimizedImage, getProductDisplayPrice, isProductOutOfStock } from '../utils/format';
+import VerifiedSellerBadge from './VerifiedSellerBadge';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = (width - 16 * 2 - 12) / 2;
@@ -199,12 +200,6 @@ export default function ProductCard({ product, onPress }) {
                 <Text style={styles.discountText}>-{discountPercent}%</Text>
               </View>
             )}
-            {product?.supplier?.is_certified && (
-              <View style={styles.certifiedBadge}>
-                <Ionicons name="shield-checkmark" size={11} color="#fff" />
-                <Text style={styles.certifiedText}>Certifié</Text>
-              </View>
-            )}
           </View>
 
           <Pressable style={styles.favBtn} onPress={toggleFavorite}>
@@ -217,11 +212,14 @@ export default function ProductCard({ product, onPress }) {
             <View style={styles.ratingRow}>
               <Ionicons name="star" size={10} color={colors.primary} />
               <Text style={styles.ratingText}>{Number(product.average_rating).toFixed(1)}</Text>
-              <Text style={styles.ratingDot}>•</Text>
-              <Text style={styles.ratingCertified}>Certifié</Text>
             </View>
           )}
           <Text style={styles.name} numberOfLines={2}>{product?.name}</Text>
+          {/* Vendeur vérifié — sa propre ligne, juste sous le nom (voir
+              frontend/src/component/Products/ProductsCard.jsx) */}
+          {product?.supplier?.is_certified && (
+            <VerifiedSellerBadge variant="chip" size={10} />
+          )}
           {product?.free_delivery_communes?.length > 0 && (
             <View style={styles.deliveryRow}>
               <Ionicons name="location" size={9} color={colors.success} />
@@ -356,11 +354,6 @@ const createStyles = (colors) => StyleSheet.create({
     alignSelf: 'flex-start',
   },
   discountText: { color: '#fff', fontSize: 10, fontWeight: '800' },
-  certifiedBadge: {
-    flexDirection: 'row', alignItems: 'center', gap: 3, alignSelf: 'flex-start',
-    backgroundColor: 'rgba(37,99,235,0.92)', paddingHorizontal: 7, paddingVertical: 3, borderRadius: radius.sm,
-  },
-  certifiedText: { color: '#fff', fontSize: 9, fontWeight: '800' },
   favBtn: {
     position: 'absolute', top: 8, right: 8, width: 28, height: 28, borderRadius: 14,
     backgroundColor: 'rgba(255,255,255,0.92)', alignItems: 'center', justifyContent: 'center',
@@ -372,8 +365,6 @@ const createStyles = (colors) => StyleSheet.create({
   info: { padding: 10, gap: 4 },
   ratingRow: { flexDirection: 'row', alignItems: 'center', gap: 3 },
   ratingText: { fontSize: 10, fontWeight: '800', color: colors.primary },
-  ratingDot: { fontSize: 10, color: colors.textFaint },
-  ratingCertified: { fontSize: 10, fontWeight: '700', color: colors.textMuted },
   name: { fontSize: 13, fontWeight: '700', color: colors.text, lineHeight: 17, minHeight: 34 },
   deliveryRow: { flexDirection: 'row', alignItems: 'center', gap: 3 },
   deliveryText: { fontSize: 9, fontWeight: '800', color: colors.success, textTransform: 'uppercase' },
