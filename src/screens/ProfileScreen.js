@@ -8,6 +8,8 @@ import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { useSpace } from '../context/SpaceContext';
 import { useNotifications } from '../context/NotificationContext';
+import { useTour } from '../tour/TourContext';
+import { HOME_TOUR_STEPS } from '../tour/tourSteps';
 import Button from '../components/Button';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -37,6 +39,10 @@ const ACCOUNT_ITEMS = [
   { label: 'Parrainage', icon: 'gift-outline', route: 'Referral' },
   { label: 'Distribution WhatsApp', icon: 'megaphone-outline', route: 'Distribution' },
   { label: 'Aide & À propos', icon: 'help-circle-outline', route: 'InfoHub' },
+  // Pas de `route` : action spéciale gérée à part dans le onPress
+  // ci-dessous (retour à l'accueil + relance de la visite guidée, voir
+  // src/tour/).
+  { label: 'Revoir la visite guidée', icon: 'compass-outline', action: 'tour' },
 ];
 
 export default function ProfileScreen({ navigation }) {
@@ -45,6 +51,18 @@ export default function ProfileScreen({ navigation }) {
   const { isLoaded, isSignedIn, user, profile, isSupplier, isDelivery, isAdmin } = useAuth();
   const { switchSpace, availableSpaces } = useSpace();
   const { unreadCount } = useNotifications();
+  const { start: startTour } = useTour();
+
+  const openAccountItem = (item) => {
+    if (item.action === 'tour') {
+      navigation.navigate('Accueil');
+      // Laisse le temps à l'onglet Accueil de monter (recherche, catégories)
+      // avant de mesurer les ancres — voir TourOverlay.js.
+      setTimeout(() => startTour(HOME_TOUR_STEPS), 400);
+      return;
+    }
+    navigation.navigate(item.route);
+  };
 
   if (!isLoaded) return null;
 
@@ -162,7 +180,7 @@ export default function ProfileScreen({ navigation }) {
           <Text style={styles.sectionLabel}>Mon compte</Text>
           <View style={styles.iconGrid}>
             {ACCOUNT_ITEMS.map((item) => (
-              <Pressable key={item.route} style={styles.iconGridItem} onPress={() => navigation.navigate(item.route)}>
+              <Pressable key={item.label} style={styles.iconGridItem} onPress={() => openAccountItem(item)}>
                 <View style={styles.iconGridIconWrap}>
                   <Ionicons name={item.icon} size={20} color={colors.primary} />
                   {item.route === 'Notifications' && unreadCount > 0 && (

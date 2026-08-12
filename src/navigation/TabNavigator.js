@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
 import { useCart } from '../context/CartContext';
+import TourAnchor from '../tour/TourAnchor';
 
 import HomeScreen from '../screens/HomeScreen';
 import CategoriesScreen from '../screens/CategoriesScreen';
@@ -60,9 +61,21 @@ export default function TabNavigator() {
         },
         tabBarLabelStyle: { fontSize: 11, fontWeight: '700' },
         tabBarIcon: ({ color, size, focused }) => {
-          if (route.name === 'Panier') return <CartIcon color={color} size={size} focused={focused} />;
+          // Ancres de la visite guidée (voir src/tour/tourSteps.js) — seuls
+          // les onglets Panier/Profil sont référencés pour l'instant.
+          if (route.name === 'Panier') {
+            return (
+              <TourAnchor id="tour-tab-panier">
+                <CartIcon color={color} size={size} focused={focused} />
+              </TourAnchor>
+            );
+          }
           const name = ICONS[route.name] || 'ellipse';
-          return <Ionicons name={focused ? name : `${name}-outline`} size={size} color={color} />;
+          const icon = <Ionicons name={focused ? name : `${name}-outline`} size={size} color={color} />;
+          if (route.name === 'Profil') {
+            return <TourAnchor id="tour-tab-profil">{icon}</TourAnchor>;
+          }
+          return icon;
         },
       })}
     >

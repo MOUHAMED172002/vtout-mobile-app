@@ -3,6 +3,7 @@ import { View, Text, FlatList, StyleSheet, Pressable, RefreshControl, Image } fr
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { radius } from '../theme/colors';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
@@ -12,11 +13,17 @@ import Loading from '../components/Loading';
 import NotificationBell from '../components/NotificationBell';
 import { getThumbnail } from '../utils/format';
 import { resolveCategoryIcon } from '../utils/categoryIcon';
+import TourAnchor from '../tour/TourAnchor';
+import { useTour } from '../tour/TourContext';
+import { HOME_TOUR_STEPS } from '../tour/tourSteps';
+
+const TOUR_SEEN_KEY = 'vtout_tour_home_seen';
 
 export default function HomeScreen({ navigation }) {
   const { colors } = useTheme();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { isSignedIn, isSupplier, isDelivery, isAdmin } = useAuth();
+  const { start: startTour } = useTour();
   const showOpportunities = isSignedIn && !isAdmin && (!isSupplier || !isDelivery);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -48,6 +55,23 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => { load(); }, [load]);
 
+  // Visite guidée automatique à la toute première ouverture de l'accueil —
+  // une fois les données chargées (pour que les catégories existent, sinon
+  // cette section entière ne serait pas montée) et laissant le temps à la
+  // mise en page de se stabiliser avant de mesurer les ancres (voir
+  // TourOverlay.js). Rejouable manuellement depuis Profil.
+  useEffect(() => {
+    if (loading) return;
+    let cancelled = false;
+    AsyncStorage.getItem(TOUR_SEEN_KEY).then((seen) => {
+      if (seen || cancelled) return;
+      setTimeout(() => { if (!cancelled) startTour(HOME_TOUR_STEPS); }, 500);
+      AsyncStorage.setItem(TOUR_SEEN_KEY, 'true');
+    });
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
+
   const onRefresh = () => { setRefreshing(true); load(); };
 
   const parentCategories = useMemo(() => categories.filter((c) => !c.parent_id), [categories]);
@@ -67,10 +91,12 @@ export default function HomeScreen({ navigation }) {
         <NotificationBell />
       </View>
 
-      <Pressable style={styles.searchBar} onPress={() => navigation.navigate('Search')}>
-        <Ionicons name="search" size={18} color={colors.textFaint} />
-        <Text style={styles.searchPlaceholder}>Rechercher un produit, une catégorie...</Text>
-      </Pressable>
+      <TourAnchor id="tour-search">
+        <Pressable style={styles.searchBar} onPress={() => navigation.navigate('Search')}>
+          <Ionicons name="search" size={18} color={colors.textFaint} />
+          <Text style={styles.searchPlaceholder}>Rechercher un produit, une catégorie...</Text>
+        </Pressable>
+      </TourAnchor>
 
       <Pressable onPress={() => navigation.navigate('Promotions')}>
         <LinearGradient colors={[colors.primary, colors.primaryDark]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.promoHero}>
@@ -100,7 +126,7 @@ export default function HomeScreen({ navigation }) {
       </Pressable>
 
       {parentCategories.length > 0 && (
-        <View style={styles.section}>
+        <TourAnchor id="tour-categories" style={styles.section}>
           <View style={styles.sectionHeaderRow}>
             <Text style={styles.sectionTitle}>Catégories</Text>
             <Pressable onPress={() => navigation.navigate('Categories')}>
@@ -168,7 +194,7 @@ export default function HomeScreen({ navigation }) {
               <Ionicons name="arrow-forward" size={14} color="#fff" />
             </Pressable>
           )}
-        </View>
+        </TourAnchor>
       )}
 
       {showOpportunities && (

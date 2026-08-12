@@ -15,6 +15,8 @@ import { navigationRef } from './src/navigation/navigationRef';
 import PushNotificationListener from './src/components/PushNotificationListener';
 import SupportChatBubble from './src/components/SupportChatBubble';
 import EmailVerificationBanner from './src/components/EmailVerificationBanner';
+import { TourProvider } from './src/tour/TourContext';
+import TourOverlay from './src/tour/TourOverlay';
 
 // Deep linking (schéma "vtout://", voir app.json) — pour l'instant limité
 // à ce que le widget "Suivi de commande" ouvre directement la bonne
@@ -62,6 +64,7 @@ function AppContent() {
         <RootNavigator />
         <PushNotificationListener />
         <SupportChatBubble />
+        <TourOverlay />
       </NavigationContainer>
     </View>
   );
@@ -76,7 +79,9 @@ export default function App() {
             <SpaceProvider>
               <NotificationProvider>
                 <CartProvider>
-                  <AppContent />
+                  <TourProvider>
+                    <AppContent />
+                  </TourProvider>
                 </CartProvider>
               </NotificationProvider>
             </SpaceProvider>
