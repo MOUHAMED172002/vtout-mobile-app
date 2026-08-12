@@ -1,7 +1,14 @@
 import React from 'react';
-import OrderTrackingWidget from './OrderTrackingWidget';
+import BuyerWidget from './BuyerWidget';
 import SupplierQueueWidget from './SupplierQueueWidget';
-import { computeOrderWidgetData, computeSupplierWidgetData } from '../services/widgetService';
+import DeliveryQueueWidget from './DeliveryQueueWidget';
+import AdminApprovalsWidget from './AdminApprovalsWidget';
+import {
+  computeBuyerWidgetData,
+  computeSupplierWidgetData,
+  computeDeliveryWidgetData,
+  computeAdminWidgetData,
+} from '../services/widgetService';
 
 // Tâche headless Android (voir index.js#registerWidgetTaskHandler) —
 // exécutée par l'OS indépendamment de l'app au premier ajout du widget, à
@@ -17,13 +24,23 @@ export async function widgetTaskHandler(props) {
 
   switch (widgetInfo.widgetName) {
     case 'OrderTracking': {
-      const data = await computeOrderWidgetData();
-      renderWidget(<OrderTrackingWidget data={data} />);
+      const data = await computeBuyerWidgetData();
+      renderWidget(<BuyerWidget data={data} />);
       break;
     }
     case 'SupplierQueue': {
       const data = await computeSupplierWidgetData();
       renderWidget(<SupplierQueueWidget data={data} />);
+      break;
+    }
+    case 'DeliveryQueue': {
+      const data = await computeDeliveryWidgetData();
+      renderWidget(<DeliveryQueueWidget data={data} />);
+      break;
+    }
+    case 'AdminApprovals': {
+      const data = await computeAdminWidgetData();
+      renderWidget(<AdminApprovalsWidget data={data} />);
       break;
     }
     default:

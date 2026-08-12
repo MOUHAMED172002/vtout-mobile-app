@@ -154,18 +154,35 @@ distantes** sur Android/iOS. Pour tester cette fonctionnalité :
 
 ## Widgets écran d'accueil
 
-Deux widgets, entièrement natifs (invisibles en Expo Go, comme les push) :
+Quatre widgets, un par rôle, entièrement natifs (invisibles en Expo Go,
+comme les push) :
 
-- **Suivi de commande** (client) — statut de la dernière commande active.
-- **Commandes vendeur** — nombre de commandes en attente à traiter
-  (n'affiche rien si l'espace vendeur n'est pas actif sur le compte).
+- **Mon activité Vtout** (acheteur) — un seul widget « intelligent » qui
+  affiche toujours la chose la plus utile dans l'instant, par ordre de
+  priorité : commande active en cours → panier non finalisé (rappel) →
+  aucune commande depuis 3 jours (relance douce) → rien d'urgent. Tap sur
+  une commande active = ouvre directement cette commande dans l'app (deep
+  link `vtout://order/:id`, voir § Deep linking plus bas).
+- **Commandes vendeur** — nombre de commandes en attente à traiter.
+- **Mes livraisons** — nombre de livraisons actives assignées.
+- **À valider** (admin) — vendeurs + produits en attente de validation.
 
-Les données sont recalculées et poussées vers le widget déjà présent sur
+Les trois derniers n'affichent rien si le rôle correspondant n'est pas
+actif sur le compte connecté.
+
+Les données sont recalculées et poussées vers les widgets déjà présents sur
 l'écran d'accueil à la connexion, à la déconnexion, et à chaque changement
 de statut de commande reçu en direct (voir `NotificationContext.js` →
-`src/services/widgetService.js`). Côté Android, le widget se met aussi à
-jour tout seul même app fermée (`src/widgets/widget-task-handler.js`,
+`src/services/widgetService.js`). Côté Android, chaque widget se met aussi
+à jour tout seul même app fermée (`src/widgets/widget-task-handler.js`,
 toutes les 30 min).
+
+### Deep linking
+
+Première configuration de deep linking de l'app (`App.js` → `linking`),
+schéma `vtout://`, pour l'instant limitée à `order/:id` → écran
+`OrderDetail` (utilisé par le widget acheteur). Réutilisable pour d'autres
+liens profonds si besoin plus tard (parrainage, etc.).
 
 ### Android (`react-native-android-widget`)
 

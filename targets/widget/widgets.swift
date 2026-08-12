@@ -9,60 +9,63 @@ let vtoutOrange = Color(red: 0.953, green: 0.443, blue: 0.129) // #f37021
 let vtoutBlue = Color(red: 0.0, green: 0.329, blue: 0.651) // #0054a6
 
 // ─────────────────────────────────────────────────────────────────────────
-// Widget "Suivi de commande" (client) — lit la dernière commande active
-// écrite par src/services/widgetService.js via ExtensionStorage
-// (`@bacons/apple-targets`), stockée en JSON dans le UserDefaults partagé
-// sous la clé "vtout_order_widget". Se rafraîchit automatiquement toutes
-// les 30 min, et immédiatement quand l'app appelle
-// ExtensionStorage.reloadWidget() après un changement de statut.
+// Widget "acheteur" — une seule chose affichée à la fois, la plus utile
+// dans l'instant (mêmes 5 modes que src/services/widgetService.js#
+// computeBuyerWidgetData, mêmes clés JSON écrites par ExtensionStorage,
+// même logique de priorité que src/widgets/BuyerWidget.js) :
+//   1. "order"    — commande active en cours
+//   2. "cart"     — panier non finalisé (rappel)
+//   3. "winback"  — aucune commande depuis 3 jours (relance douce)
+//   4. "idle"     — rien d'urgent
+//   5. "signed_out" (ou clé absente) — pas connecté
 // ─────────────────────────────────────────────────────────────────────────
 
-struct OrderEntry: TimelineEntry {
+struct BuyerEntry: TimelineEntry {
     let date: Date
-    let hasOrder: Bool
+    let mode: String
+    let orderId: String
+    let orderIdShort: String
     let statusLabel: String
     let itemsCount: Int
     let total: Int
-    let orderId: String
-    let orderIdShort: String
 }
 
-struct OrderProvider: TimelineProvider {
-    func placeholder(in context: Context) -> OrderEntry {
-        OrderEntry(date: Date(), hasOrder: true, statusLabel: "Expédiée", itemsCount: 2, total: 12000, orderId: "", orderIdShort: "A1B2C3D4")
+struct BuyerProvider: TimelineProvider {
+    func placeholder(in context: Context) -> BuyerEntry {
+        BuyerEntry(date: Date(), mode: "order", orderId: "", orderIdShort: "A1B2C3D4", statusLabel: "Expédiée", itemsCount: 2, total: 12000)
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (OrderEntry) -> Void) {
+    func getSnapshot(in context: Context, completion: @escaping (BuyerEntry) -> Void) {
         completion(loadEntry())
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<OrderEntry>) -> Void) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<BuyerEntry>) -> Void) {
         let nextUpdate = Calendar.current.date(byAdding: .minute, value: 30, to: Date())!
         completion(Timeline(entries: [loadEntry()], policy: .after(nextUpdate)))
     }
 
-    private func loadEntry() -> OrderEntry {
+    private func loadEntry() -> BuyerEntry {
         let defaults = UserDefaults(suiteName: appGroup)
-        guard let data = defaults?.data(forKey: "vtout_order_widget"),
+        guard let data = defaults?.data(forKey: "vtout_buyer_widget"),
               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-              (json["hasOrder"] as? Bool) == true else {
-            return OrderEntry(date: Date(), hasOrder: false, statusLabel: "", itemsCount: 0, total: 0, orderId: "", orderIdShort: "")
+              let mode = json["mode"] as? String else {
+            return BuyerEntry(date: Date(), mode: "signed_out", orderId: "", orderIdShort: "", statusLabel: "", itemsCount: 0, total: 0)
         }
         let orderId = json["orderId"] as? String ?? ""
-        return OrderEntry(
+        return BuyerEntry(
             date: Date(),
-            hasOrder: true,
+            mode: mode,
+            orderId: orderId,
+            orderIdShort: String(orderId.prefix(8)),
             statusLabel: json["statusLabel"] as? String ?? "—",
             itemsCount: json["itemsCount"] as? Int ?? 0,
-            total: json["total"] as? Int ?? 0,
-            orderId: orderId,
-            orderIdShort: String(orderId.prefix(8))
+            total: json["total"] as? Int ?? 0
         )
     }
 }
 
-struct OrderWidgetView: View {
-    var entry: OrderEntry
+struct BuyerWidgetView: View {
+    var entry: BuyerEntry
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -78,7 +81,8 @@ struct OrderWidgetView: View {
 
             Spacer(minLength: 2)
 
-            if entry.hasOrder {
+            switch entry.mode {
+            case "order":
                 Text(entry.statusLabel)
                     .font(.system(size: 17, weight: .heavy))
                     .lineLimit(1)
@@ -88,8 +92,30 @@ struct OrderWidgetView: View {
                 Spacer(minLength: 4)
                 Text("\(entry.itemsCount) article\(entry.itemsCount > 1 ? "s" : "") · \(entry.total) F")
                     .font(.system(size: 11, weight: .bold))
-            } else {
-                Text("Aucune commande en cours")
+            case "cart":
+                Text("Panier en attente")
+                    .font(.system(size: 16, weight: .heavy))
+                    .foregroundColor(vtoutOrange)
+                Text("\(entry.itemsCount) article\(entry.itemsCount > 1 ? "s" : "") · \(entry.total) F")
+                    .font(.system(size: 11, weight: .bold))
+                Spacer(minLength: 4)
+                Text("Finalisez votre commande")
+                    .font(.system(size: 10.5, weight: .semibold))
+                    .foregroundColor(.secondary)
+            case "winback":
+                Text("On ne vous a pas vu récemment")
+                    .font(.system(size: 14, weight: .heavy))
+                    .lineLimit(2)
+                Spacer(minLength: 6)
+                Text("Découvrez les nouveautés Vtout")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundColor(.secondary)
+            case "idle":
+                Text("Tout est à jour, à bientôt !")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(.secondary)
+            default:
+                Text("Connectez-vous pour voir votre activité")
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundColor(.secondary)
             }
@@ -98,9 +124,9 @@ struct OrderWidgetView: View {
         .containerBackground(.background, for: .widget)
         // Ouvre directement la commande (voir App.js#linking, écran
         // OrderDetail toujours monté dans RootNavigator quel que soit
-        // l'espace actif) plutôt que la racine de l'app quand on en connaît
-        // une — même URL que le widget Android (OrderTrackingWidget.js).
-        .widgetURL(entry.hasOrder ? URL(string: "vtout://order/\(entry.orderId)") : nil)
+        // l'espace actif) plutôt que la racine de l'app dans les autres
+        // modes — même URL que le widget Android (BuyerWidget.js).
+        .widgetURL(entry.mode == "order" ? URL(string: "vtout://order/\(entry.orderId)") : nil)
     }
 }
 
@@ -108,11 +134,11 @@ struct VtoutOrderWidget: Widget {
     let kind: String = "VtoutOrderWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: OrderProvider()) { entry in
-            OrderWidgetView(entry: entry)
+        StaticConfiguration(kind: kind, provider: BuyerProvider()) { entry in
+            BuyerWidgetView(entry: entry)
         }
-        .configurationDisplayName("Suivi de commande")
-        .description("Statut de votre commande Vtout en cours.")
+        .configurationDisplayName("Mon activité Vtout")
+        .description("Votre commande en cours, votre panier en attente, ou une petite relance.")
         .supportedFamilies([.systemSmall, .systemMedium])
     }
 }

@@ -6,5 +6,7 @@ struct exportWidgets: WidgetBundle {
     var body: some Widget {
         VtoutOrderWidget()
         VtoutSupplierWidget()
+        VtoutDeliveryWidget()
+        VtoutAdminWidget()
     }
 }

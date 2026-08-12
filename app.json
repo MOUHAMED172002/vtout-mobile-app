@@ -53,8 +53,8 @@
           "widgets": [
             {
               "name": "OrderTracking",
-              "label": "Suivi de commande",
-              "description": "Statut de votre commande Vtout en cours.",
+              "label": "Mon activité Vtout",
+              "description": "Votre commande en cours, votre panier en attente, ou une petite relance.",
               "minWidth": "180dp",
               "minHeight": "110dp",
               "targetCellWidth": 3,
@@ -66,6 +66,26 @@
               "name": "SupplierQueue",
               "label": "Commandes vendeur",
               "description": "Nombre de commandes en attente à traiter.",
+              "minWidth": "110dp",
+              "minHeight": "110dp",
+              "targetCellWidth": 2,
+              "targetCellHeight": 2,
+              "updatePeriodMillis": 1800000
+            },
+            {
+              "name": "DeliveryQueue",
+              "label": "Mes livraisons",
+              "description": "Nombre de livraisons actives assignées.",
+              "minWidth": "110dp",
+              "minHeight": "110dp",
+              "targetCellWidth": 2,
+              "targetCellHeight": 2,
+              "updatePeriodMillis": 1800000
+            },
+            {
+              "name": "AdminApprovals",
+              "label": "À valider",
+              "description": "Vendeurs et produits en attente de validation.",
               "minWidth": "110dp",
               "minHeight": "110dp",
               "targetCellWidth": 2,
