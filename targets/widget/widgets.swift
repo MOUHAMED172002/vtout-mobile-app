@@ -23,12 +23,13 @@ struct OrderEntry: TimelineEntry {
     let statusLabel: String
     let itemsCount: Int
     let total: Int
+    let orderId: String
     let orderIdShort: String
 }
 
 struct OrderProvider: TimelineProvider {
     func placeholder(in context: Context) -> OrderEntry {
-        OrderEntry(date: Date(), hasOrder: true, statusLabel: "Expédiée", itemsCount: 2, total: 12000, orderIdShort: "A1B2C3D4")
+        OrderEntry(date: Date(), hasOrder: true, statusLabel: "Expédiée", itemsCount: 2, total: 12000, orderId: "", orderIdShort: "A1B2C3D4")
     }
 
     func getSnapshot(in context: Context, completion: @escaping (OrderEntry) -> Void) {
@@ -45,7 +46,7 @@ struct OrderProvider: TimelineProvider {
         guard let data = defaults?.data(forKey: "vtout_order_widget"),
               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
               (json["hasOrder"] as? Bool) == true else {
-            return OrderEntry(date: Date(), hasOrder: false, statusLabel: "", itemsCount: 0, total: 0, orderIdShort: "")
+            return OrderEntry(date: Date(), hasOrder: false, statusLabel: "", itemsCount: 0, total: 0, orderId: "", orderIdShort: "")
         }
         let orderId = json["orderId"] as? String ?? ""
         return OrderEntry(
@@ -54,6 +55,7 @@ struct OrderProvider: TimelineProvider {
             statusLabel: json["statusLabel"] as? String ?? "—",
             itemsCount: json["itemsCount"] as? Int ?? 0,
             total: json["total"] as? Int ?? 0,
+            orderId: orderId,
             orderIdShort: String(orderId.prefix(8))
         )
     }
@@ -94,6 +96,11 @@ struct OrderWidgetView: View {
         }
         .padding()
         .containerBackground(.background, for: .widget)
+        // Ouvre directement la commande (voir App.js#linking, écran
+        // OrderDetail toujours monté dans RootNavigator quel que soit
+        // l'espace actif) plutôt que la racine de l'app quand on en connaît
+        // une — même URL que le widget Android (OrderTrackingWidget.js).
+        .widgetURL(entry.hasOrder ? URL(string: "vtout://order/\(entry.orderId)") : nil)
     }
 }
 

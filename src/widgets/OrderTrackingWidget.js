@@ -11,7 +11,10 @@ export default function OrderTrackingWidget({ data }) {
 
   return (
     <FlexWidget
-      clickAction="OPEN_APP"
+      // Ouvre directement la commande (deep link vtout://order/:id, voir
+      // App.js#linking) plutôt que la racine de l'app quand on en connaît une.
+      clickAction={hasOrder ? 'OPEN_URI' : 'OPEN_APP'}
+      clickActionData={hasOrder ? { uri: `vtout://order/${data.orderId}` } : undefined}
       style={{
         height: 'match_parent',
         width: 'match_parent',

@@ -16,6 +16,23 @@ import PushNotificationListener from './src/components/PushNotificationListener'
 import SupportChatBubble from './src/components/SupportChatBubble';
 import EmailVerificationBanner from './src/components/EmailVerificationBanner';
 
+// Deep linking (schéma "vtout://", voir app.json) — pour l'instant limité
+// à ce que le widget "Suivi de commande" ouvre directement la bonne
+// commande au tap (voir src/widgets/OrderTrackingWidget.js et
+// targets/widget/widgets.swift), plutôt que de rouvrir l'app à la racine.
+// OrderDetail est un écran de RootNavigator, toujours monté quel que soit
+// l'espace actif (client/vendeur/livreur/admin) — pas besoin de gérer de
+// bascule d'espace pour ce cas précis.
+const linking = {
+  prefixes: ['vtout://'],
+  config: {
+    screens: {
+      OrderDetail: 'order/:id',
+      Orders: 'orders',
+    },
+  },
+};
+
 function AppContent() {
   const { mode, colors } = useTheme();
   const baseNavTheme = mode === 'dark' ? DarkTheme : DefaultTheme;
@@ -26,6 +43,7 @@ function AppContent() {
       <EmailVerificationBanner />
       <NavigationContainer
         ref={navigationRef}
+        linking={linking}
         theme={{
           ...baseNavTheme,
           dark: mode === 'dark',
