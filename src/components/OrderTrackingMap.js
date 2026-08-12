@@ -1,62 +1,97 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { View, Text, StyleSheet, Platform } from 'react-native';
-import MapView, { Marker, PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { WebView } from 'react-native-webview';
 import { radius } from '../theme/colors';
 import { socketService } from '../services/socketService';
 
 // Miroir de frontend/src/component/Shared/OrderTrackingMap.jsx — carte de
-// suivi de livraison en direct (position du client, du vendeur, et du
+// suivi de livraison en direct (client / vendeur / livreur, position du
 // livreur mise à jour via WebSocket sur le canal dynamique
-// `order_update_${orderId}`). Nécessite react-native-maps (module natif) :
-// invisible en Expo Go, testable uniquement via un build EAS. Sur Android,
-// react-native-maps a toujours besoin d'une clé Google Maps
-// (app.json → expo.android.config.googleMaps.apiKey, encore vide) ; iOS
-// utilise Apple Maps par défaut, aucune clé requise.
-const COTONOU = { latitude: 6.3667, longitude: 2.4333 };
+// `order_update_${orderId}`). Contrairement à une première version testée
+// avec react-native-maps (nécessitait une clé Google Maps payante/à
+// configurer sur Android), on reproduit ici exactement la même techno que
+// le web : Leaflet + tuiles OpenStreetMap, gratuites et sans clé API,
+// embarquées dans une WebView — même rendu sur iOS et Android, aucune
+// config supplémentaire nécessaire.
+const COTONOU = { lat: 6.3667, lng: 2.4333 };
+
+const buildHtml = (center, customerPos, supplierPos) => `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    html, body, #map { height: 100%; margin: 0; padding: 0; }
+    .vtout-pin {
+      width: 30px; height: 30px; border-radius: 15px; background: #fff; border: 2px solid #000;
+      display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([${center.lat}, ${center.lng}], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+
+    function makeIcon(emoji, color) {
+      return L.divIcon({
+        html: '<div class="vtout-pin" style="border-color:' + color + ';color:' + color + ';">' + emoji + '</div>',
+        className: '', iconSize: [30, 30], iconAnchor: [15, 15],
+      });
+    }
+
+    ${customerPos ? `L.marker([${customerPos[0]}, ${customerPos[1]}], { icon: makeIcon('🧍', '#ef4444') }).addTo(map).bindPopup('Votre position de livraison');` : ''}
+    ${supplierPos ? `L.marker([${supplierPos[0]}, ${supplierPos[1]}], { icon: makeIcon('📍', '#10b981') }).addTo(map).bindPopup('Boutique du fournisseur');` : ''}
+
+    let riderMarker = null;
+    window.updateRiderPosition = function (lat, lng) {
+      if (riderMarker) {
+        riderMarker.setLatLng([lat, lng]);
+      } else {
+        riderMarker = L.marker([lat, lng], { icon: makeIcon('🚴', '#3b82f6') }).addTo(map).bindPopup('Le livreur est ici');
+      }
+    };
+  </script>
+</body>
+</html>
+`;
 
 export default function OrderTrackingMap({ orderId, customerPos, supplierPos }) {
-  const [riderPos, setRiderPos] = useState(null);
+  const webviewRef = useRef(null);
 
   useEffect(() => {
     if (!orderId) return;
     const handleLocationUpdate = (data) => {
-      if (data?.lat && data?.lng) setRiderPos({ latitude: data.lat, longitude: data.lng });
+      if (data?.lat && data?.lng) {
+        webviewInject(webviewRef, `window.updateRiderPosition && window.updateRiderPosition(${data.lat}, ${data.lng}); true;`);
+      }
     };
     socketService.on(`order_update_${orderId}`, handleLocationUpdate);
     return () => socketService.off(`order_update_${orderId}`, handleLocationUpdate);
   }, [orderId]);
 
-  const center = useMemo(() => {
-    if (customerPos) return { latitude: customerPos[0], longitude: customerPos[1] };
-    if (supplierPos) return { latitude: supplierPos[0], longitude: supplierPos[1] };
-    return COTONOU;
-  }, [customerPos, supplierPos]);
+  const center = customerPos
+    ? { lat: customerPos[0], lng: customerPos[1] }
+    : supplierPos
+    ? { lat: supplierPos[0], lng: supplierPos[1] }
+    : COTONOU;
+
+  const html = buildHtml(center, customerPos, supplierPos);
 
   return (
     <View style={styles.wrap}>
-      <MapView
-        provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
-        style={StyleSheet.absoluteFill}
-        initialRegion={{ ...center, latitudeDelta: 0.05, longitudeDelta: 0.05 }}
-        region={{ ...center, latitudeDelta: 0.05, longitudeDelta: 0.05 }}
-      >
-        {customerPos && (
-          <Marker coordinate={{ latitude: customerPos[0], longitude: customerPos[1] }} title="Votre position de livraison">
-            <MapPin icon="person" color="#ef4444" />
-          </Marker>
-        )}
-        {supplierPos && (
-          <Marker coordinate={{ latitude: supplierPos[0], longitude: supplierPos[1] }} title="Boutique du fournisseur">
-            <MapPin icon="location" color="#10b981" />
-          </Marker>
-        )}
-        {riderPos && (
-          <Marker coordinate={riderPos} title="Le livreur est ici">
-            <MapPin icon="bicycle" color="#3b82f6" />
-          </Marker>
-        )}
-      </MapView>
+      <WebView
+        ref={webviewRef}
+        originWhitelist={['*']}
+        source={{ html }}
+        style={{ flex: 1 }}
+        javaScriptEnabled
+        scrollEnabled={false}
+      />
 
       <View style={styles.legend}>
         <LegendItem color="#3b82f6" label="Livreur" />
@@ -66,12 +101,11 @@ export default function OrderTrackingMap({ orderId, customerPos, supplierPos }) 
   );
 }
 
-function MapPin({ icon, color }) {
-  return (
-    <View style={[pinStyles.wrap, { borderColor: color }]}>
-      <Ionicons name={icon} size={16} color={color} />
-    </View>
-  );
+// Ref pas toujours prête au tout premier événement socket (WebView encore
+// en train de charger) — no-op silencieux plutôt qu'un crash, la position
+// suivante mettra la carte à jour normalement.
+function webviewInject(ref, script) {
+  ref.current?.injectJavaScript(script);
 }
 
 function LegendItem({ color, label }) {
@@ -92,12 +126,4 @@ const styles = StyleSheet.create({
   legendItem: { flexDirection: 'row', alignItems: 'center', gap: 5 },
   legendDot: { width: 8, height: 8, borderRadius: 4 },
   legendText: { fontSize: 9.5, fontWeight: '800', color: '#334155', textTransform: 'uppercase' },
-});
-
-const pinStyles = StyleSheet.create({
-  wrap: {
-    width: 30, height: 30, borderRadius: 15, backgroundColor: '#fff', borderWidth: 2,
-    alignItems: 'center', justifyContent: 'center',
-    shadowColor: '#000', shadowOpacity: 0.2, shadowRadius: 3, shadowOffset: { width: 0, height: 1 },
-  },
 });
