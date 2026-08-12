@@ -2,15 +2,19 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { radius } from '../../theme/colors';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
+import { useTour } from '../../tour/TourContext';
+import { ADMIN_TOUR_STEPS } from '../../tour/tourSteps';
 import { getDashboardStats } from '../../services/adminStatsService';
 import { formatPrice } from '../../utils/format';
 import { getOrderStatusLabel, getOrderStatusColor } from '../../utils/orderStatus';
 import Loading from '../../components/Loading';
 
 const PERIODS = ['7J', '30J'];
+const TOUR_SEEN_KEY = 'vtout_tour_admin_seen';
 
 function StatCard({ label, value, icon, color }) {
   const { colors } = useTheme();
@@ -44,6 +48,7 @@ export default function AdminDashboardScreen({ navigation }) {
   const { colors } = useTheme();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken } = useAuth();
+  const { start: startTour } = useTour();
   const [period, setPeriod] = useState('30J');
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -63,6 +68,19 @@ export default function AdminDashboardScreen({ navigation }) {
   }, [getToken, period]);
 
   useEffect(() => { load(period); }, [period]);
+
+  // Visite guidée : proposée une seule fois, au premier chargement du tableau de bord admin.
+  useEffect(() => {
+    if (loading) return;
+    let cancelled = false;
+    AsyncStorage.getItem(TOUR_SEEN_KEY).then((seen) => {
+      if (seen || cancelled) return;
+      setTimeout(() => { if (!cancelled) startTour(ADMIN_TOUR_STEPS); }, 500);
+      AsyncStorage.setItem(TOUR_SEEN_KEY, 'true');
+    });
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
 
   if (loading) return <Loading />;
 

@@ -2,9 +2,14 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, RefreshControl, Switch, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { radius } from '../../theme/colors';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
+import { useTour } from '../../tour/TourContext';
+import { DELIVERY_TOUR_STEPS } from '../../tour/tourSteps';
+
+const TOUR_SEEN_KEY = 'vtout_tour_delivery_seen';
 import {
   getDeliveryProfile,
   getMyDeliveries,
@@ -30,6 +35,7 @@ export default function DeliveryHomeScreen({ navigation }) {
   const { colors } = useTheme();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { getToken, user, profile: authProfile } = useAuth();
+  const { start: startTour } = useTour();
   const [status, setStatus] = useState('loading'); // loading | not_registered | pending | rejected | active
   const [profile, setProfile] = useState(null);
   const [availableCount, setAvailableCount] = useState(0);
@@ -85,6 +91,19 @@ export default function DeliveryHomeScreen({ navigation }) {
     const unsub = navigation.addListener('focus', load);
     return unsub;
   }, [navigation, load]);
+
+  // Visite guidée : ne se lance que la première fois que l'espace livreur devient actif.
+  useEffect(() => {
+    if (status !== 'active') return;
+    let cancelled = false;
+    AsyncStorage.getItem(TOUR_SEEN_KEY).then((seen) => {
+      if (seen || cancelled) return;
+      setTimeout(() => { if (!cancelled) startTour(DELIVERY_TOUR_STEPS); }, 500);
+      AsyncStorage.setItem(TOUR_SEEN_KEY, 'true');
+    });
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status]);
 
   const handleToggleOnline = async (value) => {
     setTogglingOnline(true);
