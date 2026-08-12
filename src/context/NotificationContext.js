@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import { useAuth } from './AuthContext';
 import { socketService } from '../services/socketService';
 import { registerForPushNotificationsAsync } from '../services/pushService';
+import { refreshWidgets } from '../services/widgetService';
 import {
   getMyNotifications,
   markNotificationRead,
@@ -33,11 +34,16 @@ export function NotificationProvider({ children }) {
   useEffect(() => {
     if (isSignedIn && user?.id) {
       load();
+      getToken().then(refreshWidgets);
       socketService.connect(user.id);
       if (isAdmin) socketService.emit('join', 'admins');
 
       const handleLive = () => load();
-      const unsubOrder = socketService.subscribe('order_status_updated', handleLive);
+      // Un changement de statut de commande est précisément ce que les
+      // widgets écran d'accueil affichent — on les redessine en même temps
+      // que la liste de notifications (voir src/services/widgetService.js).
+      const handleOrderUpdate = () => { load(); getToken().then(refreshWidgets); };
+      const unsubOrder = socketService.subscribe('order_status_updated', handleOrderUpdate);
       const unsubMessage = socketService.subscribe('new_message', handleLive);
       const unsubAdmin = socketService.subscribe('admin_notification', handleLive);
 
@@ -49,7 +55,10 @@ export function NotificationProvider({ children }) {
       };
     }
     setNotifications([]);
-  }, [isSignedIn, user?.id, isAdmin, load]);
+    // Déconnexion : les widgets ne doivent plus afficher les données du
+    // compte précédent.
+    refreshWidgets(null);
+  }, [isSignedIn, user?.id, isAdmin, load, getToken]);
 
   // Enregistre le jeton de push Expo de cet appareil à la connexion. Le
   // retrait à la déconnexion est géré par AuthContext.signOut() (qui a

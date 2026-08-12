@@ -152,6 +152,43 @@ distantes** sur Android/iOS. Pour tester cette fonctionnalité :
 3. Le reste de l'app (achats, espaces vendeur/livreur/admin) fonctionne
    normalement dans Expo Go — seul le push OS nécessite ce build.
 
+## Widgets écran d'accueil
+
+Deux widgets, entièrement natifs (invisibles en Expo Go, comme les push) :
+
+- **Suivi de commande** (client) — statut de la dernière commande active.
+- **Commandes vendeur** — nombre de commandes en attente à traiter
+  (n'affiche rien si l'espace vendeur n'est pas actif sur le compte).
+
+Les données sont recalculées et poussées vers le widget déjà présent sur
+l'écran d'accueil à la connexion, à la déconnexion, et à chaque changement
+de statut de commande reçu en direct (voir `NotificationContext.js` →
+`src/services/widgetService.js`). Côté Android, le widget se met aussi à
+jour tout seul même app fermée (`src/widgets/widget-task-handler.js`,
+toutes les 30 min).
+
+### Android (`react-native-android-widget`)
+
+Rien de plus à configurer — le plugin (`app.json`) génère tout au
+prebuild. Fonctionne dès le prochain `eas build`.
+
+### iOS (`@bacons/apple-targets`)
+
+Deux prérequis avant que ça compile en EAS Build :
+
+1. **`ios.appleTeamId`** dans `app.json` — actuellement absent (log
+   d'avertissement à chaque `expo export`/`prebuild`, "iOS builds may fail
+   until this is corrected"). Se trouve dans Xcode (Signing & Capabilities)
+   ou sur developer.apple.com/account sous "Membership".
+2. Le widget lit ses données via un **App Group** partagé
+   (`group.com.vtout.mobile`, déjà déclaré dans `ios.entitlements`) — rien
+   à faire de plus, EAS Build gère la signature de ce groupe
+   automatiquement à partir du Team ID ci-dessus.
+
+Le code natif du widget vit dans `targets/widget/` (Swift/WidgetKit), en
+dehors du dossier `ios/` généré — il survit donc à un `expo prebuild
+--clean`. Voir `targets/widget/widgets.swift`.
+
 ## Prochaines étapes suggérées
 
 1. Icônes/splash de production (`assets/`) — ceux fournis sont des
