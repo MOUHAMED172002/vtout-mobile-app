@@ -14,6 +14,16 @@ export const updateMyProfile = async (profileData, token) => {
   return data;
 };
 
+// Renvoie l'email de vérification (voir EmailVerificationBanner.js) — même
+// endpoint que web/server/routes/resendVerificationRoutes.js, anti-spam 2min
+// géré côté serveur.
+export const resendVerificationEmail = async (token) => {
+  const { data } = await api.post('/resend-verification', {}, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return data;
+};
+
 // `file` est un objet RN { uri, name, type } issu d'expo-image-picker.
 export const uploadAvatar = async (file, token) => {
   const formData = new FormData();

@@ -11,6 +11,7 @@ import { formatPrice, getThumbnail } from '../utils/format';
 import { getOrderStatusLabel, getOrderStatusColor } from '../utils/orderStatus';
 import Loading from '../components/Loading';
 import Button from '../components/Button';
+import OrderTrackingMap from '../components/OrderTrackingMap';
 
 const isDelivered = (status) => ['livrée', 'livree'].includes((status || '').toLowerCase());
 const normalizeStatus = (status) => (status || '')
@@ -93,6 +94,25 @@ export default function OrderDetailScreen({ route, navigation }) {
           </View>
           <Text style={styles.orderDate}>{new Date(order.created_at || order.createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
         </View>
+
+        {normalizeStatus(order.status) === 'expediee' && (
+          <View style={styles.card}>
+            <View style={styles.trackingHeaderRow}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                <Ionicons name="navigate" size={16} color={colors.primary} />
+                <Text style={styles.cardTitle}>Suivi en temps réel</Text>
+              </View>
+              <View style={styles.trackingPill}>
+                <Text style={styles.trackingPillText}>Livreur en route</Text>
+              </View>
+            </View>
+            <OrderTrackingMap
+              orderId={order.id}
+              customerPos={order.address?.lat ? [parseFloat(order.address.lat), parseFloat(order.address.lng)] : null}
+              supplierPos={order.supplier?.lat ? [parseFloat(order.supplier.lat), parseFloat(order.supplier.lng)] : null}
+            />
+          </View>
+        )}
 
         {order.address && (
           <View style={styles.card}>
@@ -180,6 +200,9 @@ const createStyles = (colors) => StyleSheet.create({
   statusPill: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: radius.full },
   statusText: { fontSize: 10, fontWeight: '800', textTransform: 'uppercase' },
   cardTitle: { fontSize: 14, fontWeight: '900', color: colors.text, marginBottom: 4 },
+  trackingHeaderRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  trackingPill: { backgroundColor: `${colors.secondary}18`, paddingHorizontal: 10, paddingVertical: 4, borderRadius: radius.full },
+  trackingPillText: { fontSize: 9.5, fontWeight: '900', color: colors.secondary, textTransform: 'uppercase' },
   addressText: { fontSize: 13, fontWeight: '700', color: colors.text },
   addressSub: { fontSize: 12, color: colors.textMuted, fontWeight: '600' },
   itemRow: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingVertical: 8, borderTopWidth: 1, borderTopColor: colors.border },

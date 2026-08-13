@@ -15,6 +15,7 @@ import { formatPrice, getOptimizedImage, getProductDisplayPrice, isProductOutOfS
 import Button from '../components/Button';
 import Loading from '../components/Loading';
 import ProductCard from '../components/ProductCard';
+import VerifiedSellerBadge from '../components/VerifiedSellerBadge';
 
 const { width } = Dimensions.get('window');
 const DESCRIPTION_LINES = 8;
@@ -277,9 +278,8 @@ export default function ProductDetailScreen({ route, navigation }) {
           <Text style={styles.name}>{product.name}</Text>
 
           {product.supplier?.is_certified && (
-            <View style={styles.certifiedSellerBadge}>
-              <Ionicons name="shield-checkmark" size={14} color={colors.secondary} />
-              <Text style={styles.certifiedSellerText}>Vendeur certifié</Text>
+            <View style={{ alignSelf: 'flex-start', marginTop: 4 }}>
+              <VerifiedSellerBadge variant="pill" size={16} />
             </View>
           )}
 
@@ -484,11 +484,6 @@ const createStyles = (colors) => StyleSheet.create({
   content: { paddingHorizontal: 16, gap: 12 },
   category: { fontSize: 11, fontWeight: '800', color: colors.primary, textTransform: 'uppercase', letterSpacing: 1 },
   name: { fontSize: 20, fontWeight: '900', color: colors.text, lineHeight: 26 },
-  certifiedSellerBadge: {
-    flexDirection: 'row', alignItems: 'center', gap: 5, alignSelf: 'flex-start',
-    backgroundColor: `${colors.secondary}1a`, paddingHorizontal: 10, paddingVertical: 6, borderRadius: radius.sm,
-  },
-  certifiedSellerText: { fontSize: 11, fontWeight: '900', color: colors.secondary, textTransform: 'uppercase', letterSpacing: 0.3 },
   ratingRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   ratingText: { fontSize: 12, fontWeight: '700', color: colors.textMuted },
   priceRow: { flexDirection: 'row', alignItems: 'baseline', gap: 10 },

@@ -7,6 +7,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
 import SpaceSwitcherButton from '../components/SpaceSwitcherButton';
 import NotificationBell from '../components/NotificationBell';
+import TourHelpButton from '../components/TourHelpButton';
+import TourAnchor from '../tour/TourAnchor';
+import { SUPPLIER_TOUR_STEPS } from '../tour/tourSteps';
 
 import SupplierDashboardScreen from '../screens/supplier/SupplierDashboardScreen';
 import SupplierOrdersScreen from '../screens/supplier/SupplierOrdersScreen';
@@ -32,6 +35,13 @@ const ICONS = {
   SupplierWallet: 'wallet',
 };
 
+const TAB_ANCHORS = {
+  SupplierDashboard: 'tour-supplier-tab-dashboard',
+  SupplierOrders: 'tour-supplier-tab-orders',
+  SupplierProducts: 'tour-supplier-tab-products',
+  SupplierWallet: 'tour-supplier-tab-wallet',
+};
+
 function SupplierTabs() {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
@@ -44,6 +54,7 @@ function SupplierTabs() {
         headerStyle: { backgroundColor: colors.surface },
         headerRight: () => (
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+            <TourHelpButton steps={SUPPLIER_TOUR_STEPS} />
             <NotificationBell />
             <SpaceSwitcherButton />
           </View>
@@ -52,9 +63,12 @@ function SupplierTabs() {
         tabBarInactiveTintColor: colors.textFaint,
         tabBarStyle: { height: 60 + insets.bottom, paddingBottom: Math.max(8, insets.bottom), paddingTop: 6, borderTopColor: colors.border },
         tabBarLabelStyle: { fontSize: 11, fontWeight: '700' },
+        // Ancres de la visite guidée (voir src/tour/tourSteps.js#SUPPLIER_TOUR_STEPS).
         tabBarIcon: ({ color, size, focused }) => {
           const name = ICONS[route.name] || 'ellipse';
-          return <Ionicons name={focused ? name : `${name}-outline`} size={size} color={color} />;
+          const icon = <Ionicons name={focused ? name : `${name}-outline`} size={size} color={color} />;
+          const anchorId = TAB_ANCHORS[route.name];
+          return anchorId ? <TourAnchor id={anchorId}>{icon}</TourAnchor> : icon;
         },
       })}
     >

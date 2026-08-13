@@ -30,6 +30,18 @@ class SocketService {
     this.socket?.emit(event, data);
   }
 
+  // Écoute directe d'un événement arbitraire (au lieu des 3 canaux fixes
+  // pré-enregistrés dans connect()) — nécessaire pour les canaux dynamiques
+  // par commande (`order_update_${orderId}`, position du livreur en direct,
+  // voir OrderTrackingMap.js). Miroir de notificationService.on/off côté web.
+  on(event, callback) {
+    this.socket?.on(event, callback);
+  }
+
+  off(event, callback) {
+    this.socket?.off(event, callback);
+  }
+
   subscribe(event, callback) {
     if (!this.listeners.has(event)) this.listeners.set(event, []);
     this.listeners.get(event).push(callback);

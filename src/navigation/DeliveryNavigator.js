@@ -7,6 +7,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
 import SpaceSwitcherButton from '../components/SpaceSwitcherButton';
 import NotificationBell from '../components/NotificationBell';
+import TourHelpButton from '../components/TourHelpButton';
+import TourAnchor from '../tour/TourAnchor';
+import { DELIVERY_TOUR_STEPS } from '../tour/tourSteps';
 
 import DeliveryHomeScreen from '../screens/delivery/DeliveryHomeScreen';
 import AvailableOrdersScreen from '../screens/delivery/AvailableOrdersScreen';
@@ -26,6 +29,12 @@ const ICONS = {
   MyDeliveries: 'bicycle',
 };
 
+const TAB_ANCHORS = {
+  DeliveryHome: 'tour-delivery-tab-home',
+  AvailableOrders: 'tour-delivery-tab-available',
+  MyDeliveries: 'tour-delivery-tab-mine',
+};
+
 function DeliveryTabs() {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
@@ -38,6 +47,7 @@ function DeliveryTabs() {
         headerStyle: { backgroundColor: colors.surface },
         headerRight: () => (
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+            <TourHelpButton steps={DELIVERY_TOUR_STEPS} />
             <NotificationBell />
             <SpaceSwitcherButton />
           </View>
@@ -46,9 +56,12 @@ function DeliveryTabs() {
         tabBarInactiveTintColor: colors.textFaint,
         tabBarStyle: { height: 60 + insets.bottom, paddingBottom: Math.max(8, insets.bottom), paddingTop: 6, borderTopColor: colors.border },
         tabBarLabelStyle: { fontSize: 11, fontWeight: '700' },
+        // Ancres de la visite guidée (voir src/tour/tourSteps.js#DELIVERY_TOUR_STEPS).
         tabBarIcon: ({ color, size, focused }) => {
           const name = ICONS[route.name] || 'ellipse';
-          return <Ionicons name={focused ? name : `${name}-outline`} size={size} color={color} />;
+          const icon = <Ionicons name={focused ? name : `${name}-outline`} size={size} color={color} />;
+          const anchorId = TAB_ANCHORS[route.name];
+          return anchorId ? <TourAnchor id={anchorId}>{icon}</TourAnchor> : icon;
         },
       })}
     >

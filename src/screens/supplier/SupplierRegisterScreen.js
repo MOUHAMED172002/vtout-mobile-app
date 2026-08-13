@@ -10,6 +10,7 @@ import { registerSupplier, getMySupplierProfile } from '../../services/supplierS
 import { getPoliciesByType } from '../../services/contentService';
 import LocationPicker from '../../components/LocationPicker';
 import Button from '../../components/Button';
+import CountryPhoneSelector from '../../components/CountryPhoneSelector';
 
 // ---------------------------------------------------------------------------
 // Contenu marketing (pitch "Devenir vendeur") — même texte et mêmes sections
@@ -321,14 +322,11 @@ export default function SupplierRegisterScreen({ navigation }) {
               onChangeText={setShopName}
             />
 
-            <Text style={styles.label}>Téléphone / WhatsApp</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Recevez vos alertes commandes ici"
-              placeholderTextColor={colors.textFaint}
-              keyboardType="phone-pad"
+            <CountryPhoneSelector
+              label="Téléphone / WhatsApp"
               value={phone}
-              onChangeText={setPhone}
+              onChange={setPhone}
+              required
             />
 
             <Text style={styles.label}>Numéro Mobile Money (MoMo)</Text>

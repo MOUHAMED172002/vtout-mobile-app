@@ -2,9 +2,14 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet, Image, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { radius } from '../../theme/colors';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
+import { useTour } from '../../tour/TourContext';
+import { SUPPLIER_TOUR_STEPS } from '../../tour/tourSteps';
+
+const TOUR_SEEN_KEY = 'vtout_tour_supplier_seen';
 import { getMySupplierProfile, getMyBoutiques } from '../../services/supplierService';
 import { getMySupplierProducts } from '../../services/supplierProductService';
 import { getMySupplierOrders } from '../../services/supplierOrderService';
@@ -20,6 +25,7 @@ export default function SupplierDashboardScreen({ navigation }) {
   const { colors } = useTheme();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
   const { user, getToken } = useAuth();
+  const { start: startTour } = useTour();
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [isNotSupplier, setIsNotSupplier] = useState(false);
@@ -70,6 +76,20 @@ export default function SupplierDashboardScreen({ navigation }) {
     const unsubscribe = navigation.addListener('focus', load);
     return unsubscribe;
   }, [navigation, load]);
+
+  // Visite guidée automatique à la toute première ouverture de l'espace
+  // vendeur (voir src/tour/) — rejouable ensuite via le bouton "?" de l'en-tête.
+  useEffect(() => {
+    if (loading || isNotSupplier) return;
+    let cancelled = false;
+    AsyncStorage.getItem(TOUR_SEEN_KEY).then((seen) => {
+      if (seen || cancelled) return;
+      setTimeout(() => { if (!cancelled) startTour(SUPPLIER_TOUR_STEPS); }, 500);
+      AsyncStorage.setItem(TOUR_SEEN_KEY, 'true');
+    });
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, isNotSupplier]);
 
   if (loading) return <Loading />;
 
