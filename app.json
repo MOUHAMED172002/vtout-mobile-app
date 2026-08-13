@@ -24,7 +24,10 @@
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -48,7 +51,11 @@
       "apiUrl": "https://api.vtout.com/api",
       "googleWebClientId": "848866935575-avgfnj9g10jt7qbrkm7k1sj33lcsl646.apps.googleusercontent.com",
       "googleIosClientId": "",
-      "googleAndroidClientId": ""
-    }
+      "googleAndroidClientId": "",
+      "eas": {
+        "projectId": "47908acc-23aa-4228-8bfb-d57bdecc6a41"
+      }
+    },
+    "owner": "abdoul172002"
   }
 }
