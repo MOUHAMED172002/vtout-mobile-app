@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "481593731782",
+    "project_id": "vtout-mobile",
+    "storage_bucket": "vtout-mobile.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:481593731782:android:f57a14ca8fa386f2ba05c7",
+        "android_client_info": {
+          "package_name": "com.vtout.mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAs6ZEsUwCTk0XCXS69FueyOdmL5Im34s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

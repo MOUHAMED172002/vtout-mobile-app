@@ -15,6 +15,7 @@
     },
     "android": {
       "package": "com.vtout.mobile",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "backgroundColor": "#0054a6",
         "foregroundImage": "./assets/android-icon-foreground.png",
