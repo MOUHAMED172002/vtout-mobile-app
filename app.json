@@ -21,10 +21,7 @@
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
-      },
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ]
+      }
     },
     "ios": {
       "supportsTablet": true,
@@ -47,7 +44,8 @@
         "expo-image-picker",
         {
           "photosPermission": "Vtout a besoin d'accéder à vos photos pour choisir une image (produit, avatar, pièce d'identité...).",
-          "cameraPermission": "Vtout a besoin de la caméra pour prendre une photo (pièce d'identité, produit, avatar...)."
+          "cameraPermission": "Vtout a besoin de la caméra pour prendre une photo (pièce d'identité, produit, avatar...).",
+          "microphonePermission": false
         }
       ],
       [
