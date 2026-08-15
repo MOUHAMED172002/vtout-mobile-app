@@ -103,7 +103,7 @@
       "apiUrl": "https://api.vtout.com/api",
       "googleWebClientId": "848866935575-avgfnj9g10jt7qbrkm7k1sj33lcsl646.apps.googleusercontent.com",
       "googleIosClientId": "",
-      "googleAndroidClientId": "",
+      "googleAndroidClientId": "848866935575-q60ugak54h21lq4cnfdbgk9mtqv87bjj.apps.googleusercontent.com",
       "eas": {
         "projectId": "47908acc-23aa-4228-8bfb-d57bdecc6a41"
       }
