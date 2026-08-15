@@ -61,6 +61,11 @@ export default function ReferralScreen({ navigation }) {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // Miroir de ReferralPage.jsx (web) : le programme peut être désactivé côté
+  // admin (récompenses à 0) sans que /referrals/me ne renvoie d'erreur — sans
+  // ce garde-fou, l'écran afficherait "Offrez 0 FCFA... recevez 0 FCFA".
+  const isActive = info && (Number(info.referrerReward) > 0 || Number(info.referredReward) > 0);
+
   if (loading) return <Loading />;
   if (!info) {
     return (
@@ -68,6 +73,21 @@ export default function ReferralScreen({ navigation }) {
         <View style={styles.errorWrap}>
           <Text style={styles.errorText}>Impossible de charger cette page.</Text>
           <Button title="Réessayer" onPress={load} style={{ marginTop: 16 }} />
+        </View>
+      </SafeAreaView>
+    );
+  }
+  if (!isActive) {
+    return (
+      <SafeAreaView style={styles.safe}>
+        <View style={styles.errorWrap}>
+          <View style={styles.heroIconWrap}>
+            <Ionicons name="share-social" size={30} color={colors.primary} />
+          </View>
+          <Text style={styles.title}>Le parrainage arrive bientôt</Text>
+          <Text style={styles.subtitle}>
+            Le programme n'est pas encore activé. Revenez bientôt pour inviter vos proches et gagner des récompenses !
+          </Text>
         </View>
       </SafeAreaView>
     );
@@ -110,6 +130,10 @@ export default function ReferralScreen({ navigation }) {
           <View style={styles.statCard}>
             <Text style={styles.statValue}>{info.totalRewarded}</Text>
             <Text style={styles.statLabel}>Coupon{info.totalRewarded > 1 ? 's' : ''} gagné{info.totalRewarded > 1 ? 's' : ''}</Text>
+          </View>
+          <View style={styles.statCard}>
+            <Text style={styles.statValue}>{info.pendingCount}</Text>
+            <Text style={styles.statLabel}>En attente</Text>
           </View>
         </View>
 
