@@ -5,6 +5,22 @@ Application mobile de Vtout, avec la même logique métier que le site web
 entièrement repensé pour une app native (tabs, écrans plein écran, gestes
 natifs).
 
+## Plateformes ciblées
+
+**Lancement Android uniquement pour le moment.** Le code reste multi-plateforme
+(rien n'a été retiré), mais la priorité est au build/soumission Android — voir
+`eas.json`/`eas build --platform android`. Conséquences concrètes :
+
+- `ios.appleTeamId` (nécessaire pour signer un build iOS) n'est **pas**
+  requis tant qu'on ne construit pas pour iOS.
+- `extra.googleIosClientId` peut rester vide — seul
+  `extra.googleAndroidClientId` est nécessaire pour activer la connexion
+  Google (voir § Configuration ci-dessous).
+- Le widget iOS (`targets/widget/`, plugin `@bacons/apple-targets`) reste en
+  place dans le code mais est **en pause** : il ne compile que lors d'un
+  build iOS, qu'on ne lance pas pour l'instant. Voir § Widgets pour reprendre
+  ce chantier plus tard.
+
 ## Démarrer
 
 ```bash
@@ -189,9 +205,12 @@ liens profonds si besoin plus tard (parrainage, etc.).
 Rien de plus à configurer — le plugin (`app.json`) génère tout au
 prebuild. Fonctionne dès le prochain `eas build`.
 
-### iOS (`@bacons/apple-targets`)
+### iOS (`@bacons/apple-targets`) — en pause, pas prioritaire
 
-Deux prérequis avant que ça compile en EAS Build :
+Lancement Android uniquement pour le moment (voir § Plateformes ciblées) :
+cette section reste documentée pour reprendre le chantier iOS plus tard,
+mais n'est pas un prérequis au lancement actuel. Deux prérequis avant que ça
+compile en EAS Build :
 
 1. **`ios.appleTeamId`** dans `app.json` — actuellement absent (log
    d'avertissement à chaque `expo export`/`prebuild`, "iOS builds may fail
@@ -213,3 +232,9 @@ dehors du dossier `ios/` généré — il survit donc à un `expo prebuild
 2. Espace admin : si besoin d'aller plus loin, prioriser le CMS
    (FAQ/blog/politiques) ou les paramètres système en second temps —
    volontairement laissés au site web pour l'instant.
+3. Lancement Android : `extra.googleAndroidClientId` (Google Sign-In) +
+   `eas.json`/`extra.eas.projectId` (généré par `eas init`, jamais poussé
+   ici jusqu'à présent) — les deux seules valeurs encore manquantes avant
+   un build de production Android.
+4. iOS : repris plus tard, hors périmètre du lancement actuel (voir § iOS
+   dans la section Widgets).

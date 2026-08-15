@@ -13,13 +13,6 @@
       "resizeMode": "contain",
       "backgroundColor": "#0054a6"
     },
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.vtout.mobile",
-      "entitlements": {
-        "com.apple.security.application-groups": ["group.com.vtout.mobile"]
-      }
-    },
     "android": {
       "package": "com.vtout.mobile",
       "adaptiveIcon": {
@@ -27,6 +20,13 @@
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.vtout.mobile",
+      "entitlements": {
+        "com.apple.security.application-groups": ["group.com.vtout.mobile"]
       }
     },
     "web": {
@@ -46,7 +46,6 @@
           "cameraPermission": "Vtout a besoin de la caméra pour prendre une photo (pièce d'identité, produit, avatar...)."
         }
       ],
-      "@bacons/apple-targets",
       [
         "react-native-android-widget",
         {
@@ -94,7 +93,8 @@
             }
           ]
         }
-      ]
+      ],
+      "@bacons/apple-targets"
     ],
     "extra": {
       "apiUrl": "https://api.vtout.com/api",
